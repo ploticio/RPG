@@ -15,7 +15,7 @@ public class LevelCreator {
 	private final int levelSize = 21; //size of square grid in tiles
 	private Player player = new Player();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	private EnemyManager enemyManager = new EnemyManager(enemies);
+	private EnemyManager enemyManager = new EnemyManager(enemies,2,4);
 	private Tile[][] grid = new Tile[levelSize][levelSize];
 	
 	public LevelCreator() {

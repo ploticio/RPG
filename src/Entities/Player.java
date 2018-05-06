@@ -19,10 +19,10 @@ public class Player extends Entity {
 	
 	public Player() {
 		try {
-			up = ImageIO.read(new File("boiBack.png"));
-			down = ImageIO.read(new File("boiFront.png"));
-			left = ImageIO.read(new File("boiLeft.png"));
-			right = ImageIO.read(new File("boiRight.png"));
+			up = ImageIO.read(new File("Images\\boiBack.png"));
+			down = ImageIO.read(new File("Images\\boiFront.png"));
+			left = ImageIO.read(new File("Images\\boiLeft.png"));
+			right = ImageIO.read(new File("Images\\boiRight.png"));
 			current = down;
 		} catch (IOException e) {
 			System.out.println("No Image Found: Player");
@@ -32,10 +32,10 @@ public class Player extends Entity {
 	public Player(int x, int y) {
 		super(x, y);
 		try {
-			up = ImageIO.read(new File("boiBack.png"));
-			down = ImageIO.read(new File("boiFront.png"));
-			left = ImageIO.read(new File("boiLeft.png"));
-			right = ImageIO.read(new File("boiRight.png"));
+			up = ImageIO.read(new File("Images\\boiBack.png"));
+			down = ImageIO.read(new File("Images\\boiFront.png"));
+			left = ImageIO.read(new File("Images\\boiLeft.png"));
+			right = ImageIO.read(new File("Images\\boiRight.png"));
 			current = down;
 		} catch (IOException e) {
 			System.out.println("No Image Found: Player");

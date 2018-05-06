@@ -10,7 +10,7 @@ public class RedBlob extends Enemy{
 
 	public RedBlob() {
 		try {
-			current = ImageIO.read(new File("redBlob.png"));
+			current = ImageIO.read(new File("Images\\redBlob.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}
@@ -19,7 +19,7 @@ public class RedBlob extends Enemy{
 	public RedBlob(int x, int y) {
 		super(x, y);
 		try {
-			current = ImageIO.read(new File("redBlob.png"));
+			current = ImageIO.read(new File("Images\\redBlob.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}
