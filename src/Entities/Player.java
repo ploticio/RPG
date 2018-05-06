@@ -18,7 +18,15 @@ public class Player extends Entity {
 	 BufferedImage current;
 	
 	public Player() {
-		
+		try {
+			up = ImageIO.read(new File("boiBack.png"));
+			down = ImageIO.read(new File("boiFront.png"));
+			left = ImageIO.read(new File("boiLeft.png"));
+			right = ImageIO.read(new File("boiRight.png"));
+			current = down;
+		} catch (IOException e) {
+			System.out.println("No Image Found: Player");
+		}
 	}
 	
 	public Player(int x, int y) {
@@ -45,8 +53,6 @@ public class Player extends Entity {
 		if(s.equals("down"))
 			current = down;
 	}
-	
-	
 	
 	public void draw(Graphics g) {
 		g.drawImage(current, xPos, yPos, null);	

@@ -35,7 +35,7 @@ public class Tile {
     	try {
 			image = ImageIO.read(new File(s));
 		} catch (IOException e) {
-			System.out.println("No Image Found");
+			System.out.println("No Image Found: " + s);
 		}
     }
     
@@ -67,6 +67,10 @@ public class Tile {
     
     public void setLevelChanger(boolean b) {
     	levelChanger = b;
+    }
+    
+    public boolean isLevelChanger() {
+    	return levelChanger;
     }
     
 }
