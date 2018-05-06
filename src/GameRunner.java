@@ -27,8 +27,8 @@ public class GameRunner {
 	private static final int GAME_REFRESH = 1;
 	private static boolean debounce = false;
 	
-	static int lX = 0;
-	static int lY = 0;
+	static int lX = 1;
+	static int lY = 1;
 	static int lZ = 0; 
 	WorldGrid wg;
 	static LevelCreator currentLevel;
@@ -37,7 +37,6 @@ public class GameRunner {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				
 				////////////////////MAKE WINDOW//////////////////////
 				JFrame window = new JFrame("Game");
 				window.pack();
@@ -46,7 +45,6 @@ public class GameRunner {
 		        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        window.setLocationRelativeTo(null);
 		        window.setVisible(true);
-		       
 				
 		        /////////////////INITIALIZATION///////////////////////
 				TextBox tb = new TextBox();
@@ -101,6 +99,7 @@ public class GameRunner {
 				playerTimer.start();
 				enemyTimer.start();
 				checkTimer.start();
+				
 				////////////////////KEYBOARD INPUT//////////////////////
 				InputMap in = g.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 				in.put(KeyStroke.getKeyStroke("A"), "left");
@@ -136,7 +135,7 @@ public class GameRunner {
 						currentLevel.getPlayer().setCurrent("right");
 						if(!debounce && gameTimer.isRunning()) {
 							debounce = true;
-							if(currentLevel.getPlayer().getxGrid()==20 && lY != worldGrid.length) {
+							if(currentLevel.getPlayer().getxGrid()==20 && lY != worldGrid.length-1) {
 								int positionY = currentLevel.getPlayer().getyGrid();
 								lY+=1;
 								currentLevel = worldGrid[lX][lY][lZ];
@@ -180,7 +179,7 @@ public class GameRunner {
 						currentLevel.getPlayer().setCurrent("down");
 						if(!debounce && gameTimer.isRunning()) {
 							debounce = true;
-							if(currentLevel.getPlayer().getyGrid()==20 && lX != worldGrid[lX].length) {
+							if(currentLevel.getPlayer().getyGrid()==20 && lX != worldGrid[lX].length-1) {
 								int positionX = currentLevel.getPlayer().getxGrid();
 								lX+=1;
 								currentLevel = worldGrid[lX][lY][lZ];
@@ -210,9 +209,8 @@ public class GameRunner {
 				
 				
 				
-						
 				
-				}
+			}
 		});
 	}
 }

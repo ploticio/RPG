@@ -16,8 +16,8 @@ public class WorldGrid {
 		worldGrid[2][0][0] = new Level200();
 		worldGrid[2][1][0] = new Level210();
 		worldGrid[2][2][0] = new Level220();
-		worldGrid[0][0][0].getPlayer().setxGrid(9);
-		worldGrid[0][0][0].getPlayer().setyGrid(9);
+		worldGrid[1][1][0].getPlayer().setxGrid(9);
+		worldGrid[1][1][0].getPlayer().setyGrid(9);
 	}
 	
 	public LevelCreator[][][] getWorldGrid(){
