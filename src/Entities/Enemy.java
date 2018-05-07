@@ -20,12 +20,15 @@ public abstract class Enemy extends Entity {
 	// PROPERTIES
 	boolean isDead = false;
 
+	private int gold = 0;// amount of gold enemy drops
+
 	public Enemy() {
 
 	}
 
-	Enemy(int x, int y) {
-		super(x, y);
+	Enemy(int x, int y, String name, int maxHP, int cHP, int strength, int gold) {
+		super(x, y, name, maxHP, cHP, strength);
+		this.gold = gold;
 	}
 
 	public void randomMovement(Tile[][] grid) {
@@ -63,6 +66,18 @@ public abstract class Enemy extends Entity {
 
 	public void draw(Graphics g) {
 
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+	public void changeHealth(int x) {
+		super.setCurrentHP(super.getCurrentHP() + x);
 	}
 
 }
