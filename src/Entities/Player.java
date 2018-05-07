@@ -115,18 +115,6 @@ public class Player extends Entity {
 		this.gold = gold;
 	}
 
-	private void moveLeft() {
-	}
-
-	private void moveRight() {
-	}
-
-	private void moveDown() {
-	}
-
-	private void moveUp() {
-	}
-
 	/*
 	 * public String toString() { return "Player [level=" + level + ", exp=" + exp +
 	 * ", requiredEXP=" + requiredEXP + ", inventory=" + inventory + ", equipped=" +
