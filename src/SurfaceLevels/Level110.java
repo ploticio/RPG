@@ -1,8 +1,17 @@
 package SurfaceLevels;
 
+import java.util.ArrayList;
+
+import Entities.Blob;
+import Entities.Enemy;
 import Levels.LevelCreator;
+import Managers.EnemyManager;
 
 public class Level110  extends LevelCreator{
+	
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	EnemyManager em;
+	
 	public Level110() {
 		setImage("Images\\grass.png");
 		for(int i = 0; i < 21; i++) {
@@ -15,5 +24,12 @@ public class Level110  extends LevelCreator{
 		setImage(8,11,"Images\\signOnGrass.png");
 		setImage(11,11,"Images\\signOnGrass.png");
 		setImage(11,8,"Images\\signOnGrass.png");
+		
+		enemies.add(new Blob(5,5));
+		em = new EnemyManager(enemies);
+	}
+	
+	public EnemyManager getEnemyManager() {
+		return em;
 	}
 }

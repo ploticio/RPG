@@ -16,12 +16,12 @@ import javax.swing.Timer;
 
 import Entities.Player;
 
-public class InventoryBox extends TextBox {
-///made 5/7
-	private String s;
+public class InventoryBox extends JPanel {
+	///made 5/7
 	private int arrowPos;
 	private BufferedImage invenBoxImage;
 	private BufferedImage arrow;
+	private boolean isVisibleInventory;
 	private Timer invenBoxTimer;
 	Player p;
 
@@ -39,10 +39,7 @@ public class InventoryBox extends TextBox {
 		});
 	}
 
-	public InventoryBox(String s, Player p) {
-
-		super(s);
-		this.s = s;
+	public InventoryBox(Player p) {
 		this.p = p;
 		try {
 			invenBoxImage = ImageIO.read(new File("Images\\invenBox.png"));
@@ -50,6 +47,11 @@ public class InventoryBox extends TextBox {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		invenBoxTimer = new Timer(1, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				repaint();
+			}
+		});
 	}
 
 	public int getArrowPos() {
@@ -68,6 +70,25 @@ public class InventoryBox extends TextBox {
 		return p;
 	}
 
+	public void visibleInventory(boolean b) {
+		isVisibleInventory = b;
+		if(isVisibleInventory) {
+			invenBoxTimer.start();
+		}
+		else {
+			invenBoxTimer.stop();
+		}
+		
+	}
+	
+	public boolean getVisibilityInventory() {
+		return isVisibleInventory;
+	}
+	
+	public Timer getTimer() {
+		return invenBoxTimer;
+	}
+	
 	public void paintComponent(Graphics g) {
 		g.drawImage(invenBoxImage, 20, 360, 800, 450, null);
 		g.drawImage(arrow, 30, getArrowPos(), 10, 10, null);

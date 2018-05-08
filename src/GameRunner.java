@@ -33,7 +33,7 @@ public class GameRunner {
 	static int lX = 1;
 	static int lY = 1;
 	static int lZ = 0;
-	WorldGrid wg;
+	static WorldGrid wg;
 	static LevelCreator currentLevel;
 
 	public static void main(String[] args) {
@@ -47,24 +47,35 @@ public class GameRunner {
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				window.setLocationRelativeTo(null);
 				window.setVisible(true);
-
-				///////////////// INITIALIZATION///////////////////////
+				
+				/////////////////INITIALIZATION///////////////////////
 				TextBox tb = new TextBox();
 				tb.visible(false);
-
+				
 				WorldGrid wg = new WorldGrid();
 				LevelCreator[][][] worldGrid = wg.getWorldGrid();
 				currentLevel = worldGrid[lX][lY][lZ];
 				GraphicsMaker g = new GraphicsMaker(currentLevel);
-				InventoryBox ib = new InventoryBox("", currentLevel.getPlayer());
-				ib.visible(false);
+				InventoryBox ib = new InventoryBox(currentLevel.getPlayer());
+				
+				
+				ib.visibleInventory(false);
+				
 				window.add(g);
-				window.add(tb);
+				
 				window.add(ib);
+				
+				window.add(tb);
+				
+				
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addItems(new Potion());
-
+				
+				
+				
+				
+				
 				/////////////////// TIMERS////////////////////////////
 				Timer gameTimer = new Timer(GAME_REFRESH, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -230,10 +241,10 @@ public class GameRunner {
 					public void actionPerformed(ActionEvent arg0) {
 						if (gameTimer.isRunning()) {
 							gameTimer.stop();
-							ib.visible(true);
+							ib.visibleInventory(true);
 							System.out.println(currentLevel.getPlayer().getCurrentHP());
 						} else {
-							ib.visible(false);
+							ib.visibleInventory(false);
 							gameTimer.start();
 						}
 						in.put(KeyStroke.getKeyStroke("F"), "use");
@@ -243,15 +254,11 @@ public class GameRunner {
 									currentLevel.getPlayer().getInventory().get(ib.getArrayPostion())
 											.use(currentLevel.getPlayer());
 									currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
-								
 							}
-
 						});
 					}
-
 				});
 				////////////////////////////////////////////////////////
-
 			}
 		});
 	}
