@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import Items.*;
 
 import javax.imageio.ImageIO;
 
@@ -15,6 +16,8 @@ public class Player extends Entity {
 	private int gold;
 	private int level;
 	private int exp;
+
+	ArrayList<Item> inventory = new ArrayList<Item>();
 	private int requiredEXP; // amount of exp need to level up
 	// private ArrayList<Item> inventory = new ArrayList<>();
 	// private ArrayList<Item> equipped = new ArrayList<>();
@@ -102,6 +105,14 @@ public class Player extends Entity {
 		return requiredEXP;
 	}
 
+	public void addItems(Item i) {
+		inventory.add(i);
+	}
+
+	public ArrayList<Item> getInventory() {
+		return inventory;
+	}
+
 	/*
 	 * public ArrayList getInventory() { return inventory; }
 	 * 
@@ -114,6 +125,7 @@ public class Player extends Entity {
 	public void setGold(int gold) {
 		this.gold = gold;
 	}
+	
 
 	/*
 	 * public String toString() { return "Player [level=" + level + ", exp=" + exp +
