@@ -30,7 +30,6 @@ public class RedBlob extends Enemy {
 	private static int gold() {
 		Random rand = new Random();
 		int gold = rand.nextInt(9) + 1;
-		System.out.println(gold);
 		return gold;
 	}
 
