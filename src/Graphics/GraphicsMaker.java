@@ -50,7 +50,7 @@ public class GraphicsMaker extends JPanel {
 		}
 		setSize(840, 840);
 	}
-
+	
 	public void changeLevel(LevelCreator l) {
 		p = l.getPlayer();
 		this.l = l;

@@ -21,9 +21,7 @@ public class TextBox extends JPanel{
 	
 	private String s = "Sample Text";
 	private BufferedImage textBoxImage;
-	private Timer textBoxTimer;
 	private Font customFont;
-	private boolean isVisible;
 	
 	public TextBox() {
 		try {
@@ -34,12 +32,6 @@ public class TextBox extends JPanel{
 		} catch (IOException e /*| FontFormatException e*/) {
 			e.printStackTrace();
 		}
-		
-		textBoxTimer = new Timer(1, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				repaint();
-			}
-		});
 	}
 	public TextBox(String s) {
 		this();
@@ -50,26 +42,16 @@ public class TextBox extends JPanel{
 		this.s = s;
 	}
 	
-	public void visible(boolean b) {
-		isVisible = b;
-		if(isVisible) {
-			textBoxTimer.start();
-		}
-		else {
-			textBoxTimer.stop();
-		}
-	}
-	
-	public boolean getVisibility() {
-		return isVisible;
+	public void update() {
+		repaint();
 	}
 	
 	public void paintComponent(Graphics g) {
-		g.drawImage(textBoxImage, 20, 660, 800, 150, null);
+		g.drawImage(textBoxImage, 0, 0, 800, 150, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		//g.setFont(customFont);
-		g.drawString(s, 35, 685);
-		g.drawString("Press 'E' to close", 660, 800);
+		g.drawString(s, 15, 30);
+		g.drawString("Press 'E' to close", 635, 135);
 	}
 
 }

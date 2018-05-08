@@ -25,7 +25,7 @@ public class Level110  extends LevelCreator{
 		setImage(11,11,"Images\\signOnGrass.png");
 		setImage(11,8,"Images\\signOnGrass.png");
 		
-		enemies.add(new Blob(5,5));
+		enemies.add(new Blob(8,9));
 		em = new EnemyManager(enemies);
 	}
 	

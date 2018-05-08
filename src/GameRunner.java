@@ -42,15 +42,14 @@ public class GameRunner {
 				//////////////////// MAKE WINDOW//////////////////////
 				JFrame window = new JFrame("Game");
 				window.pack();
-				window.setSize(856, 879);
-				window.setResizable(true);
+				window.setSize(846, 869);
+				window.setResizable(false);
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				window.setLocationRelativeTo(null);
 				window.setVisible(true);
 				
 				/////////////////INITIALIZATION///////////////////////
 				TextBox tb = new TextBox();
-				tb.visible(false);
 				
 				WorldGrid wg = new WorldGrid();
 				LevelCreator[][][] worldGrid = wg.getWorldGrid();
@@ -58,15 +57,9 @@ public class GameRunner {
 				GraphicsMaker g = new GraphicsMaker(currentLevel);
 				InventoryBox ib = new InventoryBox(currentLevel.getPlayer());
 				
-				
-				ib.visibleInventory(false);
-				
 				window.add(g);
-				
 				window.add(ib);
-				
 				window.add(tb);
-				
 				
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addItems(new Potion());
@@ -82,6 +75,16 @@ public class GameRunner {
 						g.update();
 					}
 				});
+				Timer textBoxTimer = new Timer(GAME_REFRESH, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						tb.update();
+					}
+				});
+				Timer inventoryBoxTimer = new Timer(GAME_REFRESH, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ib.update();
+					}
+				});
 				Timer playerTimer = new Timer(PLAYER_DELAY, new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						debounce = false;
@@ -90,8 +93,9 @@ public class GameRunner {
 							if (currentLevel.getPlayer().getxGrid() == e.getxGrid()
 									&& currentLevel.getPlayer().getyGrid() == e.getyGrid()) {
 								gameTimer.stop();
+								tb.setBounds(20,660,800,150);
 								tb.setText("You've been attacked by " + e.toString() + "!");
-								tb.visible(true);
+								textBoxTimer.start();
 								break;
 							}
 						}
@@ -231,7 +235,7 @@ public class GameRunner {
 					public void actionPerformed(ActionEvent arg0) {
 						if (!gameTimer.isRunning()) {
 							gameTimer.start();
-							tb.visible(false);
+							textBoxTimer.stop();
 						}
 					}
 				});
@@ -241,19 +245,20 @@ public class GameRunner {
 					public void actionPerformed(ActionEvent arg0) {
 						if (gameTimer.isRunning()) {
 							gameTimer.stop();
-							ib.visibleInventory(true);
-							System.out.println(currentLevel.getPlayer().getCurrentHP());
+							ib.setBounds(20, 360, 800, 450);
+							inventoryBoxTimer.start();
 						} else {
-							ib.visibleInventory(false);
+							inventoryBoxTimer.stop();
 							gameTimer.start();
+							
 						}
 						in.put(KeyStroke.getKeyStroke("F"), "use");
 						out.put("use", new AbstractAction() {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
-									currentLevel.getPlayer().getInventory().get(ib.getArrayPostion())
-											.use(currentLevel.getPlayer());
+									currentLevel.getPlayer().getInventory().get(ib.getArrayPostion()).use(currentLevel.getPlayer());
 									currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
+									
 							}
 						});
 					}

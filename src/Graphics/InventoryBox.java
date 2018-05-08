@@ -21,23 +21,7 @@ public class InventoryBox extends JPanel {
 	private int arrowPos;
 	private BufferedImage invenBoxImage;
 	private BufferedImage arrow;
-	private boolean isVisibleInventory;
-	private Timer invenBoxTimer;
 	Player p;
-
-	public InventoryBox() {
-		try {
-			invenBoxImage = ImageIO.read(new File("Images\\invenBox.png"));
-			arrow = ImageIO.read(new File("Images\\pointarrow.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		invenBoxTimer = new Timer(1, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				repaint();
-			}
-		});
-	}
 
 	public InventoryBox(Player p) {
 		this.p = p;
@@ -47,15 +31,10 @@ public class InventoryBox extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		invenBoxTimer = new Timer(1, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				repaint();
-			}
-		});
 	}
 
 	public int getArrowPos() {
-		return 395 + arrowPos * 20;
+		return 40 + arrowPos * 20;
 	}
 
 	public void setArrowPos(int x) {
@@ -69,35 +48,20 @@ public class InventoryBox extends JPanel {
 	public Player getPlayer() {
 		return p;
 	}
-
-	public void visibleInventory(boolean b) {
-		isVisibleInventory = b;
-		if(isVisibleInventory) {
-			invenBoxTimer.start();
-		}
-		else {
-			invenBoxTimer.stop();
-		}
-		
-	}
 	
-	public boolean getVisibilityInventory() {
-		return isVisibleInventory;
-	}
-	
-	public Timer getTimer() {
-		return invenBoxTimer;
+	public void update() {
+		repaint();
 	}
 	
 	public void paintComponent(Graphics g) {
-		g.drawImage(invenBoxImage, 20, 360, 800, 450, null);
-		g.drawImage(arrow, 30, getArrowPos(), 10, 10, null);
+		g.drawImage(invenBoxImage, 0,0, 800, 450, null);
+		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));
-		g.drawString("Gold: " + p.getGold(), 45, 385);
+		g.drawString("Gold: " + p.getGold(), 40, 30);
 		for (int i = 0; i < p.getInventory().size(); i++) {
-			g.drawString(p.getInventory().get(i).toString(), 45, 405 + i * 20);
+			g.drawString(p.getInventory().get(i).toString(), 40, 50 + i * 20);
 		}
-		g.drawString("Press 'F' to use", 660, 800);
+		g.drawString("Press 'F' to use", 650, 435);
 
 	}
 }
