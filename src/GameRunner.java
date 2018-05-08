@@ -62,6 +62,8 @@ public class GameRunner {
 				window.add(tb);
 				window.add(ib);
 				currentLevel.getPlayer().addItems(new Potion());
+				currentLevel.getPlayer().addItems(new Potion());
+				currentLevel.getPlayer().addItems(new Potion());
 
 				/////////////////// TIMERS////////////////////////////
 				Timer gameTimer = new Timer(GAME_REFRESH, new ActionListener() {
@@ -184,7 +186,7 @@ public class GameRunner {
 						}
 						if (!gameTimer.isRunning() && ib.getArrayPostion() > 0) {
 							ib.setArrowPos(1);
-							//System.out.println(ib.getArrayPostion());
+							// System.out.println(ib.getArrayPostion());
 						}
 					}
 				});
@@ -208,9 +210,9 @@ public class GameRunner {
 								}
 							}
 						}
-						if (!gameTimer.isRunning() && ib.getArrayPostion() < ib.getPlayer().getInventory().size()-1) {
+						if (!gameTimer.isRunning() && ib.getArrayPostion() < ib.getPlayer().getInventory().size() - 1) {
 							ib.setArrowPos(-1);
-							//System.out.println(ib.getArrayPostion());
+							// System.out.println(ib.getArrayPostion());
 						}
 					}
 				});
@@ -238,10 +240,12 @@ public class GameRunner {
 						out.put("use", new AbstractAction() {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
-								currentLevel.getPlayer().getInventory().get(ib.getArrayPostion()).use(currentLevel.getPlayer());
-								currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
+									currentLevel.getPlayer().getInventory().get(ib.getArrayPostion())
+											.use(currentLevel.getPlayer());
+									currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
+								
 							}
-							
+
 						});
 					}
 

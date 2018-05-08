@@ -23,5 +23,5 @@ public class WorldGrid {
 	public LevelCreator[][][] getWorldGrid(){
 		return worldGrid;
 	}
-	
+
 }
