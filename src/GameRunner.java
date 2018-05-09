@@ -99,7 +99,7 @@ public class GameRunner {
 								currentLevel.getEnemyManager().setEnemyIndex(i);
 								cb.setBounds(20, 660, 800, 150);
 								cb.setTextMain("You've been attacked by " + e.toString() + "!");
-								cb.setTextSub(" ");
+								cb.setTextSub("Select an attack by pressing 'F'");
 								combBoxTimer.start();
 							}
 						}
