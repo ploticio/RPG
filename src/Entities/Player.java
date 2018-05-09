@@ -18,9 +18,9 @@ public class Player extends Entity {
 	private int exp;
 
 	ArrayList<Item> inventory = new ArrayList<Item>();
+	ArrayList<Attack> attacks = new ArrayList<Attack>();
+
 	private int requiredEXP; // amount of exp need to level up
-	// private ArrayList<Item> inventory = new ArrayList<>();
-	// private ArrayList<Item> equipped = new ArrayList<>();
 
 	BufferedImage down;
 	BufferedImage up;
@@ -30,6 +30,7 @@ public class Player extends Entity {
 
 	public Player() {
 		try {
+			fillAttacks();
 			up = ImageIO.read(new File("Images\\boiBack.png"));
 			down = ImageIO.read(new File("Images\\boiFront.png"));
 			left = ImageIO.read(new File("Images\\boiLeft.png"));
@@ -46,6 +47,7 @@ public class Player extends Entity {
 		level = 1;
 		exp = 0;
 		requiredEXP = 10;
+		fillAttacks();
 
 		// movement and graphics
 		try {
@@ -57,6 +59,13 @@ public class Player extends Entity {
 		} catch (IOException e) {
 			System.out.println("No Image Found: Player");
 		}
+	}
+
+	private void fillAttacks() {
+		attacks.add(new Attack("Stab", 2));
+		attacks.add(new Attack("Slice", 10));
+		attacks.add(new Attack("Kick", 4));
+		attacks.add(new Attack("Punch", 6));
 	}
 
 	///////// Graphics/////////////
@@ -87,6 +96,14 @@ public class Player extends Entity {
 		System.out.println("Strength has increased to " + super.getStrength());
 		System.out.println("Health has increased to " + super.getMaxHP());
 	}
+	
+	public boolean ifNextLevel() {
+		if(exp >= requiredEXP) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/////////// getters and setters///////////
 	public void changeHealth(int x) {
@@ -101,6 +118,10 @@ public class Player extends Entity {
 		return exp;
 	}
 
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+	
 	public int getRequiredEXP() {
 		return requiredEXP;
 	}
@@ -111,6 +132,10 @@ public class Player extends Entity {
 
 	public ArrayList<Item> getInventory() {
 		return inventory;
+	}
+
+	public ArrayList<Attack> getAttacks() {
+		return attacks;
 	}
 
 	/*
@@ -125,7 +150,6 @@ public class Player extends Entity {
 	public void setGold(int gold) {
 		this.gold = gold;
 	}
-	
 
 	/*
 	 * public String toString() { return "Player [level=" + level + ", exp=" + exp +
