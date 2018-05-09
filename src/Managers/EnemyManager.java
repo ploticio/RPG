@@ -14,13 +14,22 @@ public class EnemyManager {
 	private Random r = new Random();
 	private int min;// minimum amount of enemies
 	private int max;// maximum amount of enemies
+	private int enemyIndex = 0;
 
 	public EnemyManager(ArrayList<Enemy> enemies) {
 		this.enemies = enemies;
 	}
-	
+
 	public ArrayList<Enemy> getList() {
 		return enemies;
+	}
+
+	public int getEnemyIndex() {
+		return enemyIndex;
+	}
+
+	public void setEnemyIndex(int enemyIndex) {
+		this.enemyIndex = enemyIndex;
 	}
 
 	public void draw(Graphics g) {
