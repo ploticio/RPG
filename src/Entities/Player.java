@@ -46,7 +46,7 @@ public class Player extends Entity {
 		this.gold = gold;
 		level = 1;
 		exp = 0;
-		requiredEXP = 10;
+		requiredEXP = 3;
 		fillAttacks();
 
 		// movement and graphics

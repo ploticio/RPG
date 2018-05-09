@@ -30,8 +30,8 @@ public class GameRunner {
 	private static boolean debounce = false;
 	private static boolean isOpen = false;// checks if inventory is open
 
-	static int lX = 1;
-	static int lY = 1;
+	static int lX = 4;
+	static int lY = 2;
 	static int lZ = 0;
 	static WorldGrid wg;
 	static LevelCreator currentLevel;
@@ -98,9 +98,9 @@ public class GameRunner {
 								gameTimer.stop();
 								currentLevel.getEnemyManager().setEnemyIndex(i);
 								cb.setBounds(20, 660, 800, 150);
-								cb.setTextMain("You've been attacked by " + e.toString() + "!");
-								cb.setTextSub("Select an attack by pressing 'F'");
 								combBoxTimer.start();
+								cb.setTextMain("Fighting: " + e.getName() + "!");
+								cb.setTextSub(" ");
 							}
 						}
 					}
@@ -150,12 +150,14 @@ public class GameRunner {
 								currentLevel.getPlayer().setxGrid(20);
 								currentLevel.getPlayer().setyGrid(positionY);
 								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("left");
-							} else {
+							} 
+							else {
 								if (currentLevel.getPlayer().getxGrid() != 0
-										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() - 1][currentLevel
-												.getPlayer().getyGrid()].isBlocked()) {
+										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() - 1][currentLevel.getPlayer().getyGrid()].isBlocked()) {
 									currentLevel.getPlayer().moveX(-1);
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -173,12 +175,14 @@ public class GameRunner {
 								currentLevel.getPlayer().setxGrid(0);
 								currentLevel.getPlayer().setyGrid(positionY);
 								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("right");
 							} else {
 								if (currentLevel.getPlayer().getxGrid() != 20
 										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() + 1][currentLevel
 												.getPlayer().getyGrid()].isBlocked()) {
 									currentLevel.getPlayer().moveX(1);
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -196,11 +200,13 @@ public class GameRunner {
 								currentLevel.getPlayer().setyGrid(20);
 								currentLevel.getPlayer().setxGrid(positionX);
 								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("up");
 							} else {
 								if (currentLevel.getPlayer().getyGrid() != 0 && !currentLevel.getGrid()[currentLevel
 										.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid() - 1].isBlocked()) {
 									currentLevel.getPlayer().moveY(-1);
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -227,11 +233,13 @@ public class GameRunner {
 								currentLevel.getPlayer().setyGrid(0);
 								currentLevel.getPlayer().setxGrid(positionX);
 								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("down");
 							} else {
 								if (currentLevel.getPlayer().getyGrid() != 20 && !currentLevel.getGrid()[currentLevel
 										.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid() + 1].isBlocked()) {
 									currentLevel.getPlayer().moveY(1);
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -248,36 +256,44 @@ public class GameRunner {
 						}
 					}
 				});
-				out.put("close textbox", new AbstractAction() {
-					public void actionPerformed(ActionEvent arg0) {
-						if (!gameTimer.isRunning()) {
-							gameTimer.start();
-							textBoxTimer.stop();
-						}
-					}
-				});
 				/// Added 5/7
 				out.put("inventory", new AbstractAction() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						if (gameTimer.isRunning()) {
+						boolean wasInCombat = false;
+						if (gameTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
 							gameTimer.stop();
 							ib.setBounds(20, 360, 800, 450);
 							inventoryBoxTimer.start();
-						} else {
-							inventoryBoxTimer.stop();
-							gameTimer.start();
-
 						}
-						out.put("use", new AbstractAction() {
-							@Override
-							public void actionPerformed(ActionEvent arg0) {
-								currentLevel.getPlayer().getInventory().get(ib.getArrayPostion())
-										.use(currentLevel.getPlayer());
-								currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
-
+						else if(combBoxTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
+							wasInCombat = true;
+							combBoxTimer.stop();
+							ib.setBounds(20, 360, 800, 450);
+							inventoryBoxTimer.start();
+						}
+						else {
+							inventoryBoxTimer.stop();
+							if(wasInCombat) {
+								gameTimer.stop();
+								combBoxTimer.start();
 							}
-						});
+							else {
+								gameTimer.start();
+							}
+						}
+					}
+				});
+				out.put("close textbox", new AbstractAction() {
+					public void actionPerformed(ActionEvent arg0) {
+						if (!gameTimer.isRunning() && textBoxTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
+							gameTimer.start();
+							textBoxTimer.stop();
+						}
+						if (!gameTimer.isRunning() && combBoxTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
+							gameTimer.start();
+							combBoxTimer.stop();
+						}
 					}
 				});
 				////////////////////////
@@ -287,12 +303,14 @@ public class GameRunner {
 				//////// Combat System/////////
 				out.put("use", new AbstractAction() {
 					public void actionPerformed(ActionEvent arg0) {
+						if(inventoryBoxTimer.isRunning()) {
+							currentLevel.getPlayer().getInventory().get(ib.getArrayPostion()).use(currentLevel.getPlayer());
+							currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
+						}
 						if (!gameTimer.isRunning() && combBoxTimer.isRunning()) {
-							Enemy e = currentLevel.getEnemyManager().getList()
-									.get(currentLevel.getEnemyManager().getEnemyIndex());
+							Enemy e = currentLevel.getEnemyManager().getList().get(currentLevel.getEnemyManager().getEnemyIndex());
 							// amount of total damage player deals
-							int totalAttack = currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion())
-									.getStrength() + currentLevel.getPlayer().getStrength();
+							int totalAttack = currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion()).getStrength() + currentLevel.getPlayer().getStrength();
 
 							// player attacks with chosen attack
 							e.changeHealth(-1 * totalAttack);
@@ -310,23 +328,16 @@ public class GameRunner {
 								currentLevel.getPlayer().setExp(currentLevel.getPlayer().getExp() + 5);
 								currentLevel.getPlayer().setGold(currentLevel.getPlayer().getGold() + e.getGold());
 								// resume game
-								out.put("close textbox", new AbstractAction() {
-									public void actionPerformed(ActionEvent arg0) {
-										if (!gameTimer.isRunning()) {
-											gameTimer.start();
-											combBoxTimer.stop();
-										}
-									}
-								});
 
 								// if player levels up
 								if (currentLevel.getPlayer().ifNextLevel()) {
-									currentLevel.getPlayer().levelUp();
-									gameTimer.stop();
-									tb.setBounds(20, 660, 800, 150);
-									tb.setText("You are now level " + currentLevel.getPlayer().getLevel() + "!");
-									textBoxTimer.start();
-								}
+                                    currentLevel.getPlayer().levelUp();
+                                    gameTimer.stop();
+                                    combBoxTimer.stop();
+                                    tb.setBounds(20, 660, 800, 150);
+                                    tb.setText("You are now level " + currentLevel.getPlayer().getLevel() + "!");
+                                    //textBoxTimer.start();
+                                }
 							} else {
 
 								int enemyAttack = e.getStrength();

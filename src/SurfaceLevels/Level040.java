@@ -2,8 +2,8 @@ package SurfaceLevels;
 
 import Levels.LevelCreator;
 
-public class Level020  extends LevelCreator{
-	public Level020(){
+public class Level040 extends LevelCreator{
+	public Level040() {
 		setImage("Images\\grass.png");
 	}
 }

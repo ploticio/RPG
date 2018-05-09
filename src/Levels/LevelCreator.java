@@ -59,8 +59,8 @@ public class LevelCreator {
 		grid[x][y].setBlocked(b);
 	}
 	
-	public void setLevelChanger(int x, int y, boolean b) {
-		grid[x][y].setLevelChanger(b);
+	public void setChanger(int x, int y, int n) {
+		grid[x][y].setChanger(n);
 	}
 	
 	public void setBlocked(int x, int y, boolean b) {

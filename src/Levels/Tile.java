@@ -15,7 +15,7 @@ public class Tile {
 	// PROPERTIES
 	private boolean blocked = false;
 	private boolean hasEntity = false;
-	private boolean levelChanger = false;
+	private int changer = 0;
 
 	public Tile() {
 		// default constructor
@@ -46,30 +46,30 @@ public class Tile {
 		}
 
 	}
-
+	
 	// PROPERTIES
 	public boolean isBlocked() {
 		return blocked;
 	}
-
+	
 	public void setBlocked(boolean b) {
 		blocked = b;
 	}
-
+	
 	public void setHasEntity(boolean b) {
 		hasEntity = b;
 	}
-
+	
 	public boolean hasEntity() {
 		return hasEntity;
 	}
-
-	public void setLevelChanger(boolean b) {
-		levelChanger = b;
+	
+	public void setChanger(int n) {
+		changer = n;
 	}
-
-	public boolean isLevelChanger() {
-		return levelChanger;
+	
+	public int getChanger() {
+		return changer;
 	}
-
+	
 }
