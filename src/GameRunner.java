@@ -47,28 +47,26 @@ public class GameRunner {
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				window.setLocationRelativeTo(null);
 				window.setVisible(true);
-				
-				/////////////////INITIALIZATION///////////////////////
+
+				///////////////// INITIALIZATION///////////////////////
 				TextBox tb = new TextBox();
-				
+
 				WorldGrid wg = new WorldGrid();
 				LevelCreator[][][] worldGrid = wg.getWorldGrid();
 				currentLevel = worldGrid[lX][lY][lZ];
 				GraphicsMaker g = new GraphicsMaker(currentLevel);
 				InventoryBox ib = new InventoryBox(currentLevel.getPlayer());
-				
+				CombatBox cb = new CombatBox(currentLevel.getPlayer());
+
 				window.add(g);
 				window.add(ib);
 				window.add(tb);
-				
+				window.add(cb);
+
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addItems(new Potion());
-				
-				
-				
-				
-				
+
 				/////////////////// TIMERS////////////////////////////
 				Timer gameTimer = new Timer(GAME_REFRESH, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -85,6 +83,11 @@ public class GameRunner {
 						ib.update();
 					}
 				});
+				Timer combBoxTimer = new Timer(GAME_REFRESH, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						cb.update();
+					}
+				});
 				Timer playerTimer = new Timer(PLAYER_DELAY, new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						debounce = false;
@@ -93,10 +96,11 @@ public class GameRunner {
 							if (currentLevel.getPlayer().getxGrid() == e.getxGrid()
 									&& currentLevel.getPlayer().getyGrid() == e.getyGrid()) {
 								gameTimer.stop();
-								tb.setBounds(20,660,800,150);
-								tb.setText("You've been attacked by " + e.toString() + "!");
-								textBoxTimer.start();
-								break;
+								currentLevel.getEnemyManager().setEnemyIndex(i);
+								cb.setBounds(20, 660, 800, 150);
+								cb.setTextMain("You've been attacked by " + e.toString() + "!");
+								cb.setTextSub(" ");
+								combBoxTimer.start();
 							}
 						}
 					}
@@ -132,6 +136,7 @@ public class GameRunner {
 				in.put(KeyStroke.getKeyStroke("S"), "down");
 				in.put(KeyStroke.getKeyStroke("E"), "close textbox");
 				in.put(KeyStroke.getKeyStroke("I"), "inventory");
+				in.put(KeyStroke.getKeyStroke("F"), "use");
 				ActionMap out = g.getActionMap();
 				out.put("left", new AbstractAction() {
 					public void actionPerformed(ActionEvent arg0) {
@@ -199,9 +204,14 @@ public class GameRunner {
 								}
 							}
 						}
-						if (!gameTimer.isRunning() && ib.getArrayPostion() > 0) {
+						if (inventoryBoxTimer.isRunning() && !gameTimer.isRunning() && ib.getArrayPostion() > 0) {
 							ib.setArrowPos(1);
 							// System.out.println(ib.getArrayPostion());
+						}
+						///
+						if (combBoxTimer.isRunning() && !gameTimer.isRunning() && cb.getArrayPostion() > 0) {
+							cb.setArrowPos(1);
+							// System.out.println(cb.getArrayPostion());
 						}
 					}
 				});
@@ -225,9 +235,16 @@ public class GameRunner {
 								}
 							}
 						}
-						if (!gameTimer.isRunning() && ib.getArrayPostion() < ib.getPlayer().getInventory().size() - 1) {
+						if (inventoryBoxTimer.isRunning() && !gameTimer.isRunning()
+								&& ib.getArrayPostion() < ib.getPlayer().getInventory().size() - 1) {
 							ib.setArrowPos(-1);
 							// System.out.println(ib.getArrayPostion());
+						}
+						///
+						if (combBoxTimer.isRunning() && !gameTimer.isRunning()
+								&& cb.getArrayPostion() < cb.getPlayer().getAttacks().size() - 1) {
+							cb.setArrowPos(-1);
+							// System.out.println(cb.getArrayPostion());
 						}
 					}
 				});
@@ -250,20 +267,87 @@ public class GameRunner {
 						} else {
 							inventoryBoxTimer.stop();
 							gameTimer.start();
-							
+
 						}
-						in.put(KeyStroke.getKeyStroke("F"), "use");
 						out.put("use", new AbstractAction() {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
-									currentLevel.getPlayer().getInventory().get(ib.getArrayPostion()).use(currentLevel.getPlayer());
-									currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
-									
+								currentLevel.getPlayer().getInventory().get(ib.getArrayPostion())
+										.use(currentLevel.getPlayer());
+								currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
+
 							}
 						});
 					}
 				});
-				////////////////////////////////////////////////////////
+				////////////////////////
+
+				/// Added 5/8
+
+				//////// Combat System/////////
+				out.put("use", new AbstractAction() {
+					public void actionPerformed(ActionEvent arg0) {
+						if (!gameTimer.isRunning() && combBoxTimer.isRunning()) {
+							Enemy e = currentLevel.getEnemyManager().getList()
+									.get(currentLevel.getEnemyManager().getEnemyIndex());
+							// amount of total damage player deals
+							int totalAttack = currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion())
+									.getStrength() + currentLevel.getPlayer().getStrength();
+
+							// player attacks with chosen attack
+							e.changeHealth(-1 * totalAttack);
+
+							// print out player action
+							cb.setTextMain("Player uses "
+									+ currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion()).getName()
+									+ ", and deals " + totalAttack + " damage!");
+
+							// if enemy dies
+							if (e.getCurrentHP() <= 0) {
+								currentLevel.getEnemyManager().getList().remove(e);
+								cb.setTextMain(e.getName() + " has died and dropped " + e.getGold() + " gold.");
+								cb.setTextSub("You have gained " + 5 + " exp. Press 'E' to close.");
+								currentLevel.getPlayer().setExp(currentLevel.getPlayer().getExp() + 5);
+								currentLevel.getPlayer().setGold(currentLevel.getPlayer().getGold() + e.getGold());
+								// resume game
+								out.put("close textbox", new AbstractAction() {
+									public void actionPerformed(ActionEvent arg0) {
+										if (!gameTimer.isRunning()) {
+											gameTimer.start();
+											combBoxTimer.stop();
+										}
+									}
+								});
+
+								// if player levels up
+								if (currentLevel.getPlayer().ifNextLevel()) {
+									currentLevel.getPlayer().levelUp();
+									gameTimer.stop();
+									tb.setBounds(20, 660, 800, 150);
+									tb.setText("You are now level " + currentLevel.getPlayer().getLevel() + "!");
+									textBoxTimer.start();
+								}
+							} else {
+
+								int enemyAttack = e.getStrength();
+
+								// enemy attacks
+								currentLevel.getPlayer().changeHealth(-1 * enemyAttack);
+
+								// print out enemy action
+								cb.setTextSub(e.getName() + " attacks and deals " + enemyAttack + " damage!");
+
+								if (currentLevel.getPlayer().getCurrentHP() <= 0) {
+									//TODO: game over
+								}
+
+								// prints out enemy's current health after attack
+								// System.out.println(e.getCurrentHP());
+							}
+						}
+					}
+				});
+
 			}
 		});
 	}
