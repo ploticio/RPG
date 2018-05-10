@@ -143,7 +143,7 @@ public class GameRunner {
 						currentLevel.getPlayer().setCurrent("left");
 						if (!debounce && gameTimer.isRunning()) {
 							debounce = true;
-							if (currentLevel.getPlayer().getxGrid() == 0 && lY != 0) {
+							if (currentLevel.getPlayer().getxGrid() == 0 && lY != 0 && lZ != 2) {
 								int positionY = currentLevel.getPlayer().getyGrid();
 								lY -= 1;
 								currentLevel = worldGrid[lX][lY][lZ];
@@ -153,6 +153,15 @@ public class GameRunner {
 								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("left");
 							} 
+							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()-1][currentLevel.getPlayer().getyGrid()].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()-1][currentLevel.getPlayer().getyGrid()].getChanger();
+								currentLevel = worldGrid[lX][lY][lZ];
+								currentLevel.getPlayer().setyGrid(19);
+								currentLevel.getPlayer().setxGrid(10);
+								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								currentLevel.getPlayer().setCurrent("up");
+							}
 							else {
 								if (currentLevel.getPlayer().getxGrid() != 0
 										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() - 1][currentLevel.getPlayer().getyGrid()].isBlocked()) {
@@ -168,7 +177,7 @@ public class GameRunner {
 						currentLevel.getPlayer().setCurrent("right");
 						if (!debounce && gameTimer.isRunning()) {
 							debounce = true;
-							if (currentLevel.getPlayer().getxGrid() == 20 && lY != worldGrid.length - 1) {
+							if (currentLevel.getPlayer().getxGrid() == 20 && lY != worldGrid.length - 1 && lZ != 2) {
 								int positionY = currentLevel.getPlayer().getyGrid();
 								lY += 1;
 								currentLevel = worldGrid[lX][lY][lZ];
@@ -177,7 +186,17 @@ public class GameRunner {
 								g.changeLevel(currentLevel);
 								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("right");
-							} else {
+							} 
+							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()+1][currentLevel.getPlayer().getyGrid()].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()+1][currentLevel.getPlayer().getyGrid()].getChanger();
+								currentLevel = worldGrid[lX][lY][lZ];
+								currentLevel.getPlayer().setyGrid(19);
+								currentLevel.getPlayer().setxGrid(10);
+								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								currentLevel.getPlayer().setCurrent("up");
+							}
+							else {
 								if (currentLevel.getPlayer().getxGrid() != 20
 										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() + 1][currentLevel
 												.getPlayer().getyGrid()].isBlocked()) {
@@ -193,7 +212,7 @@ public class GameRunner {
 						currentLevel.getPlayer().setCurrent("up");
 						if (!debounce && gameTimer.isRunning()) {
 							debounce = true;
-							if (currentLevel.getPlayer().getyGrid() == 0 && lX != 0) {
+							if (currentLevel.getPlayer().getyGrid() == 0 && lX != 0 && lZ != 2) {
 								int positionX = currentLevel.getPlayer().getxGrid();
 								lX -= 1;
 								currentLevel = worldGrid[lX][lY][lZ];
@@ -202,7 +221,17 @@ public class GameRunner {
 								g.changeLevel(currentLevel);
 								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("up");
-							} else {
+							}
+							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()-1].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()-1].getChanger();
+								currentLevel = worldGrid[lX][lY][lZ];
+								currentLevel.getPlayer().setyGrid(19);
+								currentLevel.getPlayer().setxGrid(10);
+								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								currentLevel.getPlayer().setCurrent("up");
+							}
+							else {
 								if (currentLevel.getPlayer().getyGrid() != 0 && !currentLevel.getGrid()[currentLevel
 										.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid() - 1].isBlocked()) {
 									currentLevel.getPlayer().moveY(-1);
@@ -226,7 +255,7 @@ public class GameRunner {
 						currentLevel.getPlayer().setCurrent("down");
 						if (!debounce && gameTimer.isRunning()) {
 							debounce = true;
-							if (currentLevel.getPlayer().getyGrid() == 20 && lX != worldGrid[lX].length - 1) {
+							if (currentLevel.getPlayer().getyGrid() == 20 && lX != worldGrid[lX].length - 1 && lZ != 2) {
 								int positionX = currentLevel.getPlayer().getxGrid();
 								lX += 1;
 								currentLevel = worldGrid[lX][lY][lZ];
@@ -235,7 +264,17 @@ public class GameRunner {
 								g.changeLevel(currentLevel);
 								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
 								currentLevel.getPlayer().setCurrent("down");
-							} else {
+							} 
+							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()+1].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()+1].getChanger();
+								currentLevel = worldGrid[lX][lY][lZ];
+								currentLevel.getPlayer().setyGrid(19);
+								currentLevel.getPlayer().setxGrid(10);
+								g.changeLevel(currentLevel);
+								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								currentLevel.getPlayer().setCurrent("up");
+							}
+							else {
 								if (currentLevel.getPlayer().getyGrid() != 20 && !currentLevel.getGrid()[currentLevel
 										.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid() + 1].isBlocked()) {
 									currentLevel.getPlayer().moveY(1);

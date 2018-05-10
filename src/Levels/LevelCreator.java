@@ -104,6 +104,16 @@ public class LevelCreator {
 	}
 	
 	/**
+	 * 
+	 * @param x - x position of tile
+	 * @param y - y position of tile
+	 * @return changer property
+	 */
+	public int getChanger(int x, int y) {
+		return grid[x][y].getChanger();
+	}
+	
+	/**
 	 * Sets block property of one tile
 	 * @param x - x position of tile
 	 * @param y - y position of tile

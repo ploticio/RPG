@@ -1,5 +1,6 @@
 package Levels;
 
+import SpecialLevels.Shop222;
 import SurfaceLevels.*;
 
 public class WorldGrid {
@@ -36,6 +37,7 @@ public class WorldGrid {
 		worldGrid[4][2][0] = new Level420();
 		worldGrid[4][3][0] = new Level430();
 		worldGrid[4][4][0] = new Level440();
+		worldGrid[2][2][2] = new Shop222();
 		worldGrid[4][2][0].getPlayer().setxGrid(10);
 		worldGrid[4][2][0].getPlayer().setyGrid(17);
 	}
