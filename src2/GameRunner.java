@@ -58,8 +58,8 @@ public class GameRunner {
 				InventoryBox ib = new InventoryBox(currentLevel.getPlayer());
 				CombatBox cb = new CombatBox(currentLevel.getPlayer());
 				PauseScreen ps = new PauseScreen();
-				EquipmentBox eq = new EquipmentBox();
 				ArmorBox ab = new ArmorBox(currentLevel.getPlayer());
+				WeaponBox wb = new WeaponBox(currentLevel.getPlayer());
 
 				window.add(g);
 				window.add(ab);
@@ -67,14 +67,15 @@ public class GameRunner {
 				window.add(cb);
 				window.add(tb);
 				window.add(ps);
-				window.add(eq);
+				window.add(wb);
 
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addItems(new Potion());
 				currentLevel.getPlayer().addArmor(new WoodenArmor());
 				currentLevel.getPlayer().addArmor(new IronArmor());
-
+				currentLevel.getPlayer().addWeapon(new WoodenSword());
+				currentLevel.getPlayer().addWeapon(new IronSword());
 				/////////////////// TIMERS////////////////////////////
 				Timer gameTimer = new Timer(GAME_REFRESH, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -102,14 +103,14 @@ public class GameRunner {
 						ps.update();
 					}
 				});
-				Timer equipmentTimer = new Timer(GAME_REFRESH, new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						eq.update();
-					}
-				});
 				Timer armorTimer = new Timer(GAME_REFRESH, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ab.update();
+					}
+				});
+				Timer weaponTimer = new Timer(GAME_REFRESH, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						wb.update();
 					}
 				});
 				////////////////////////////////////////////////////////////
@@ -251,11 +252,11 @@ public class GameRunner {
 						if (pauseTimer.isRunning() && !gameTimer.isRunning() && ps.getArrayPostion() > 0) {
 							ps.setArrowPos(1);
 						}
-						if (equipmentTimer.isRunning() && !gameTimer.isRunning() && eq.getArrayPostion() > 0) {
-							eq.setArrowPos(1);
-						}
 						if (armorTimer.isRunning() && !gameTimer.isRunning() && ab.getArrayPostion() > 0) {
 							ab.setArrowPos(1);
+						}
+						if (weaponTimer.isRunning() && !gameTimer.isRunning() && wb.getArrayPostion() > 0) {
+							wb.setArrowPos(1);
 						}
 					}
 				});
@@ -294,15 +295,16 @@ public class GameRunner {
 							cb.setArrowPos(-1);
 							// System.out.println(cb.getArrayPostion());
 						}
-						if (pauseTimer.isRunning() && !gameTimer.isRunning() && ps.getArrayPostion() < 2) {
+						if (pauseTimer.isRunning() && !gameTimer.isRunning() && ps.getArrayPostion() < 3) {
 							ps.setArrowPos(-1);
 						}
-						if (equipmentTimer.isRunning() && !gameTimer.isRunning() && eq.getArrayPostion() < 1) {
-							eq.setArrowPos(-1);
-						}
 						if (armorTimer.isRunning() && !gameTimer.isRunning()
-								&& ab.getArrayPostion() < ab.getPlayer().getArmor().size()) {
+								&& ab.getArrayPostion() < ab.getPlayer().getArmor().size() - 1) {
 							ab.setArrowPos(-1);
+						}
+						if (weaponTimer.isRunning() && !gameTimer.isRunning()
+								&& wb.getArrayPostion() < wb.getPlayer().getWeapons().size() - 1) {
+							wb.setArrowPos(-1);
 						}
 					}
 				});
@@ -327,6 +329,7 @@ public class GameRunner {
 							gameTimer.start();
 							tb.setText("");
 							tb.setText2("");
+							tb.setText3("");
 							textBoxTimer.stop();
 						}
 						/*
@@ -349,17 +352,24 @@ public class GameRunner {
 							currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
 						}
 						if (armorTimer.isRunning()) {
-							int x = currentLevel.getPlayer().getArmor()
-									.indexOf(currentLevel.getPlayer().getEquipArmor());
-							if (currentLevel.getPlayer().getHasArmorEquiped()) {
-								currentLevel.getPlayer().getArmor().get(x).unequip();
-								currentLevel.getPlayer().getArmor().get(ab.getArrayPostion()).equip();
-							} else {
-								currentLevel.getPlayer().getArmor().get(ab.getArrayPostion()).equip();
-								currentLevel.getPlayer().setHasArmorEquiped(true);
+							for (int i = 0; i < currentLevel.getPlayer().getArmor().size(); i++) {
+								currentLevel.getPlayer().getArmor().get(i).unequip();
 							}
-
+							currentLevel.getPlayer().setMaxHP();
+							currentLevel.getPlayer().getArmor().get(ab.getArrayPostion()).equip();
+							currentLevel.getPlayer()
+									.setEquipedArmor(currentLevel.getPlayer().getArmor().get(ab.getArrayPostion()));
 						}
+						if (weaponTimer.isRunning()) {
+							for (int i = 0; i < currentLevel.getPlayer().getWeapons().size(); i++) {
+								currentLevel.getPlayer().getWeapons().get(i).unequip();
+							}
+							currentLevel.getPlayer().setStrength();
+							currentLevel.getPlayer().getWeapons().get(wb.getArrayPostion()).equip();
+							currentLevel.getPlayer()
+									.setEquipedWeapon(currentLevel.getPlayer().getWeapons().get(wb.getArrayPostion()));
+						}
+
 						if (pauseTimer.isRunning()) {
 							if (ps.getArrayPostion() == 0) {
 								pauseTimer.stop();
@@ -368,18 +378,22 @@ public class GameRunner {
 							}
 							if (ps.getArrayPostion() == 1) {
 								pauseTimer.stop();
-								eq.setBounds(20, 660, 800, 150);
-								equipmentTimer.start();
-							}
-							if (ps.getArrayPostion() == 2) {
-
-							}
-						}
-						if (equipmentTimer.isRunning()) {
-							if (ab.getArrayPostion() == 0) {
-								equipmentTimer.stop();
 								ab.setBounds(20, 360, 800, 450);
 								armorTimer.start();
+							}
+							if (ps.getArrayPostion() == 2) {
+								pauseTimer.stop();
+								wb.setBounds(20, 360, 800, 450);
+								weaponTimer.start();
+							}
+							if (ps.getArrayPostion() == 3) {
+								pauseTimer.stop();
+								tb.setBounds(20, 660, 800, 150);
+								tb.setText("Level: " + currentLevel.getPlayer().getLevel());
+								tb.setText2("Health: " + currentLevel.getPlayer().getCurrentHP() + "/"
+										+ currentLevel.getPlayer().getMaxHP());
+								tb.setText3("Strength: " + currentLevel.getPlayer().getStrength());
+								textBoxTimer.start();
 							}
 						}
 
@@ -449,31 +463,37 @@ public class GameRunner {
 					boolean isPaused = false;
 
 					public void actionPerformed(ActionEvent arg0) {
-						if (equipmentTimer.isRunning()) {
-							equipmentTimer.stop();
-							gameTimer.start();
-						} else if (gameTimer.isRunning() && !equipmentTimer.isRunning()) {
+						if (gameTimer.isRunning()) {
 							ps.setBounds(20, 660, 800, 150);
 							gameTimer.stop();
 							pauseTimer.start();
 							isPaused = true;
-						} else if (isPaused && inventoryBoxTimer.isRunning() && !equipmentTimer.isRunning()) {
+						} else if (textBoxTimer.isRunning()) {
+							textBoxTimer.stop();
+							tb.setText("");
+							tb.setText2("");
+							tb.setText3("");
+							gameTimer.start();
+						} else if (isPaused && inventoryBoxTimer.isRunning()) {
 							inventoryBoxTimer.stop();
 							gameTimer.start();
 							isPaused = false;
-						} else if (combBoxTimer.isRunning() && !isPaused && !equipmentTimer.isRunning()) {
+						} else if (combBoxTimer.isRunning() && !isPaused) {
 							wasInCombat = true;
 							isPaused = true;
 							combBoxTimer.stop();
 							ib.setBounds(20, 360, 800, 450);
 							inventoryBoxTimer.start();
-						} else if (wasInCombat && isPaused && !equipmentTimer.isRunning()) {
+						} else if (wasInCombat && isPaused) {
 							isPaused = false;
 							wasInCombat = false;
 							inventoryBoxTimer.stop();
 							combBoxTimer.start();
 						} else if (armorTimer.isRunning()) {
 							armorTimer.stop();
+							gameTimer.start();
+						} else if (weaponTimer.isRunning()) {
+							weaponTimer.stop();
 							gameTimer.start();
 						} else {
 							pauseTimer.stop();

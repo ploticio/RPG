@@ -148,6 +148,9 @@ public abstract class Entity {
 	 */
 	public void changeHP(int amount) {
 		currentHP = currentHP + amount;
+		if(currentHP > maxHP) {
+			currentHP = maxHP;
+		}
 	}
 
 	/**

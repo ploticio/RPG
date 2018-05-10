@@ -1,16 +1,16 @@
 package Items;
 
-public abstract class Armor implements Equipment {
+public abstract class Weapon implements Equipment {
 	private String name;
 	private String desc;
 	private int increase;
 	private boolean isEquiped;
 
-	public Armor() {
+	public Weapon() {
 		isEquiped = false;
 	}
 
-	public Armor(String name, String desc, int increase) {
+	public Weapon(String name, String desc, int increase) {
 		this.name = name;
 		this.desc = desc;
 		this.increase = increase;

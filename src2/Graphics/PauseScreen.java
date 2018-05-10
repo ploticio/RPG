@@ -53,8 +53,9 @@ public class PauseScreen extends JPanel {
 		g.drawImage(arrow, 10, getArrowPos(), 10, 10, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.drawString("Inventory", 25, 30);
-		g.drawString("Equipment", 25, 50);
-		g.drawString("Player Stats", 25, 70);
+		g.drawString("Armor", 25, 50);
+		g.drawString("Weapons", 25, 70);
+		g.drawString("Stats", 25, 90);
 
 	}
 }

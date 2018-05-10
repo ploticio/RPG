@@ -1,6 +1,7 @@
 package Entities;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,14 +17,17 @@ public class Player extends Entity {
 	private int gold;
 	private int level;
 	private int exp;
-	private int unmodifiedHP;
-	private int modifiedHP;
+	private int trueHP;// hp before armor is added
+	private int trueStrength;
 	private Armor equipedArmor;
 	private NoArmor na = new NoArmor();
+	private Weapon equipedWeapon;
+	private NoWeapon nw = new NoWeapon();
 
 	ArrayList<Item> inventory = new ArrayList<Item>();
 	ArrayList<Attack> attacks = new ArrayList<Attack>();
 	ArrayList<Armor> armor = new ArrayList<Armor>();
+	ArrayList<Weapon> weapon = new ArrayList<Weapon>();
 
 	private int requiredEXP; // amount of exp need to level up
 
@@ -32,12 +36,15 @@ public class Player extends Entity {
 	BufferedImage left;
 	BufferedImage right;
 	BufferedImage current;
+	BufferedImage statBoxImage;
 
 	public Player() {
 		requiredEXP = 3;
-		unmodifiedHP = 20;
-		super.setMaxHP(20);
+		trueHP = 20;
+		trueStrength = 5;
+		super.setCurrentHP(20);
 		equipedArmor = na;
+		equipedWeapon = nw;
 		try {
 			fillAttacks();
 			up = ImageIO.read(new File("Images\\boiBack.png"));
@@ -60,6 +67,7 @@ public class Player extends Entity {
 
 		// movement and graphics
 		try {
+			statBoxImage = ImageIO.read(new File("Images\\boiStat.png"));
 			up = ImageIO.read(new File("Images\\boiBack.png"));
 			down = ImageIO.read(new File("Images\\boiFront.png"));
 			left = ImageIO.read(new File("Images\\boiLeft.png"));
@@ -90,13 +98,19 @@ public class Player extends Entity {
 	}
 
 	public void draw(Graphics g) {
+		g.drawImage(statBoxImage, 5, 5, 70, 70, null);
+		g.setFont(new Font("Arial", Font.BOLD, 16));
+		g.drawString("Player", 80, 24);
+		g.drawString("Health: " + getCurrentHP() + "/" + getMaxHP(), 80, 44);
+		g.drawString("Level: " + getLevel(), 80, 64);
+		g.drawString("EXP: " + getExp() + "/" + getRequiredEXP(), 80, 84);
 		g.drawImage(current, xPos, yPos, null);
 	}
 
 	//////// Character Stats and levels////////////
 	public void levelUp() {
-		super.setMaxHP(super.getMaxHP() + 1);
-		super.setStrength(super.getStrength() + 1);
+		trueHP++;
+		trueStrength++;
 		requiredEXP += (level * 2);
 		level++;
 		exp = exp % requiredEXP;
@@ -113,8 +127,6 @@ public class Player extends Entity {
 			return false;
 		}
 	}
-	
-	
 
 	/////////// getters and setters///////////
 	public void changeHealth(int x) {
@@ -145,12 +157,34 @@ public class Player extends Entity {
 		armor.add(a);
 	}
 
+	public void addWeapon(Weapon w) {
+		weapon.add(w);
+	}
+
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
 
 	public ArrayList<Attack> getAttacks() {
 		return attacks;
+	}
+
+
+	///////// HP STUFF///////////////
+	public int getTrueHP() {
+		return trueHP;
+	}
+
+	public void setMaxHP() {
+		super.setMaxHP(trueHP + equipedArmor.getIncrease());
+	}
+
+	public int getMaxHP() {
+		return equipedArmor.getIncrease() + trueHP;
+	}
+
+	public Armor getEquipedArmor() {
+		return equipedArmor;
 	}
 
 	public void setEquipedArmor(Armor a) {
@@ -161,10 +195,32 @@ public class Player extends Entity {
 		return armor;
 	}
 
-	public Armor getEquipArmor() {
-		return equipedArmor;
+	////////// STRENGTH STUFF///////////
+	public void setEquipedWeapon(Weapon w) {
+		equipedWeapon = w;
 	}
 
+	public Weapon getEquipedWeapon() {
+		return equipedWeapon;
+	}
+
+	public int getTrueStrength() {
+		return trueStrength;
+	}
+
+	public void setStrength() {
+		super.setStrength(trueStrength + equipedWeapon.getIncrease());
+	}
+
+	public int getStrength() {
+		return trueStrength + equipedWeapon.getIncrease();
+	}
+
+	public ArrayList<Weapon> getWeapons() {
+		return weapon;
+	}
+
+	/////
 	/*
 	 * public ArrayList getInventory() { return inventory; }
 	 * 
