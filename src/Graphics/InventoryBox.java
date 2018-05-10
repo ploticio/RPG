@@ -54,7 +54,8 @@ public class InventoryBox extends JPanel {
 	}
 	
 	/**
-	 * Gets arrow position in the window
+	 * Gets array position in the window
+	 * @return arrowPos - position of arrow
 	 */
 	public int getArrayPostion() {
 		return arrowPos;

@@ -25,6 +25,11 @@ public class CombatBox extends JPanel {
 	String s1 = "";
 	String s2 = "";
 
+	/**
+	 * Loaded Constructor - initializes combBoxImage and arrow to images 
+	 * and initializes player entity
+	 * @param p - 
+	 */
 	public CombatBox(Player p) {
 		this.p = p;
 		try {
@@ -35,34 +40,64 @@ public class CombatBox extends JPanel {
 		}
 	}
 
+	/**
+	 * Gets arrow position in the window
+	 * @return arrow's position
+	 */
 	public int getArrowPos() {
 		return 40 + arrowPos * 25;
 	}
 
+	/**
+	 * Sets arrow position in the window
+	 * @return x - arrow's new position
+	 */
 	public void setArrowPos(int x) {
 		arrowPos -= x;
 	}
 
+	/**
+	 * Gets array position in the window
+	 * @return arrowPos - position of arrow
+	 */
 	public int getArrayPostion() {
 		return arrowPos;
 	}
 
+	/**
+	 * Gets the player entity
+	 * @return p - player entity
+	 */
 	public Player getPlayer() {
 		return p;
 	}
 
+	/**
+	 * Updates graphics
+	 */
 	public void update() {
 		repaint();
 	}
 
+	/**
+	 * Sets primary text
+	 * @param s - new primary text
+	 */
 	public void setTextMain(String s) {
 		this.s1 = s;
 	}
 	
+	/**
+	 * Sets secondary text
+	 * @param s - new secondary text
+	 */
 	public void setTextSub(String s) {
 		this.s2 = s;
 	}
 
+	/**
+	 * Renders combat box in the window
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage(combBoxImage, 0, 0, 800, 150, null);
 		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);
