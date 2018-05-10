@@ -17,5 +17,13 @@ public class Level400 extends LevelCreator{
 			setImage(j,19,"Images\\sand.png", false);
 			setImage(j,18,"Images\\sandToGrassN.png", false);
 		}
+		for(int k = 0; k < 21; k++) {
+			setImage(k, 0, "Images\\bushHo.png", true);
+		}
+		for(int k = 0; k < 18; k++) {
+			setImage(0, k, "Images\\bushVe.png",true);
+		}
+		setImage(0,19,"Images\\rockOnSand.png",true);
+		setImage(0,18,"Images\\bushEnd.png",true);
 	}
 }

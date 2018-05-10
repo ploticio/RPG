@@ -13,7 +13,9 @@ public class Level420 extends LevelCreator{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private EnemyManager em = new EnemyManager(enemies,3,5);
 	
+	
 	public Level420(){
+		//no enemy
 		setImage("Images\\grass.png");
 		for(int i = 0; i < 2; i++) {
 			setImage(r.nextInt(8), r.nextInt(18), "Images\\bush.png", true);
@@ -36,6 +38,13 @@ public class Level420 extends LevelCreator{
 		setImage(9,14, "Images\\dirtToGrassSW.png", false);
 		setImage(10,14, "Images\\dirtToGrassS.png", false);
 		setImage(11,14, "Images\\dirtToGrassSE.png", false);
+		
+		for(int k = 0; k < 8; k++) {
+			setImage(k, 0, "Images\\bushHo.png", true);
+		}
+		for(int k = 13; k < 21; k++) {
+			setImage(k, 0, "Images\\bushHo.png", true);
+		}
 	}
 	
 	public EnemyManager getEnemyManager() {
