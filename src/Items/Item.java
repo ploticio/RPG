@@ -5,52 +5,59 @@ public abstract class Item {
 	private String name;
 	private String desc;
 	
+	/**
+	 * Default Constructor - creates item object
+	 */
 	public Item() {
 		
 	}
+	
+	/**
+	 * Loaded Constructor - initializes name and description
+	 * @param name - name of item
+	 * @param desc - description of item
+	 */
 	public Item(String name, String desc) {
 		this.name = name;
 		this.name = desc;
 	}
 
 	/**
-	 * getters method
-	 * 
-	 * @return - name
+	 * Gets name of item
+	 * @return name - item name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * setters method
-	 * 
-	 * @param n
-	 *            - given name
+	 * Sets name of item
+	 * @param n - name of item
 	 */
 	public void setName(String n) {
 		this.name = n;
 	}
-
+	
 	/**
-	 * getters method
-	 * 
-	 * @return - description
+	 * Gets description of item
+	 * @return desc - description of item
 	 */
 	public String getDesc() {
 		return desc;
 	}
 
 	/**
-	 * setters method
-	 * 
-	 * @param n
-	 *            - given description
+	 * Sets description of item
+	 * @param d - description of item
 	 */
+	
 	public void setDesc(String d) {
 		this.name = d;
 	}
 
+	/**
+	 * Formats item's name and description as a string
+	 */
 	public String toString() {
 		return "name: \n" + name + "\ndesc: \n" + desc;
 	}
