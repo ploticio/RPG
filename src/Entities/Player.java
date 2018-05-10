@@ -1,6 +1,7 @@
 package Entities;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,6 +28,7 @@ public class Player extends Entity {
 	BufferedImage left;
 	BufferedImage right;
 	BufferedImage current;
+	BufferedImage statBoxImage;
 
 	/**
 	 * Default Constructor - initializes player sprites and sets the current direction to down
@@ -34,6 +36,7 @@ public class Player extends Entity {
 	public Player() {
 		try {
 			fillAttacks();
+			statBoxImage = ImageIO.read(new File("Images\\boiStat.png"));
 			up = ImageIO.read(new File("Images\\boiBack.png"));
 			down = ImageIO.read(new File("Images\\boiFront.png"));
 			left = ImageIO.read(new File("Images\\boiLeft.png"));
@@ -61,6 +64,7 @@ public class Player extends Entity {
 
 		// movement and graphics
 		try {
+			statBoxImage = ImageIO.read(new File("Images\\boiStat.png"));
 			up = ImageIO.read(new File("Images\\boiBack.png"));
 			down = ImageIO.read(new File("Images\\boiFront.png"));
 			left = ImageIO.read(new File("Images\\boiLeft.png"));
@@ -102,6 +106,12 @@ public class Player extends Entity {
 	 * @param g - graphics drawer
 	 */
 	public void draw(Graphics g) {
+		g.drawImage(statBoxImage, 5,5, 70, 70, null);
+		g.setFont(new Font("Arial", Font.BOLD, 16));
+		g.drawString("Player", 80, 24);
+		g.drawString("Health: " + getCurrentHP() + "/" + getMaxHP(), 80, 44);
+		g.drawString("Level: " + getLevel(), 80, 64);
+		g.drawString("EXP: " + getExp() + "/" + getRequiredEXP(), 80, 84);
 		g.drawImage(current, xPos, yPos, null);
 	}
 
@@ -229,4 +239,11 @@ public class Player extends Entity {
 	 * + "]"; }
 	 */
 
+	
+	
+	
+	
+	
+	
+	
 }

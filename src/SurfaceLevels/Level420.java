@@ -11,7 +11,7 @@ import Managers.EnemyManager;
 public class Level420 extends LevelCreator{
 	private Random r = new Random();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	private EnemyManager em;
+	private EnemyManager em = new EnemyManager(enemies,3,5);
 	
 	public Level420(){
 		setImage("Images\\grass.png");
@@ -29,16 +29,13 @@ public class Level420 extends LevelCreator{
 			setImage(11,i,"Images\\dirtToGrassE.png", false);
 		}
 		for(int j = 0; j<21; j++) {
-			setImage(j,20,"Images\\water.png", true);
-			setImage(j,19,"Images\\waterToSand.png", true);
-			setImage(j,18,"Images\\sand.png", true);
+			setImage(j,20,"Images\\waterToSand.png", true);
+			setImage(j,19,"Images\\sand.png", false);
+			setImage(j,18,"Images\\sandToGrassN.png", false);
 		}
 		setImage(9,14, "Images\\dirtToGrassSW.png", false);
 		setImage(10,14, "Images\\dirtToGrassS.png", false);
 		setImage(11,14, "Images\\dirtToGrassSE.png", false);
-		
-		enemies.add(new Blob(9,9));
-		em = new EnemyManager(enemies);
 	}
 	
 	public EnemyManager getEnemyManager() {

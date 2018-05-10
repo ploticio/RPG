@@ -13,9 +13,9 @@ public class Level430 extends LevelCreator{
 			setImage(r.nextInt(21), r.nextInt(21), "Images\\rockOnGrass.png", true);
 		}
 		for(int j = 0; j<21; j++) {
-			setImage(j,20,"Images\\water.png", true);
-			setImage(j,19,"Images\\water.png", true);
-			setImage(j,18,"Images\\waterToGrassN.png", true);
+			setImage(j,20,"Images\\waterToSand.png", true);
+			setImage(j,19,"Images\\sand.png", false);
+			setImage(j,18,"Images\\sandToGrassN.png", false);
 		}
 	}
 }
