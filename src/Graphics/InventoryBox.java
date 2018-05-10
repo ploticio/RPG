@@ -23,6 +23,10 @@ public class InventoryBox extends JPanel {
 	private BufferedImage arrow;
 	Player p;
 
+	/**
+	 * Loaded Constructor - initializes arrow and invenBoxImage to images
+	 * @param p - player entity
+	 */
 	public InventoryBox(Player p) {
 		this.p = p;
 		try {
@@ -33,26 +37,47 @@ public class InventoryBox extends JPanel {
 		}
 	}
 
+	/**
+	 * Gets arrow position in the window
+	 * @return arrow's position
+	 */
 	public int getArrowPos() {
 		return 40 + arrowPos * 20;
 	}
 
+	/**
+	 * Sets arrow position in the window
+	 * @return x - arrow's new position
+	 */
 	public void setArrowPos(int x) {
 		arrowPos -= x;
 	}
 	
+	/**
+	 * Gets arrow position in the window
+	 */
 	public int getArrayPostion() {
 		return arrowPos;
 	}
 	
+	/**
+	 * Gets the player entity
+	 * @return p - player entity
+	 */
 	public Player getPlayer() {
 		return p;
 	}
 	
+	/**
+	 * Updates graphics
+	 */
 	public void update() {
 		repaint();
 	}
 	
+	/**
+	 * Renders inventory box in the window
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage(invenBoxImage, 0,0, 800, 450, null);
 		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);

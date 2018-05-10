@@ -23,6 +23,9 @@ public class TextBox extends JPanel{
 	private BufferedImage textBoxImage;
 	private Font customFont;
 	
+	/**
+	 * Default Constructor - initializes textBoxImage to image
+	 */
 	public TextBox() {
 		try {
 			textBoxImage = ImageIO.read(new File("Images\\textBox.png"));
@@ -33,19 +36,34 @@ public class TextBox extends JPanel{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Loaded Constructor - initializes s to text content
+	 * @param s - text in text box as string
+	 */
 	public TextBox(String s) {
 		this();
 		this.s = s;
 	}
 	
+	/**
+	 * Sets text for text box
+	 * @param s - text content
+	 */
 	public void setText(String s) {
 		this.s = s;
 	}
 	
+	/**
+	 * Updates graphics
+	 */
 	public void update() {
 		repaint();
 	}
 	
+	/**
+	 * Renders text box in the window
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage(textBoxImage, 0, 0, 800, 150, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));

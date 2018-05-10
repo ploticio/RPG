@@ -31,12 +31,9 @@ public class GraphicsMaker extends JPanel {
 	private ArrayList<Enemy> enemyList;
 
 	/**
-	 * Renders a level without any enemies
-	 * 
-	 * @param l
-	 *            - level to be rendered
-	 * @param p
-	 *            - player object to be placed
+	 * Loaded Constructor - Renders a level without any enemies
+	 * @param l - level to be rendered
+	 * @param p - player object to be placed
 	 */
 
 	public GraphicsMaker(LevelCreator l) {
@@ -51,6 +48,10 @@ public class GraphicsMaker extends JPanel {
 		setSize(840, 840);
 	}
 	
+	/**
+	 * Loads new level
+	 * @param l - new level
+	 */
 	public void changeLevel(LevelCreator l) {
 		p = l.getPlayer();
 		this.l = l;
@@ -62,10 +63,17 @@ public class GraphicsMaker extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates graphics
+	 */
 	public void update() {
 		repaint();
 	}
 
+	/**
+	 * Renders new graphic
+	 * @param g - graphic drawer
+	 */
 	public void paintComponent(Graphics g) {
 		l.makeLevel(g);
 		if (em != null)
