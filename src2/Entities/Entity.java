@@ -147,9 +147,9 @@ public abstract class Entity {
 	 * @param amount - number that health is changed
 	 */
 	public void changeHP(int amount) {
-		currentHP = currentHP + amount;
-		if(currentHP > maxHP) {
-			currentHP = maxHP;
+		setCurrentHP(getCurrentHP() + amount);
+		if(getCurrentHP() > getMaxHP()) {
+			setCurrentHP(getMaxHP());
 		}
 	}
 

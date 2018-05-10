@@ -326,6 +326,9 @@ public class GameRunner {
 				 * } } });
 				 */
 				out.put("close textbox", new AbstractAction() {
+					boolean wasInCombat = false;
+					boolean isPaused = false;
+
 					public void actionPerformed(ActionEvent arg0) {
 						if (!gameTimer.isRunning() && textBoxTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
 							gameTimer.start();
@@ -333,7 +336,50 @@ public class GameRunner {
 							tb.setText2("");
 							tb.setText3("");
 							textBoxTimer.stop();
+						} else if (wasInCombat && isPaused) {
+							ib.setBounds(800, 800, 800, 800);
+							isPaused = false;
+							wasInCombat = false;
+							combBoxTimer.start();
+							inventoryBoxTimer.stop();
+						} else if (gameTimer.isRunning()) {
+							ps.setBounds(20, 660, 800, 150);
+							gameTimer.stop();
+							pauseTimer.start();
+							inventoryBoxTimer.stop();
+							isPaused = true;
+						} else if (textBoxTimer.isRunning()) {
+							textBoxTimer.stop();
+							tb.setText("");
+							tb.setText2("");
+							tb.setText3("");
+							gameTimer.start();
+							inventoryBoxTimer.stop();
+						} else if (isPaused && inventoryBoxTimer.isRunning()) {
+							inventoryBoxTimer.stop();
+							gameTimer.start();
+							isPaused = false;
+						} else if (combBoxTimer.isRunning() && !isPaused) {
+							wasInCombat = true;
+							isPaused = true;
+							combBoxTimer.stop();
+							ib.setBounds(20, 360, 800, 450);
+							inventoryBoxTimer.start();
+						} else if (armorTimer.isRunning()) {
+							armorTimer.stop();
+							gameTimer.start();
+							isPaused = false;
+						} else if (weaponTimer.isRunning()) {
+							weaponTimer.stop();
+							gameTimer.start();
+							isPaused = false;
+						} else {
+							pauseTimer.stop();
+							gameTimer.start();
+							wasInCombat = false;
+							isPaused = false;
 						}
+
 						/*
 						 * if (!gameTimer.isRunning() && combBoxTimer.isRunning() &&
 						 * !inventoryBoxTimer.isRunning()) { gameTimer.start(); combBoxTimer.stop(); }
@@ -414,6 +460,16 @@ public class GameRunner {
 								currentLevel.getEnemyManager().getList().remove(e);
 								combBoxTimer.stop();
 								tb.setBounds(20, 660, 800, 150);
+								// if player levels up
+								if (p.ifNextLevel()) {
+									p.levelUp();
+									gameTimer.stop();
+									combBoxTimer.stop();
+									tb.setBounds(20, 660, 800, 150);
+									tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
+									tb.setText2("You are now level " + p.getLevel() + "!");
+									// textBoxTimer.start();
+								}
 
 								tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
 								textBoxTimer.start();
@@ -422,16 +478,6 @@ public class GameRunner {
 								p.setGold(currentLevel.getPlayer().getGold() + e.getGold());
 								// resume game
 
-								// if player levels up
-								if (p.ifNextLevel()) {
-									p.levelUp();
-									gameTimer.stop();
-									combBoxTimer.stop();
-									tb.setBounds(20, 660, 800, 150);
-									tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
-									tb.setText2("You are now level " + currentLevel.getPlayer().getLevel() + "!");
-									// textBoxTimer.start();
-								}
 							} else {
 
 								int enemyAttack = e.getStrength();
@@ -452,55 +498,32 @@ public class GameRunner {
 						}
 					}
 				});
-				/////////////////////////// PAUSING//////////////////////////
+				/////////////////////////// PAUSING//////////////////////////THIS WAS ALL ADDED
+				/////////////////////////// IN TO 'E'
 				//// made 5/9
-				out.put("pause", new AbstractAction() {
-					boolean wasInCombat = false;
-					boolean isPaused = false;
-
-					public void actionPerformed(ActionEvent arg0) {
-						if (gameTimer.isRunning()) {
-							ps.setBounds(20, 660, 800, 150);
-							gameTimer.stop();
-							pauseTimer.start();
-							isPaused = true;
-						} else if (textBoxTimer.isRunning()) {
-							textBoxTimer.stop();
-							tb.setText("");
-							tb.setText2("");
-							tb.setText3("");
-							gameTimer.start();
-						} else if (isPaused && inventoryBoxTimer.isRunning()) {
-							inventoryBoxTimer.stop();
-							gameTimer.start();
-							isPaused = false;
-						} else if (combBoxTimer.isRunning() && !isPaused) {
-							wasInCombat = true;
-							isPaused = true;
-							combBoxTimer.stop();
-							ib.setBounds(20, 360, 800, 450);
-							inventoryBoxTimer.start();
-						} else if (wasInCombat && isPaused) {
-							isPaused = false;
-							wasInCombat = false;
-							inventoryBoxTimer.stop();
-							combBoxTimer.start();
-						} else if (armorTimer.isRunning()) {
-							armorTimer.stop();
-							gameTimer.start();
-						} else if (weaponTimer.isRunning()) {
-							weaponTimer.stop();
-							gameTimer.start();
-						} else {
-							pauseTimer.stop();
-							gameTimer.start();
-							wasInCombat = false;
-							isPaused = false;
-						}
-
-					}
-
-				});
+				/*
+				 * out.put("pause", new AbstractAction() { boolean wasInCombat = false; boolean
+				 * isPaused = false;
+				 * 
+				 * public void actionPerformed(ActionEvent arg0) { if (gameTimer.isRunning()) {
+				 * ps.setBounds(20, 660, 800, 150); gameTimer.stop(); pauseTimer.start();
+				 * isPaused = true; } else if (textBoxTimer.isRunning()) { textBoxTimer.stop();
+				 * tb.setText(""); tb.setText2(""); tb.setText3(""); gameTimer.start(); } else
+				 * if (isPaused && inventoryBoxTimer.isRunning()) { inventoryBoxTimer.stop();
+				 * gameTimer.start(); isPaused = false; } else if (combBoxTimer.isRunning() &&
+				 * !isPaused) { wasInCombat = true; isPaused = true; combBoxTimer.stop();
+				 * ib.setBounds(20, 360, 800, 450); inventoryBoxTimer.start(); } else if
+				 * (wasInCombat && isPaused) { isPaused = false; wasInCombat = false;
+				 * inventoryBoxTimer.stop(); combBoxTimer.start(); } else if
+				 * (armorTimer.isRunning()) { armorTimer.stop(); gameTimer.start(); } else if
+				 * (weaponTimer.isRunning()) { weaponTimer.stop(); gameTimer.start(); } else {
+				 * pauseTimer.stop(); gameTimer.start(); wasInCombat = false; isPaused = false;
+				 * }
+				 * 
+				 * }
+				 * 
+				 * });
+				 */
 
 			}
 		});
