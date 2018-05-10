@@ -50,16 +50,18 @@ public class GameRunner {
 
 				///////////////// INITIALIZATION///////////////////////
 				TextBox tb = new TextBox();
+				Player p = new Player();
 
 				WorldGrid wg = new WorldGrid();
 				LevelCreator[][][] worldGrid = wg.getWorldGrid();
 				currentLevel = worldGrid[lX][lY][lZ];
 				GraphicsMaker g = new GraphicsMaker(currentLevel);
-				InventoryBox ib = new InventoryBox(currentLevel.getPlayer());
-				CombatBox cb = new CombatBox(currentLevel.getPlayer());
+				g.setThePlayer(p);
+				InventoryBox ib = new InventoryBox(p);
+				CombatBox cb = new CombatBox(p);
 				PauseScreen ps = new PauseScreen();
-				ArmorBox ab = new ArmorBox(currentLevel.getPlayer());
-				WeaponBox wb = new WeaponBox(currentLevel.getPlayer());
+				ArmorBox ab = new ArmorBox(p);
+				WeaponBox wb = new WeaponBox(p);
 
 				window.add(g);
 				window.add(ab);
@@ -69,13 +71,13 @@ public class GameRunner {
 				window.add(ps);
 				window.add(wb);
 
-				currentLevel.getPlayer().addItems(new Potion());
-				currentLevel.getPlayer().addItems(new Potion());
-				currentLevel.getPlayer().addItems(new Potion());
-				currentLevel.getPlayer().addArmor(new WoodenArmor());
-				currentLevel.getPlayer().addArmor(new IronArmor());
-				currentLevel.getPlayer().addWeapon(new WoodenSword());
-				currentLevel.getPlayer().addWeapon(new IronSword());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addArmor(new WoodenArmor());
+				p.addArmor(new IronArmor());
+				p.addWeapon(new WoodenSword());
+				p.addWeapon(new IronSword());
 				/////////////////// TIMERS////////////////////////////
 				Timer gameTimer = new Timer(GAME_REFRESH, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -347,27 +349,24 @@ public class GameRunner {
 					//////// USING SHIT OUTSIDE OF COMBAT/////////
 					public void actionPerformed(ActionEvent arg0) {
 						if (inventoryBoxTimer.isRunning()) {
-							currentLevel.getPlayer().getInventory().get(ib.getArrayPostion())
-									.use(currentLevel.getPlayer());
-							currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
+							p.getInventory().get(ib.getArrayPostion()).use(p);
+							p.getInventory().remove(ib.getArrayPostion());
 						}
 						if (armorTimer.isRunning()) {
-							for (int i = 0; i < currentLevel.getPlayer().getArmor().size(); i++) {
-								currentLevel.getPlayer().getArmor().get(i).unequip();
+							for (int i = 0; i < p.getArmor().size(); i++) {
+								p.getArmor().get(i).unequip();
 							}
-							currentLevel.getPlayer().setMaxHP();
-							currentLevel.getPlayer().getArmor().get(ab.getArrayPostion()).equip();
-							currentLevel.getPlayer()
-									.setEquipedArmor(currentLevel.getPlayer().getArmor().get(ab.getArrayPostion()));
+							p.setMaxHP();
+							p.getArmor().get(ab.getArrayPostion()).equip();
+							p.setEquipedArmor(p.getArmor().get(ab.getArrayPostion()));
 						}
 						if (weaponTimer.isRunning()) {
-							for (int i = 0; i < currentLevel.getPlayer().getWeapons().size(); i++) {
-								currentLevel.getPlayer().getWeapons().get(i).unequip();
+							for (int i = 0; i < p.getWeapons().size(); i++) {
+								p.getWeapons().get(i).unequip();
 							}
-							currentLevel.getPlayer().setStrength();
-							currentLevel.getPlayer().getWeapons().get(wb.getArrayPostion()).equip();
-							currentLevel.getPlayer()
-									.setEquipedWeapon(currentLevel.getPlayer().getWeapons().get(wb.getArrayPostion()));
+							p.setStrength();
+							p.getWeapons().get(wb.getArrayPostion()).equip();
+							p.setEquipedWeapon(p.getWeapons().get(wb.getArrayPostion()));
 						}
 
 						if (pauseTimer.isRunning()) {
@@ -389,10 +388,9 @@ public class GameRunner {
 							if (ps.getArrayPostion() == 3) {
 								pauseTimer.stop();
 								tb.setBounds(20, 660, 800, 150);
-								tb.setText("Level: " + currentLevel.getPlayer().getLevel());
-								tb.setText2("Health: " + currentLevel.getPlayer().getCurrentHP() + "/"
-										+ currentLevel.getPlayer().getMaxHP());
-								tb.setText3("Strength: " + currentLevel.getPlayer().getStrength());
+								tb.setText("Level: " + p.getLevel());
+								tb.setText2("Health: " + p.getCurrentHP() + "/" + p.getMaxHP());
+								tb.setText3("Strength: " + p.getStrength());
 								textBoxTimer.start();
 							}
 						}
@@ -402,15 +400,13 @@ public class GameRunner {
 							Enemy e = currentLevel.getEnemyManager().getList()
 									.get(currentLevel.getEnemyManager().getEnemyIndex());
 							// amount of total damage player deals
-							int totalAttack = currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion())
-									.getStrength() + currentLevel.getPlayer().getStrength();
+							int totalAttack = p.getAttacks().get(cb.getArrayPostion()).getStrength() + p.getStrength();
 
 							// player attacks with chosen attack
 							e.changeHealth(-1 * totalAttack);
 
 							// print out player action
-							cb.setTextMain("Player uses "
-									+ currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion()).getName()
+							cb.setTextMain("Player uses " + p.getAttacks().get(cb.getArrayPostion()).getName()
 									+ ", and deals " + totalAttack + " damage!");
 
 							// if enemy dies
@@ -422,13 +418,13 @@ public class GameRunner {
 								tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
 								textBoxTimer.start();
 								// cb.setTextSub("You have gained " + 5 + " exp. Press 'E' to close.");
-								currentLevel.getPlayer().setExp(currentLevel.getPlayer().getExp() + 5);
-								currentLevel.getPlayer().setGold(currentLevel.getPlayer().getGold() + e.getGold());
+								p.setExp(currentLevel.getPlayer().getExp() + 5);
+								p.setGold(currentLevel.getPlayer().getGold() + e.getGold());
 								// resume game
 
 								// if player levels up
-								if (currentLevel.getPlayer().ifNextLevel()) {
-									currentLevel.getPlayer().levelUp();
+								if (p.ifNextLevel()) {
+									p.levelUp();
 									gameTimer.stop();
 									combBoxTimer.stop();
 									tb.setBounds(20, 660, 800, 150);
@@ -441,7 +437,7 @@ public class GameRunner {
 								int enemyAttack = e.getStrength();
 
 								// enemy attacks
-								currentLevel.getPlayer().changeHealth(-1 * enemyAttack);
+								p.changeHealth(-1 * enemyAttack);
 
 								// print out enemy action
 								cb.setTextSub(e.getName() + " attacks and deals " + enemyAttack + " damage!");

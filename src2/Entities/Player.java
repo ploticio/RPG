@@ -98,12 +98,6 @@ public class Player extends Entity {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(statBoxImage, 5, 5, 70, 70, null);
-		g.setFont(new Font("Arial", Font.BOLD, 16));
-		g.drawString("Player", 80, 24);
-		g.drawString("Health: " + getCurrentHP() + "/" + getMaxHP(), 80, 44);
-		g.drawString("Level: " + getLevel(), 80, 64);
-		g.drawString("EXP: " + getExp() + "/" + getRequiredEXP(), 80, 84);
 		g.drawImage(current, xPos, yPos, null);
 	}
 

@@ -29,6 +29,7 @@ public class GraphicsMaker extends JPanel {
 	private EnemyManager em;
 	private Tile[][] lg;
 	private ArrayList<Enemy> enemyList;
+	private Player thePlayer;
 
 	/**
 	 * Renders a level without any enemies
@@ -50,7 +51,7 @@ public class GraphicsMaker extends JPanel {
 		}
 		setSize(840, 840);
 	}
-	
+
 	public void changeLevel(LevelCreator l) {
 		p = l.getPlayer();
 		this.l = l;
@@ -66,12 +67,27 @@ public class GraphicsMaker extends JPanel {
 		repaint();
 	}
 
+	public void setThePlayer(Player p) {
+		thePlayer = p;
+	}
+
 	public void paintComponent(Graphics g) {
 		l.makeLevel(g);
 		if (em != null)
 			em.draw(g);
 		p.draw(g);
 		g.dispose();
+		try {
+			g.drawImage(ImageIO.read(new File("Images\\boiStat.png")), 5, 5, 70, 70, null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		g.setFont(new Font("Arial", Font.BOLD, 16));
+		g.drawString("Player", 80, 24);
+		g.drawString("Health: " + thePlayer.getCurrentHP() + "/" + thePlayer.getMaxHP(), 80, 44);
+		g.drawString("Level: " + thePlayer.getLevel(), 80, 64);
+		g.drawString("EXP: " + thePlayer.getExp() + "/" + thePlayer.getRequiredEXP(), 80, 84);
 	}
 
 }
