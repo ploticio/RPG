@@ -6,6 +6,9 @@ public class WorldGrid {
 	
 	private LevelCreator[][][] worldGrid = new LevelCreator[5][5][3];
 	
+	/**
+	 * Default Constructor - Creates 3d array of levels
+	 */
 	public WorldGrid() {
 		//SURFACE LEVELS
 		worldGrid[0][0][0] = new Level000();
@@ -37,6 +40,10 @@ public class WorldGrid {
 		worldGrid[4][2][0].getPlayer().setyGrid(17);
 	}
 	
+	/**
+	 * Gets grid of levels
+	 * @return worldGrid - 3d array of levels
+	 */
 	public LevelCreator[][][] getWorldGrid(){
 		return worldGrid;
 	}
