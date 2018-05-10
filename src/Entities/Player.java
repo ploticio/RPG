@@ -28,6 +28,9 @@ public class Player extends Entity {
 	BufferedImage right;
 	BufferedImage current;
 
+	/**
+	 * Default Constructor - initializes player sprites and sets the current direction to down
+	 */
 	public Player() {
 		try {
 			fillAttacks();
@@ -41,6 +44,13 @@ public class Player extends Entity {
 		}
 	}
 
+	/**
+	 * Loaded Constructor - initializes player sprites, x and y positions, 
+	 * gold amount, and sets the current direction to down
+	 * @param x - x position
+	 * @param y - y position
+	 * @param gold - amount of gold held
+	 */
 	public Player(int x, int y, int gold) {
 		super(x, y, "Player", 10, 10, 10);
 		this.gold = gold;
@@ -61,6 +71,9 @@ public class Player extends Entity {
 		}
 	}
 
+	/**
+	 * Adds attacks to players attack list
+	 */
 	private void fillAttacks() {
 		attacks.add(new Attack("Stab", 2));
 		attacks.add(new Attack("Slice", 10));
@@ -69,6 +82,10 @@ public class Player extends Entity {
 	}
 
 	///////// Graphics/////////////
+	/**
+	 * Sets player direction according to keyboard input
+	 * @param s - direction name
+	 */
 	public void setCurrent(String s) {
 		if (s.equals("up"))
 			current = up;
@@ -80,11 +97,19 @@ public class Player extends Entity {
 			current = down;
 	}
 
+	/**
+	 * Renders player entity
+	 * @param g - graphics drawer
+	 */
 	public void draw(Graphics g) {
 		g.drawImage(current, xPos, yPos, null);
 	}
 
 	//////// Character Stats and levels////////////
+	
+	/**
+	 * Raises level, max health, strength points, and next level requirements
+	 */
 	public void levelUp() {
 		super.setMaxHP(super.getMaxHP() + 1);
 		super.setStrength(super.getStrength() + 1);
@@ -97,6 +122,10 @@ public class Player extends Entity {
 		System.out.println("Health has increased to " + super.getMaxHP());
 	}
 	
+	/**
+	 * Checks if player has enough experience points to level up
+	 * @return if ready for next level
+	 */
 	public boolean ifNextLevel() {
 		if(exp >= requiredEXP) {
 			return true;
@@ -106,34 +135,66 @@ public class Player extends Entity {
 	}
 
 	/////////// getters and setters///////////
+	/**
+	 * Adds health to player
+	 * @param x - health points added to player
+	 */
 	public void changeHealth(int x) {
 		super.setCurrentHP(super.getCurrentHP() + x);
 	}
 
+	/**
+	 * Gets current level
+	 * @return level - level number
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Gets current amount of experience points
+	 * @return exp - amount of experience points
+	 */
 	public int getExp() {
 		return exp;
 	}
 
+	/**
+	 * Sets amount of experience points
+	 * @param exp - new amount of experience points
+	 */
 	public void setExp(int exp) {
 		this.exp = exp;
 	}
 	
+	/**
+	 * Gets amount of experience points needed to level up
+	 * @return requiredEXP - experience requirement
+	 */
 	public int getRequiredEXP() {
 		return requiredEXP;
 	}
 
+	/**
+	 * Adds item to inventory list
+	 * @param i - new item added
+	 */
 	public void addItems(Item i) {
 		inventory.add(i);
 	}
 
+	/**
+	 * Gets list of items in inventory
+	 * @return inventory - list of items in player's inventory
+	 */
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
 
+	/**
+	 * Gets list of player's attacks
+	 * @return attacks - list of attacks
+	 */
 	public ArrayList<Attack> getAttacks() {
 		return attacks;
 	}
@@ -143,10 +204,19 @@ public class Player extends Entity {
 	 * 
 	 * public ArrayList getEquipped() { return equipped; }
 	 */
+	
+	/**
+	 * Gets amount of gold player has
+	 * @return gold - amount of gold
+	 */
 	public int getGold() {
 		return gold;
 	}
-
+ 
+	/**
+	 * Sets amount of gold player has
+	 * @param gold - new amount of gold
+	 */
 	public void setGold(int gold) {
 		this.gold = gold;
 	}

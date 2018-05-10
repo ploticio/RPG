@@ -22,19 +22,44 @@ public abstract class Enemy extends Entity {
 
 	private int gold = 0;// amount of gold enemy drops
 
+	/**
+	 * Default Constructor - creates enemy
+	 */
 	public Enemy() {
 
 	}
 
+	/**
+	 * Loaded Constructor - initializes enemy position, name, maximum health, current health, 
+	 * strength points, and gold amount
+	 * @param x - x position
+	 * @param y - y position
+	 * @param name - enemy name
+	 * @param maxHP - maximum health points
+	 * @param cHP - current health points
+	 * @param strength - strength points
+	 * @param gold - amount of gold held
+	 */
 	Enemy(int x, int y, String name, int maxHP, int cHP, int strength, int gold) {
 		super(x, y, name, maxHP, cHP, strength);
 		this.gold = gold;
 	}
 
+	/**
+	 * Randomly moves enemy one tile
+	 * @param grid - array of tiles for level
+	 */
 	public void randomMovement(Tile[][] grid) {
 		randomMovement(grid, 11, 11);
 	}
 
+	/**
+	 * Picks a random direction; checks if there is an entity there, is blocked, or at the edge of the grid;
+	 * then moves the enemy if it meets the conditions
+	 * @param grid - array for level
+	 * @param xBound - clearance boundary in the x direction
+	 * @param yBound - clearance boundary in the y direction
+	 */
 	public void randomMovement(Tile[][] grid, int xBound, int yBound) {
 		grid[super.getxGrid()][super.getyGrid()].setHasEntity(false);
 		// System.out.println("differenceX: " + Math.abs(super.getxGrid()-xStart) + "
@@ -64,18 +89,33 @@ public abstract class Enemy extends Entity {
 		// System.out.println("X: " + super.getxGrid() + " Y: " + super.getyGrid());
 	}
 
+	/**
+	 * Renders enemy
+	 */
 	public void draw(Graphics g) {
 
 	}
 
+	/**
+	 * Gets gold amount
+	 * @return gold - amount of gold held
+	 */
 	public int getGold() {
 		return gold;
 	}
 
+	/**
+	 * Sets gold amount
+	 * @param gold - amount of gold held
+	 */
 	public void setGold(int gold) {
 		this.gold = gold;
 	}
 
+	/**
+	 * Adds to enemy health
+	 * @param x - health points added
+	 */
 	public void changeHealth(int x) {
 		super.setCurrentHP(super.getCurrentHP() + x);
 	}
