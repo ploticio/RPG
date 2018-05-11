@@ -20,6 +20,8 @@ import javax.swing.Timer;
 public class TextBox extends JPanel{
 	
 	private String s = "Sample Text";
+	private String s2 = "";
+	private String s3 = "";
 	private BufferedImage textBoxImage;
 	private Font customFont;
 	
@@ -52,6 +54,20 @@ public class TextBox extends JPanel{
 	 */
 	public void setText(String s) {
 		this.s = s;
+	}
+	/**
+	 * Sets text for text box
+	 * @param s - text content
+	 */
+	public void setText2(String s) {
+		this.s2 = s;
+	}
+	/**
+	 * Sets text for text box
+	 * @param s - text content
+	 */
+	public void setText3(String s) {
+		this.s3 = s;
 	}
 	
 	/**

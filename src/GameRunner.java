@@ -7,16 +7,18 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import java.io.*;
-import sun.audio.*;
-
+import Managers.EnemyManager;
 import Graphics.*;
 import Levels.*;
+import SurfaceLevels.*;
 import Entities.*;
 import Items.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Random;
 
 //UPDATED MAY 5TH
 
@@ -26,7 +28,7 @@ public class GameRunner {
 	private static final int PLAYER_DELAY = 100;
 	private static final int GAME_REFRESH = 1;
 	private static boolean debounce = false;
-	private static boolean isOpen = false;// checks if inventory is open
+	// private static boolean isPaused = false;// checks if game is paused
 
 	static int lX = 4;
 	static int lY = 2;
@@ -48,47 +50,40 @@ public class GameRunner {
 
 				///////////////// INITIALIZATION///////////////////////
 				TextBox tb = new TextBox();
+				Player p = new Player();
 
 				WorldGrid wg = new WorldGrid();
 				LevelCreator[][][] worldGrid = wg.getWorldGrid();
 				currentLevel = worldGrid[lX][lY][lZ];
 				GraphicsMaker g = new GraphicsMaker(currentLevel);
-				InventoryBox ib = new InventoryBox(currentLevel.getPlayer());
-				CombatBox cb = new CombatBox(currentLevel.getPlayer());
+				InventoryBox ib = new InventoryBox(p);
+				CombatBox cb = new CombatBox(p);
+				PauseScreen ps = new PauseScreen();
+				ArmorBox ab = new ArmorBox(p);
+				WeaponBox wb = new WeaponBox(p);
 
 				window.add(g);
+				window.add(ab);
 				window.add(ib);
-				window.add(tb);
 				window.add(cb);
+				window.add(tb);
+				window.add(ps);
+				window.add(wb);
 
-				currentLevel.getPlayer().addItems(new Potion());
-				currentLevel.getPlayer().addItems(new Potion());
-				currentLevel.getPlayer().addItems(new Potion());
-				
-				////////////////////////MUSIC/////////////////////
-				/////* WILL ONLY WORK WITH .WAV FILES *//////////
-				/*
-				InputStream in2;
-				AudioStream as = null;
-				try {
-			        in2 = new FileInputStream("Audio\\testMusic.wav");
-			        as = new AudioStream(in2);
-			    } catch (FileNotFoundException e) {
-			        System.out.println("Audio file not found.");
-			        e.printStackTrace();
-			    } catch (IOException e) {
-			        System.out.println("Incorrect input.");
-			        e.printStackTrace();
-			    }
-			    AudioPlayer.player.start(as);
-			    */
-				
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addArmor(new WoodenArmor());
+				p.addArmor(new IronArmor());
+				p.addWeapon(new WoodenSword());
+				p.addWeapon(new IronSword());
 				/////////////////// TIMERS////////////////////////////
 				Timer gameTimer = new Timer(GAME_REFRESH, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						g.update();
 					}
 				});
+				/////////////// BOX TIMERS///////////////////////////////
 				Timer textBoxTimer = new Timer(GAME_REFRESH, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						tb.update();
@@ -104,6 +99,22 @@ public class GameRunner {
 						cb.update();
 					}
 				});
+				Timer pauseTimer = new Timer(GAME_REFRESH, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ps.update();
+					}
+				});
+				Timer armorTimer = new Timer(GAME_REFRESH, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ab.update();
+					}
+				});
+				Timer weaponTimer = new Timer(GAME_REFRESH, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						wb.update();
+					}
+				});
+				////////////////////////////////////////////////////////////
 				Timer playerTimer = new Timer(PLAYER_DELAY, new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						debounce = false;
@@ -153,6 +164,7 @@ public class GameRunner {
 				in.put(KeyStroke.getKeyStroke("E"), "close textbox");
 				in.put(KeyStroke.getKeyStroke("I"), "inventory");
 				in.put(KeyStroke.getKeyStroke("F"), "use");
+				in.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 				ActionMap out = g.getActionMap();
 				out.put("left", new AbstractAction() {
 					public void actionPerformed(ActionEvent arg0) {
@@ -166,30 +178,32 @@ public class GameRunner {
 								currentLevel.getPlayer().setxGrid(20);
 								currentLevel.getPlayer().setyGrid(positionY);
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
 								currentLevel.getPlayer().setCurrent("left");
-							} 
-							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()-1][currentLevel.getPlayer().getyGrid()].getChanger() != 0) {
-								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()-1][currentLevel.getPlayer().getyGrid()].getChanger();
+							} else if (currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() - 1][currentLevel
+									.getPlayer().getyGrid()].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() - 1][currentLevel
+										.getPlayer().getyGrid()].getChanger();
 								currentLevel = worldGrid[lX][lY][lZ];
-								if(lZ == 2) {
+								if (lZ == 2) {
 									currentLevel.getPlayer().setyGrid(19);
 									currentLevel.getPlayer().setxGrid(10);
 									currentLevel.getPlayer().setCurrent("up");
 								}
-								if(lZ == 0) {
+								if (lZ == 0) {
 									currentLevel.getPlayer().setyGrid(17);
 									currentLevel.getPlayer().setxGrid(15);
 									currentLevel.getPlayer().setCurrent("down");
 								}
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
-							}
-							else {
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
+							} else {
 								if (currentLevel.getPlayer().getxGrid() != 0
-										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() - 1][currentLevel.getPlayer().getyGrid()].isBlocked()) {
+										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() - 1][currentLevel
+												.getPlayer().getyGrid()].isBlocked()) {
 									currentLevel.getPlayer().moveX(-1);
-									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: "
+											+ currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -207,31 +221,32 @@ public class GameRunner {
 								currentLevel.getPlayer().setxGrid(0);
 								currentLevel.getPlayer().setyGrid(positionY);
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
 								currentLevel.getPlayer().setCurrent("right");
-							} 
-							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()+1][currentLevel.getPlayer().getyGrid()].getChanger() != 0) {
-								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()+1][currentLevel.getPlayer().getyGrid()].getChanger();
+							} else if (currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() + 1][currentLevel
+									.getPlayer().getyGrid()].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() + 1][currentLevel
+										.getPlayer().getyGrid()].getChanger();
 								currentLevel = worldGrid[lX][lY][lZ];
-								if(lZ == 2) {
+								if (lZ == 2) {
 									currentLevel.getPlayer().setyGrid(19);
 									currentLevel.getPlayer().setxGrid(10);
 									currentLevel.getPlayer().setCurrent("up");
 								}
-								if(lZ == 0) {
+								if (lZ == 0) {
 									currentLevel.getPlayer().setyGrid(17);
 									currentLevel.getPlayer().setxGrid(15);
 									currentLevel.getPlayer().setCurrent("down");
 								}
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
-							}
-							else {
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
+							} else {
 								if (currentLevel.getPlayer().getxGrid() != 20
 										&& !currentLevel.getGrid()[currentLevel.getPlayer().getxGrid() + 1][currentLevel
 												.getPlayer().getyGrid()].isBlocked()) {
 									currentLevel.getPlayer().moveX(1);
-									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: "
+											+ currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -249,30 +264,31 @@ public class GameRunner {
 								currentLevel.getPlayer().setyGrid(20);
 								currentLevel.getPlayer().setxGrid(positionX);
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
 								currentLevel.getPlayer().setCurrent("up");
-							}
-							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()-1].getChanger() != 0) {
-								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()-1].getChanger();
+							} else if (currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel
+									.getPlayer().getyGrid() - 1].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel
+										.getPlayer().getyGrid() - 1].getChanger();
 								currentLevel = worldGrid[lX][lY][lZ];
-								if(lZ == 2) {
+								if (lZ == 2) {
 									currentLevel.getPlayer().setyGrid(19);
 									currentLevel.getPlayer().setxGrid(10);
 									currentLevel.getPlayer().setCurrent("up");
 								}
-								if(lZ == 0) {
+								if (lZ == 0) {
 									currentLevel.getPlayer().setyGrid(17);
 									currentLevel.getPlayer().setxGrid(15);
 									currentLevel.getPlayer().setCurrent("down");
 								}
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
-							}
-							else {
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
+							} else {
 								if (currentLevel.getPlayer().getyGrid() != 0 && !currentLevel.getGrid()[currentLevel
 										.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid() - 1].isBlocked()) {
 									currentLevel.getPlayer().moveY(-1);
-									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: "
+											+ currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -285,6 +301,15 @@ public class GameRunner {
 							cb.setArrowPos(1);
 							// System.out.println(cb.getArrayPostion());
 						}
+						if (pauseTimer.isRunning() && !gameTimer.isRunning() && ps.getArrayPostion() > 0) {
+							ps.setArrowPos(1);
+						}
+						if (armorTimer.isRunning() && !gameTimer.isRunning() && ab.getArrayPostion() > 0) {
+							ab.setArrowPos(1);
+						}
+						if (weaponTimer.isRunning() && !gameTimer.isRunning() && wb.getArrayPostion() > 0) {
+							wb.setArrowPos(1);
+						}
 					}
 				});
 				out.put("down", new AbstractAction() {
@@ -292,37 +317,39 @@ public class GameRunner {
 						currentLevel.getPlayer().setCurrent("down");
 						if (!debounce && gameTimer.isRunning()) {
 							debounce = true;
-							if (currentLevel.getPlayer().getyGrid() == 20 && lX != worldGrid[lX].length - 1 && lZ != 2) {
+							if (currentLevel.getPlayer().getyGrid() == 20 && lX != worldGrid[lX].length - 1
+									&& lZ != 2) {
 								int positionX = currentLevel.getPlayer().getxGrid();
 								lX += 1;
 								currentLevel = worldGrid[lX][lY][lZ];
 								currentLevel.getPlayer().setyGrid(0);
 								currentLevel.getPlayer().setxGrid(positionX);
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
 								currentLevel.getPlayer().setCurrent("down");
-							} 
-							else if(currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()+1].getChanger() != 0) {
-								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid()+1].getChanger();
+							} else if (currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel
+									.getPlayer().getyGrid() + 1].getChanger() != 0) {
+								lZ += currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel
+										.getPlayer().getyGrid() + 1].getChanger();
 								currentLevel = worldGrid[lX][lY][lZ];
-								if(lZ == 2) {
+								if (lZ == 2) {
 									currentLevel.getPlayer().setyGrid(19);
 									currentLevel.getPlayer().setxGrid(10);
 									currentLevel.getPlayer().setCurrent("up");
 								}
-								if(lZ == 0) {
+								if (lZ == 0) {
 									currentLevel.getPlayer().setyGrid(17);
 									currentLevel.getPlayer().setxGrid(15);
 									currentLevel.getPlayer().setCurrent("down");
 								}
 								g.changeLevel(currentLevel);
-								System.out.println("["+lX+"]["+lY+"]["+lZ+"]");
-							}
-							else {
+								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
+							} else {
 								if (currentLevel.getPlayer().getyGrid() != 20 && !currentLevel.getGrid()[currentLevel
 										.getPlayer().getxGrid()][currentLevel.getPlayer().getyGrid() + 1].isBlocked()) {
 									currentLevel.getPlayer().moveY(1);
-									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: " + currentLevel.getPlayer().getyGrid());
+									System.out.println("X: " + currentLevel.getPlayer().getxGrid() + " Y: "
+											+ currentLevel.getPlayer().getyGrid());
 								}
 							}
 						}
@@ -337,46 +364,93 @@ public class GameRunner {
 							cb.setArrowPos(-1);
 							// System.out.println(cb.getArrayPostion());
 						}
+						if (pauseTimer.isRunning() && !gameTimer.isRunning() && ps.getArrayPostion() < 3) {
+							ps.setArrowPos(-1);
+						}
+						if (armorTimer.isRunning() && !gameTimer.isRunning()
+								&& ab.getArrayPostion() < ab.getPlayer().getArmor().size() - 1) {
+							ab.setArrowPos(-1);
+						}
+						if (weaponTimer.isRunning() && !gameTimer.isRunning()
+								&& wb.getArrayPostion() < wb.getPlayer().getWeapons().size() - 1) {
+							wb.setArrowPos(-1);
+						}
 					}
 				});
 				/// Added 5/7
-				out.put("inventory", new AbstractAction() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						boolean wasInCombat = false;
-						if (gameTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
-							gameTimer.stop();
-							ib.setBounds(20, 360, 800, 450);
-							inventoryBoxTimer.start();
-						}
-						else if(combBoxTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
-							wasInCombat = true;
-							combBoxTimer.stop();
-							ib.setBounds(20, 360, 800, 450);
-							inventoryBoxTimer.start();
-						}
-						else {
-							inventoryBoxTimer.stop();
-							if(wasInCombat) {
-								gameTimer.stop();
-								combBoxTimer.start();
-							}
-							else {
-								gameTimer.start();
-							}
-						}
-					}
-				});
+				/*
+				 * out.put("inventory", new AbstractAction() {
+				 * 
+				 * @Override public void actionPerformed(ActionEvent arg0) { boolean wasInCombat
+				 * = false; if (!isPaused) { if (gameTimer.isRunning() &&
+				 * !inventoryBoxTimer.isRunning()) { gameTimer.stop(); ib.setBounds(20, 360,
+				 * 800, 450); inventoryBoxTimer.start(); } else if (combBoxTimer.isRunning() &&
+				 * !inventoryBoxTimer.isRunning()) { wasInCombat = true; combBoxTimer.stop();
+				 * ib.setBounds(20, 360, 800, 450); inventoryBoxTimer.start(); } else {
+				 * inventoryBoxTimer.stop(); if (wasInCombat) { gameTimer.stop();
+				 * combBoxTimer.start(); } else { gameTimer.start(); } }
+				 * 
+				 * } } });
+				 */
 				out.put("close textbox", new AbstractAction() {
+					boolean wasInCombat = false;
+					boolean isPaused = false;
+
 					public void actionPerformed(ActionEvent arg0) {
 						if (!gameTimer.isRunning() && textBoxTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
 							gameTimer.start();
+							tb.setText("");
+							tb.setText2("");
+							tb.setText3("");
 							textBoxTimer.stop();
-						}
-						if (!gameTimer.isRunning() && combBoxTimer.isRunning() && !inventoryBoxTimer.isRunning()) {
+						} else if (wasInCombat && isPaused) {
+							ib.setBounds(800, 800, 800, 800);
+							isPaused = false;
+							wasInCombat = false;
+							combBoxTimer.start();
+							inventoryBoxTimer.stop();
+						} else if (gameTimer.isRunning()) {
+							ps.setBounds(20, 660, 800, 150);
+							gameTimer.stop();
+							pauseTimer.start();
+							inventoryBoxTimer.stop();
+							isPaused = true;
+						} else if (textBoxTimer.isRunning()) {
+							textBoxTimer.stop();
+							tb.setText("");
+							tb.setText2("");
+							tb.setText3("");
 							gameTimer.start();
+							inventoryBoxTimer.stop();
+						} else if (isPaused && inventoryBoxTimer.isRunning()) {
+							inventoryBoxTimer.stop();
+							gameTimer.start();
+							isPaused = false;
+						} else if (combBoxTimer.isRunning() && !isPaused) {
+							wasInCombat = true;
+							isPaused = true;
 							combBoxTimer.stop();
+							ib.setBounds(20, 360, 800, 450);
+							inventoryBoxTimer.start();
+						} else if (armorTimer.isRunning()) {
+							armorTimer.stop();
+							gameTimer.start();
+							isPaused = false;
+						} else if (weaponTimer.isRunning()) {
+							weaponTimer.stop();
+							gameTimer.start();
+							isPaused = false;
+						} else {
+							pauseTimer.stop();
+							gameTimer.start();
+							wasInCombat = false;
+							isPaused = false;
 						}
+
+						/*
+						 * if (!gameTimer.isRunning() && combBoxTimer.isRunning() &&
+						 * !inventoryBoxTimer.isRunning()) { gameTimer.start(); combBoxTimer.stop(); }
+						 */
 					}
 				});
 				////////////////////////
@@ -385,54 +459,104 @@ public class GameRunner {
 
 				//////// Combat System/////////
 				out.put("use", new AbstractAction() {
+					//////// USING SHIT OUTSIDE OF COMBAT/////////
 					public void actionPerformed(ActionEvent arg0) {
-						if(inventoryBoxTimer.isRunning()) {
-							currentLevel.getPlayer().getInventory().get(ib.getArrayPostion()).use(currentLevel.getPlayer());
-							currentLevel.getPlayer().getInventory().remove(ib.getArrayPostion());
+						if (inventoryBoxTimer.isRunning()) {
+							p.getInventory().get(ib.getArrayPostion()).use(p);
+							p.getInventory().remove(ib.getArrayPostion());
 						}
+						if (armorTimer.isRunning()) {
+							for (int i = 0; i < p.getArmor().size(); i++) {
+								p.getArmor().get(i).unequip();
+							}
+							p.setMaxHP();
+							p.getArmor().get(ab.getArrayPostion()).equip();
+							p.setEquipedArmor(p.getArmor().get(ab.getArrayPostion()));
+						}
+						if (weaponTimer.isRunning()) {
+							for (int i = 0; i < p.getWeapons().size(); i++) {
+								p.getWeapons().get(i).unequip();
+							}
+							p.setStrength();
+							p.getWeapons().get(wb.getArrayPostion()).equip();
+							p.setEquipedWeapon(p.getWeapons().get(wb.getArrayPostion()));
+						}
+
+						if (pauseTimer.isRunning()) {
+							if (ps.getArrayPostion() == 0) {
+								pauseTimer.stop();
+								ib.setBounds(20, 360, 800, 450);
+								inventoryBoxTimer.start();
+							}
+							if (ps.getArrayPostion() == 1) {
+								pauseTimer.stop();
+								ab.setBounds(20, 360, 800, 450);
+								armorTimer.start();
+							}
+							if (ps.getArrayPostion() == 2) {
+								pauseTimer.stop();
+								wb.setBounds(20, 360, 800, 450);
+								weaponTimer.start();
+							}
+							if (ps.getArrayPostion() == 3) {
+								pauseTimer.stop();
+								tb.setBounds(20, 660, 800, 150);
+								tb.setText("Level: " + p.getLevel());
+								tb.setText2("Health: " + p.getCurrentHP() + "/" + p.getMaxHP());
+								tb.setText3("Strength: " + p.getStrength());
+								textBoxTimer.start();
+							}
+						}
+
+						/////////////////////////////////////////////////
 						if (!gameTimer.isRunning() && combBoxTimer.isRunning()) {
-							Enemy e = currentLevel.getEnemyManager().getList().get(currentLevel.getEnemyManager().getEnemyIndex());
+							Enemy e = currentLevel.getEnemyManager().getList()
+									.get(currentLevel.getEnemyManager().getEnemyIndex());
 							// amount of total damage player deals
-							int totalAttack = currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion()).getStrength() + currentLevel.getPlayer().getStrength();
+							int totalAttack = p.getAttacks().get(cb.getArrayPostion()).getStrength() + p.getStrength();
 
 							// player attacks with chosen attack
 							e.changeHealth(-1 * totalAttack);
 
 							// print out player action
-							cb.setTextMain("Player uses "
-									+ currentLevel.getPlayer().getAttacks().get(cb.getArrayPostion()).getName()
+							cb.setTextMain("Player uses " + p.getAttacks().get(cb.getArrayPostion()).getName()
 									+ ", and deals " + totalAttack + " damage!");
 
 							// if enemy dies
 							if (e.getCurrentHP() <= 0) {
 								currentLevel.getEnemyManager().getList().remove(e);
-								cb.setTextMain(e.getName() + " has died and dropped " + e.getGold() + " gold.");
-								cb.setTextSub("You have gained " + 5 + " exp. Press 'E' to close.");
-								currentLevel.getPlayer().setExp(currentLevel.getPlayer().getExp() + 5);
-								currentLevel.getPlayer().setGold(currentLevel.getPlayer().getGold() + e.getGold());
+								combBoxTimer.stop();
+								tb.setBounds(20, 660, 800, 150);
+								// if player levels up
+								if (p.ifNextLevel()) {
+									p.levelUp();
+									gameTimer.stop();
+									combBoxTimer.stop();
+									tb.setBounds(20, 660, 800, 150);
+									tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
+									tb.setText2("You are now level " + p.getLevel() + "!");
+									// textBoxTimer.start();
+								}
+
+								tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
+								textBoxTimer.start();
+								// cb.setTextSub("You have gained " + 5 + " exp. Press 'E' to close.");
+								p.setExp(currentLevel.getPlayer().getExp() + 5);
+								p.setGold(currentLevel.getPlayer().getGold() + e.getGold());
 								// resume game
 
-								// if player levels up
-								if (currentLevel.getPlayer().ifNextLevel()) {
-                                    currentLevel.getPlayer().levelUp();
-                                    gameTimer.stop();
-                                    combBoxTimer.stop();
-                                    tb.setBounds(20, 660, 800, 150);
-                                    tb.setText("You are now level " + currentLevel.getPlayer().getLevel() + "!");
-                                    //textBoxTimer.start();
-                                }
 							} else {
 
 								int enemyAttack = e.getStrength();
 
 								// enemy attacks
-								currentLevel.getPlayer().changeHealth(-1 * enemyAttack);
+								p.changeHealth(-1 * enemyAttack);
 
 								// print out enemy action
 								cb.setTextSub(e.getName() + " attacks and deals " + enemyAttack + " damage!");
 
 								if (currentLevel.getPlayer().getCurrentHP() <= 0) {
-									//TODO: game over
+									// TODO: game over
 								}
 
 								// prints out enemy's current health after attack
@@ -441,6 +565,32 @@ public class GameRunner {
 						}
 					}
 				});
+				/////////////////////////// PAUSING//////////////////////////THIS WAS ALL ADDED
+				/////////////////////////// IN TO 'E'
+				//// made 5/9
+				/*
+				 * out.put("pause", new AbstractAction() { boolean wasInCombat = false; boolean
+				 * isPaused = false;
+				 * 
+				 * public void actionPerformed(ActionEvent arg0) { if (gameTimer.isRunning()) {
+				 * ps.setBounds(20, 660, 800, 150); gameTimer.stop(); pauseTimer.start();
+				 * isPaused = true; } else if (textBoxTimer.isRunning()) { textBoxTimer.stop();
+				 * tb.setText(""); tb.setText2(""); tb.setText3(""); gameTimer.start(); } else
+				 * if (isPaused && inventoryBoxTimer.isRunning()) { inventoryBoxTimer.stop();
+				 * gameTimer.start(); isPaused = false; } else if (combBoxTimer.isRunning() &&
+				 * !isPaused) { wasInCombat = true; isPaused = true; combBoxTimer.stop();
+				 * ib.setBounds(20, 360, 800, 450); inventoryBoxTimer.start(); } else if
+				 * (wasInCombat && isPaused) { isPaused = false; wasInCombat = false;
+				 * inventoryBoxTimer.stop(); combBoxTimer.start(); } else if
+				 * (armorTimer.isRunning()) { armorTimer.stop(); gameTimer.start(); } else if
+				 * (weaponTimer.isRunning()) { weaponTimer.stop(); gameTimer.start(); } else {
+				 * pauseTimer.stop(); gameTimer.start(); wasInCombat = false; isPaused = false;
+				 * }
+				 * 
+				 * }
+				 * 
+				 * });
+				 */
 
 			}
 		});

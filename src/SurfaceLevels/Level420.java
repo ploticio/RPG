@@ -45,6 +45,8 @@ public class Level420 extends LevelCreator{
 		for(int k = 13; k < 21; k++) {
 			setImage(k, 0, "Images\\bushHo.png", true);
 		}
+		
+		em.spawnBlobs();
 	}
 	
 	public EnemyManager getEnemyManager() {

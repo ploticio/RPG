@@ -17,10 +17,18 @@ public class Player extends Entity {
 	private int gold;
 	private int level;
 	private int exp;
-
+	private int trueHP;// hp before armor is added
+	private int trueStrength;
+	private Armor equipedArmor;
+	private NoArmor na = new NoArmor();
+	private Weapon equipedWeapon;
+	private NoWeapon nw = new NoWeapon();
+	
 	ArrayList<Item> inventory = new ArrayList<Item>();
 	ArrayList<Attack> attacks = new ArrayList<Attack>();
-
+	ArrayList<Armor> armor = new ArrayList<Armor>();
+	ArrayList<Weapon> weapon = new ArrayList<Weapon>();
+	
 	private int requiredEXP; // amount of exp need to level up
 
 	BufferedImage down;
@@ -34,6 +42,12 @@ public class Player extends Entity {
 	 * Default Constructor - initializes player sprites and sets the current direction to down
 	 */
 	public Player() {
+		requiredEXP = 3;
+		trueHP = 20;
+		trueStrength = 5;
+		super.setCurrentHP(20);
+		equipedArmor = na;
+		equipedWeapon = nw;
 		try {
 			fillAttacks();
 			statBoxImage = ImageIO.read(new File("Images\\boiStat.png"));
@@ -192,7 +206,21 @@ public class Player extends Entity {
 	public void addItems(Item i) {
 		inventory.add(i);
 	}
-
+	/**
+	 * Adds armor to inventory list
+	 * @param a - new armor added
+	 */
+	public void addArmor(Armor a) {
+		armor.add(a);
+	}
+	/**
+	 * Adds weapon to inventory list
+	 * @param w - new weapon added
+	 */
+	public void addWeapon(Weapon w) {
+		weapon.add(w);
+	}
+	
 	/**
 	 * Gets list of items in inventory
 	 * @return inventory - list of items in player's inventory
@@ -209,11 +237,90 @@ public class Player extends Entity {
 		return attacks;
 	}
 
-	/*
-	 * public ArrayList getInventory() { return inventory; }
-	 * 
-	 * public ArrayList getEquipped() { return equipped; }
+	///////// HP STUFF///////////////
+	/**
+	 * Gets health
+	 * @return health without armor
 	 */
+	public int getTrueHP() {
+		return trueHP;
+	}
+	/**
+	 * sets max hp
+	 */
+	public void setMaxHP() {
+		super.setMaxHP(trueHP + equipedArmor.getIncrease());
+	}
+	/**
+	 * gets max hp
+	 * @return gets max hp
+	 */
+	public int getMaxHP() {
+		return equipedArmor.getIncrease() + trueHP;
+	}
+	/**
+	 * gets equipped armor
+	 * @return gets armor
+	 */
+	public Armor getEquipedArmor() {
+		return equipedArmor;
+	}
+	/**
+	 * Sets equipped armor
+	 * @param a - the armor
+	 */
+	public void setEquipedArmor(Armor a) {
+		equipedArmor = a;
+	}
+	/**
+	 * Gets armor list
+	 * @return armor list
+	 */
+	public ArrayList<Armor> getArmor() {
+		return armor;
+	}
+	
+	////////// STRENGTH STUFF///////////
+	/**
+	 * sets the equipped weapon
+	 * @param w - the equipped weapon
+	 */
+	public void setEquipedWeapon(Weapon w) {
+		equipedWeapon = w;
+	}
+	/**
+	 * gets the equipped weapon
+	 * @return the equipped weapon
+	 */
+	public Weapon getEquipedWeapon() {
+		return equipedWeapon;
+	}
+	/**
+	 * gets the strength without modifiers
+	 * @return strength
+	 */
+	public int getTrueStrength() {
+		return trueStrength;
+	}
+	/**
+	 * sets the strength
+	 */
+	public void setStrength() {
+		super.setStrength(trueStrength + equipedWeapon.getIncrease());
+	}
+	/**
+	 * gets the current strength
+	 */
+	public int getStrength() {
+		return trueStrength + equipedWeapon.getIncrease();
+	}
+	/**
+	 * gets the list of weapons
+	 * @return - list of weapons
+	 */
+	public ArrayList<Weapon> getWeapons() {
+		return weapon;
+	}
 	
 	/**
 	 * Gets amount of gold player has
