@@ -3,18 +3,17 @@ package Entities;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class Blob extends Enemy {
+public class Mushroom extends Enemy {
 
 	/**
 	 * Default Constructor - loads enemy image
 	 */
-	public Blob() {
+	public Mushroom() {
 		try {
-			current = ImageIO.read(new File("Images\\blob.png"));
+			current = ImageIO.read(new File("Images\\mushroom.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}
@@ -23,10 +22,10 @@ public class Blob extends Enemy {
 	/**
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
-	public Blob(int x, int y) {
-		super(x, y, "Green Blob", 15, 15, 10, 25, 3);
+	public Mushroom(int x, int y) {
+		super(x, y, "Mushroom", 15, 15, 10, 25, 3);
 		try {
-			current = ImageIO.read(new File("Images\\blob.png"));
+			current = ImageIO.read(new File("Images\\mushroom.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}

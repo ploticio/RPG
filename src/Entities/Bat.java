@@ -24,7 +24,7 @@ public class Bat extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Bat(int x, int y) {
-		super(x, y, "Bat", 15, 15, 10, gold());
+		super(x, y, "Bat", 15, 15, 10, 10, 10);
 		try {
 			current = ImageIO.read(new File("Images\\bat.png"));
 		} catch (IOException e) {
@@ -32,16 +32,6 @@ public class Bat extends Enemy {
 		}
 	}
 
-	/**
-	 * Randomizes amount of gold held
-	 * @return gold - amount of gold held
-	 */
-	// random amount of gold to be dropped
-	private static int gold() {
-		Random rand = new Random();
-		int gold = rand.nextInt(9) + 1;
-		return gold;
-	}
 
 	/**
 	 * Renders enemy

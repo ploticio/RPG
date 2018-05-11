@@ -145,6 +145,10 @@ public class LevelCreator {
 		}
 	}
 
+	public void setAltPlayer(Player p) {
+		player.setAltPlayer(p);
+	}
+	
 	/**
 	 * Gets player entity
 	 * @return player - player entity

@@ -19,7 +19,9 @@ public abstract class Enemy extends Entity {
 
 	// PROPERTIES
 	boolean isDead = false;
-
+	
+	
+	private int exp = 0;
 	private int gold = 0;// amount of gold enemy drops
 
 	/**
@@ -40,8 +42,9 @@ public abstract class Enemy extends Entity {
 	 * @param strength - strength points
 	 * @param gold - amount of gold held
 	 */
-	Enemy(int x, int y, String name, int maxHP, int cHP, int strength, int gold) {
+	Enemy(int x, int y, String name, int maxHP, int cHP, int strength, int exp , int gold) {
 		super(x, y, name, maxHP, cHP, strength);
+		this.exp = exp;
 		this.gold = gold;
 	}
 
@@ -110,6 +113,22 @@ public abstract class Enemy extends Entity {
 	 */
 	public void setGold(int gold) {
 		this.gold = gold;
+	}
+	
+	/**
+	 * Gets gold amount
+	 * @return exp - amount of exp held
+	 */
+	public int getExp() {
+		return exp;
+	}
+
+	/**
+	 * Sets gold amount
+	 * @param gold - amount of exp held
+	 */
+	public void setExp(int exp) {
+		this.exp = exp;
 	}
 
 	/**

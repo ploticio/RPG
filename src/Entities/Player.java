@@ -16,20 +16,21 @@ import Graphics.GraphicsMaker;
 public class Player extends Entity {
 	private int gold;
 	private int level;
-	private int exp;
+	private double exp;
 	private int trueHP;// hp before armor is added
 	private int trueStrength;
 	private Armor equipedArmor;
 	private NoArmor na = new NoArmor();
 	private Weapon equipedWeapon;
 	private NoWeapon nw = new NoWeapon();
+	private Player alt;
 	
 	ArrayList<Item> inventory = new ArrayList<Item>();
 	ArrayList<Attack> attacks = new ArrayList<Attack>();
 	ArrayList<Armor> armor = new ArrayList<Armor>();
 	ArrayList<Weapon> weapon = new ArrayList<Weapon>();
 	
-	private int requiredEXP; // amount of exp need to level up
+	private double requiredEXP; // amount of exp need to level up
 
 	BufferedImage down;
 	BufferedImage up;
@@ -42,10 +43,10 @@ public class Player extends Entity {
 	 * Default Constructor - initializes player sprites and sets the current direction to down
 	 */
 	public Player() {
-		requiredEXP = 3;
-		trueHP = 20;
+		requiredEXP = 50;
+		trueHP = 5;
 		trueStrength = 5;
-		super.setCurrentHP(20);
+		super.setCurrentHP(5);
 		equipedArmor = na;
 		equipedWeapon = nw;
 		try {
@@ -61,32 +62,9 @@ public class Player extends Entity {
 		}
 	}
 
-	/**
-	 * Loaded Constructor - initializes player sprites, x and y positions, 
-	 * gold amount, and sets the current direction to down
-	 * @param x - x position
-	 * @param y - y position
-	 * @param gold - amount of gold held
-	 */
-	public Player(int x, int y, int gold) {
-		super(x, y, "Player", 10, 10, 10);
-		this.gold = gold;
-		level = 1;
-		exp = 0;
-		requiredEXP = 3;
-		fillAttacks();
-
-		// movement and graphics
-		try {
-			statBoxImage = ImageIO.read(new File("Images\\boiStat.png"));
-			up = ImageIO.read(new File("Images\\boiBack.png"));
-			down = ImageIO.read(new File("Images\\boiFront.png"));
-			left = ImageIO.read(new File("Images\\boiLeft.png"));
-			right = ImageIO.read(new File("Images\\boiRight.png"));
-			current = down;
-		} catch (IOException e) {
-			System.out.println("No Image Found: Player");
-		}
+	
+	public void setAltPlayer(Player alt) {
+		this.alt = alt;
 	}
 
 	/**
@@ -120,12 +98,15 @@ public class Player extends Entity {
 	 * @param g - graphics drawer
 	 */
 	public void draw(Graphics g) {
-		g.drawImage(statBoxImage, 5,5, 70, 70, null);
-		g.setFont(new Font("Arial", Font.BOLD, 16));
-		g.drawString("Player", 80, 24);
-		g.drawString("Health: " + getCurrentHP() + "/" + getMaxHP(), 80, 44);
-		g.drawString("Level: " + getLevel(), 80, 64);
-		g.drawString("EXP: " + getExp() + "/" + getRequiredEXP(), 80, 84);
+		if(alt != null) {
+			g.drawImage(statBoxImage, 5,5, 70, 70, null);
+			g.setFont(new Font("Arial", Font.BOLD, 16));
+			g.setColor(Color.WHITE);
+			g.drawString("Gold: " + alt.getGold(), 80, 64);
+			g.drawString("Health: " + alt.getCurrentHP() + "/" + alt.getMaxHP(), 80, 44);
+			g.drawString("Level: " + alt.getLevel(), 80, 24);
+			g.drawString("EXP: " + Math.round(alt.getExp()*10)/10 + "/" + Math.round(alt.getRequiredEXP()*10)/10, 80, 84);
+		}
 		g.drawImage(current, xPos, yPos, null);
 	}
 
@@ -135,16 +116,12 @@ public class Player extends Entity {
 	 * Raises level, max health, strength points, and next level requirements
 	 */
 	public void levelUp() {
-		super.setMaxHP(super.getMaxHP() + 1);
-		super.setStrength(super.getStrength() + 1);
-		requiredEXP += (level * 2);
-		level++;
-		exp = exp % requiredEXP;
-		System.out.println("Level Up!");
-		System.out.println("Level has increased to " + level);
-		System.out.println("Strength has increased to " + super.getStrength());
-		System.out.println("Health has increased to " + super.getMaxHP());
-	}
+        trueHP++;
+        trueStrength++;
+        level++;
+        exp = exp % requiredEXP;
+        requiredEXP = 50*Math.exp(0.1*level);
+    }
 	
 	/**
 	 * Checks if player has enough experience points to level up
@@ -179,23 +156,23 @@ public class Player extends Entity {
 	 * Gets current amount of experience points
 	 * @return exp - amount of experience points
 	 */
-	public int getExp() {
+	public double getExp() {
 		return exp;
 	}
 
 	/**
 	 * Sets amount of experience points
-	 * @param exp - new amount of experience points
+	 * @param d - new amount of experience points
 	 */
-	public void setExp(int exp) {
-		this.exp = exp;
+	public void setExp(double d) {
+		this.exp = d;
 	}
 	
 	/**
 	 * Gets amount of experience points needed to level up
 	 * @return requiredEXP - experience requirement
 	 */
-	public int getRequiredEXP() {
+	public double getRequiredEXP() {
 		return requiredEXP;
 	}
 

@@ -1,5 +1,6 @@
 package Graphics;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -14,14 +15,17 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import Entities.Enemy;
 import Entities.Player;
 
 public class CombatBox extends JPanel {
 	/// made 5/8
 	private int arrowPos;
 	private BufferedImage combBoxImage;
+	private BufferedImage statBoxImage;
 	private BufferedImage arrow;
 	Player p;
+	Enemy e;
 	String s1 = "";
 	String s2 = "";
 
@@ -39,7 +43,7 @@ public class CombatBox extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Gets arrow position in the window
 	 * @return arrow's position
@@ -71,7 +75,14 @@ public class CombatBox extends JPanel {
 	public Player getPlayer() {
 		return p;
 	}
-
+	
+	public void setAltPlayer(Player p) {
+		p.setAltPlayer(p);
+	}
+	
+	public void setEnemy(Enemy e) {
+		this.e = e;
+	}
 	/**
 	 * Updates graphics
 	 */
@@ -107,6 +118,11 @@ public class CombatBox extends JPanel {
 		}
 		g.drawString(s1, 300, 75);
 		g.drawString(s2, 300, 100);
-
+		if(p!=null && e!=null) {
+			g.drawImage(statBoxImage, 5,5, 70, 70, null);
+			g.setFont(new Font("Arial", Font.BOLD, 16));
+			g.drawString("Your Health: " + p.getCurrentHP(), 300, 20);
+			g.drawString("Enemies Health: " + e.getCurrentHP(), 600, 20);
+		}
 	}
 }

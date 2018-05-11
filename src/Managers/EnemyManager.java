@@ -13,25 +13,36 @@ import Entities.*;
 //created 5/1
 public class EnemyManager {
 
+	//NOTE FOR MYSELF: ADAPT ENEMY MANAGER INTO WORLD GRID SO ENEMIES DONT KEEP SPAWNING WHILE PLAYER IS IN COMBAT
+	
+	
 	////////RESPAWN RATE///////////
 	private final int RESPAWN_RATE = 5000;
 	
-	private ArrayList<Enemy> enemies;
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private Random r = new Random();
 	private int min, max, xBound, yBound;
 	private int enemyIndex = 0;
 	private Timer respawner;
 	
-	public EnemyManager(ArrayList<Enemy> enemies, int min, int max, int xBound, int yBound) {
-		this.enemies = enemies;
+	public EnemyManager(int min, int max, int xBound, int yBound) {
 		this.min = min;
 		this.max = max;
 		this.xBound = xBound;
 		this.yBound = yBound;
 	}
 	
+	public EnemyManager(ArrayList<Enemy> enemies, int min, int max, int xBound, int yBound) {
+		this(min,max,xBound,yBound);
+		this.enemies = enemies;
+	}
+	
 	public EnemyManager(ArrayList<Enemy> enemies, int min, int max) {
 		this(enemies,min,max,21,21);
+	}
+	
+	public EnemyManager(int min, int max) {
+		this(min,max,21,21);
 	}
 
 	public ArrayList<Enemy> getList() {
@@ -55,17 +66,68 @@ public class EnemyManager {
 		respawner.start();
 	}
 	
-	public void spawnBats() {
+	public void spawnMushrooms() {
 		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Mushroom(r.nextInt(xBound), r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					System.out.println(spawnChance);
 					if(spawnChance<25) {
-						enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Mushroom(r.nextInt(xBound), r.nextInt(yBound)));
+					}
+				}
+			}});
+		respawner.start();
+	}
+	
+	public void spawnWitches() {
+		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
+			public void actionPerformed(ActionEvent arg0) {
+				if(enemies.size() < min) {
+					enemies.add(new Witch(r.nextInt(xBound), r.nextInt(yBound)));
+				}
+				else if(enemies.size()>=min && enemies.size()<max) {
+					int spawnChance = r.nextInt(100);
+					System.out.println(spawnChance);
+					if(spawnChance<25) {
+						enemies.add(new Witch(r.nextInt(xBound), r.nextInt(yBound)));
+					}
+				}
+			}});
+		respawner.start();
+	}
+	
+	public void spawnFlameSkulls() {
+		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
+			public void actionPerformed(ActionEvent arg0) {
+				if(enemies.size() < min) {
+					enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
+				}
+				else if(enemies.size()>=min && enemies.size()<max) {
+					int spawnChance = r.nextInt(100);
+					System.out.println(spawnChance);
+					if(spawnChance<25) {
+						enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
+					}
+				}
+			}});
+		respawner.start();
+	}
+	
+	public void spawnCrawlers() {
+		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
+			public void actionPerformed(ActionEvent arg0) {
+				if(enemies.size() < min) {
+					enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
+				}
+				else if(enemies.size()>=min && enemies.size()<max) {
+					int spawnChance = r.nextInt(100);
+					System.out.println(spawnChance);
+					if(spawnChance<25) {
+						enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
 					}
 				}
 			}});

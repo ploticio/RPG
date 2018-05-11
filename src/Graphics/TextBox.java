@@ -22,6 +22,7 @@ public class TextBox extends JPanel{
 	private String s = "Sample Text";
 	private String s2 = "";
 	private String s3 = "";
+	private String s4 = "";
 	private BufferedImage textBoxImage;
 	private Font customFont;
 	
@@ -70,6 +71,10 @@ public class TextBox extends JPanel{
 		this.s3 = s;
 	}
 	
+	public void setText4(String s) {
+		this.s4 = s;
+	}
+	
 	/**
 	 * Updates graphics
 	 */
@@ -81,11 +86,14 @@ public class TextBox extends JPanel{
 	 * Renders text box in the window
 	 */
 	public void paintComponent(Graphics g) {
-		g.drawImage(textBoxImage, 0, 0, 800, 150, null);
-		g.setFont(new Font("Arial", Font.BOLD, 16));
-		//g.setFont(customFont);
-		g.drawString(s, 15, 30);
-		g.drawString("Press 'E' to close", 635, 135);
-	}
+        g.drawImage(textBoxImage, 0, 0, 800, 150, null);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        //g.setFont(customFont);
+        g.drawString(s, 15, 30);
+        g.drawString(s2, 15, 50);
+        g.drawString(s3, 15, 70);
+        g.drawString(s4, 15, 90);
+        g.drawString("Press 'E' to close", 635, 135);
+    }
 
 }
