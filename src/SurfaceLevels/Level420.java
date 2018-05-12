@@ -25,13 +25,16 @@ public class Level420 extends LevelCreator{
 			setImage(11,i,"Images\\dirtToGrassE.png", false);
 		}
 		for(int j = 0; j<21; j++) {
-			setImage(j,20,"Images\\waterToSand.png", true);
-			setImage(j,19,"Images\\sand.png", false);
+			setImage(j,20,"Images\\water.png", true);
+			setImage(j,19,"Images\\waterToSand.png", true);
 			setImage(j,18,"Images\\sandToGrassN.png", false);
 		}
 		setImage(9,14, "Images\\dirtToGrassSW.png", false);
 		setImage(10,14, "Images\\dirtToGrassS.png", false);
 		setImage(11,14, "Images\\dirtToGrassSE.png", false);
+		setImage(9,20,"Images\\boat1.png");
+		setImage(10,20,"Images\\boat2.png");
+		
 		
 		for(int k = 0; k < 8; k++) {
 			setImage(k, 0, "Images\\bushHo.png", true);

@@ -1,6 +1,7 @@
 package Levels;
 
 import CaveLevels.*;
+import Entities.Boinkers;
 import SurfaceLevels.*;
 import SpecialLevels.*;
 
@@ -81,6 +82,9 @@ public class WorldGrid {
 		worldGrid[3][4][1].getEnemyManager().spawnCrawlers(100, 132, 18, 18);
 		worldGrid[2][3][1].getEnemyManager().spawnCrawlers(100, 132, 18, 18);
 		worldGrid[2][4][1].getEnemyManager().spawnFlameSkulls(100, 132, 18, 18);
+		
+		//BOSS
+		worldGrid[2][4][2].getEnemyManager().getList().add(new Boinkers(1,1));
 		
 		worldGrid[4][2][0].getPlayer().setxGrid(10);
 		worldGrid[4][2][0].getPlayer().setyGrid(17);

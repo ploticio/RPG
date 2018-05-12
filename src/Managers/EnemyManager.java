@@ -75,12 +75,12 @@ public class EnemyManager {
 		batRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Bat(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
+					enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Bat(r.nextInt(xBound) +1, r.nextInt(yBound) +1));
+						enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -136,15 +136,15 @@ public class EnemyManager {
 	}
 	
 	public void spawnFlameSkulls(int min, int max, int xBound, int yBound) {
-		flameSkullRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every .5 seconds
+		flameSkullRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new FlameSkull(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
+					enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new FlameSkull(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
+						enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -152,15 +152,15 @@ public class EnemyManager {
 	}
 	
 	public void spawnCrawlers(int min, int max, int xBound, int yBound) {
-		crawlerRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every .5 seconds
+		crawlerRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Crawler(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
+					enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Crawler(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
+						enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
 					}
 				}
 			}});
