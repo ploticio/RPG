@@ -27,15 +27,16 @@ public class GameRunner {
 
 	private static final int ENEMY_DELAY = 1000;
 	private static final int PLAYER_DELAY = 100;
+	private static final int DESPAWN_RATE = 5000;
 	private static final int GAME_REFRESH = 1;
 	private static boolean debounce = false;
 	private static boolean isBuying = false;
 	private static boolean isSelling = false;
 	// private static boolean isPaused = false;// checks if game is paused
 
-	static int lX = 4;
-	static int lY = 2;
-	static int lZ = 0;
+	static int lX = 2;
+	static int lY = 4;
+	static int lZ = 2;
 	static WorldGrid wg;
 	static LevelCreator currentLevel;
 
@@ -188,13 +189,34 @@ public class GameRunner {
 								cb.setTextMain("Fighting: " + e.getName() + "!");
 								cb.setTextSub(" ");
 							}
+							if(lX == 2 && lY == 4 && lZ == 2) {
+								if(currentLevel.getPlayer().getxGrid()>0 && currentLevel.getPlayer().getxGrid()<19
+										&& currentLevel.getPlayer().getyGrid()>0 && currentLevel.getPlayer().getyGrid()<14) {
+									gameTimer.stop();
+									currentLevel.getEnemyManager().setEnemyIndex(i);
+									cb.setBounds(20, 660, 800, 150);
+									cb.setEnemy(e);
+									//System.out.println(p.getEquipedWeapon());
+									if(p.hasWeapon()) {
+										p.setWeaponAttacks(true);
+									}
+									else {
+										p.setWeaponAttacks(false);
+									}
+									combBoxTimer.start();
+									cb.setTextMain("Fighting: " + e.getName() + "!");
+									cb.setTextSub(" ");
+								}
+							}
 						}
 					}
 				});
 				Timer enemyTimer = new Timer(ENEMY_DELAY, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						for (int i = 0; i < currentLevel.getEnemyManager().getList().size(); i++) {
-							currentLevel.getEnemyManager().getList().get(i).randomMovement(currentLevel.getGrid());
+						if(lZ != 2) {
+							for (int i = 0; i < currentLevel.getEnemyManager().getList().size(); i++) {
+								currentLevel.getEnemyManager().getList().get(i).randomMovement(currentLevel.getGrid());
+							}
 						}
 					}
 				});
@@ -256,7 +278,7 @@ public class GameRunner {
 					}
 				});
 				
-				Timer despawnTimer = new Timer(5000, new ActionListener() {
+				Timer despawnTimer = new Timer(DESPAWN_RATE, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(lZ == 0) {
 							for(int y=3; y<5; y++) {
@@ -695,7 +717,7 @@ public class GameRunner {
 
 				//////// Combat System/////////
 			out.put("use", new AbstractAction() {
-				//////// USING SHIT OUTSIDE OF COMBAT/////////
+				//////// USING STUFF OUTSIDE OF COMBAT/////////
 				public void actionPerformed(ActionEvent arg0) {
 					////////// BUYING/SELLING//////////////////////
 					if (shopArmorTimer.isRunning() && isBuying) {

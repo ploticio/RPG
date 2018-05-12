@@ -16,10 +16,9 @@ public abstract class Enemy extends Entity {
 	// STARTING POSITION (FOR BOUNDING MOVEMENT)
 	int xStart = super.getxGrid();
 	int yStart = super.getyGrid();
-
-	// PROPERTIES
-	boolean isDead = false;
 	
+	// PROPERTIES
+	protected boolean isBoss = false;
 	
 	private int exp = 0;
 	private int gold = 0;// amount of gold enemy drops
@@ -137,6 +136,10 @@ public abstract class Enemy extends Entity {
 	 */
 	public void changeHealth(int x) {
 		super.setCurrentHP(super.getCurrentHP() + x);
+	}
+	
+	public boolean isBoss() {
+		return isBoss;
 	}
 
 }

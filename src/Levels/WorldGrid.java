@@ -1,8 +1,10 @@
 package Levels;
 
 import CaveLevels.*;
+import Entities.Boinkers;
 import SurfaceLevels.*;
 import SpecialLevels.*;
+
 
 public class WorldGrid {
 	
@@ -43,7 +45,9 @@ public class WorldGrid {
 		worldGrid[3][3][1] = new Level331();
 		worldGrid[3][4][1] = new Level341();
 		worldGrid[2][2][2] = new Shop222();
+		
 		worldGrid[2][4][2] = new Boss242();
+		worldGrid[2][4][2].getEnemyManager().getList().add(new Boinkers(1,1));
 		
 		worldGrid[3][3][0].getEnemyManager().spawnBlobs(7,10,21,21);
 		worldGrid[3][3][1].getEnemyManager().spawnMushrooms(7, 10, 21, 21);
