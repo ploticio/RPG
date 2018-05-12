@@ -18,6 +18,7 @@ public class EnemyManager {
 	
 	////////RESPAWN RATE///////////
 	private int respawnRate = 5000;
+	private int caveRespawnRate = 500;
 	private int chance = 15;
 	
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -71,15 +72,15 @@ public class EnemyManager {
 	}
 	
 	public void spawnBats(int min, int max, int xBound, int yBound) {
-		batRespawner = new Timer(respawnRate, new ActionListener() { //respawn every 10 seconds
+		batRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Bat(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Bat(r.nextInt(xBound) +1, r.nextInt(yBound) +1));
 					}
 				}
 			}});
@@ -135,15 +136,15 @@ public class EnemyManager {
 	}
 	
 	public void spawnFlameSkulls(int min, int max, int xBound, int yBound) {
-		flameSkullRespawner = new Timer(respawnRate, new ActionListener() { //respawn every 10 seconds
+		flameSkullRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every .5 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new FlameSkull(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new FlameSkull(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
 					}
 				}
 			}});
@@ -151,15 +152,15 @@ public class EnemyManager {
 	}
 	
 	public void spawnCrawlers(int min, int max, int xBound, int yBound) {
-		crawlerRespawner = new Timer(respawnRate, new ActionListener() { //respawn every 10 seconds
+		crawlerRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every .5 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Crawler(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Crawler(r.nextInt(xBound) + 1, r.nextInt(yBound) + 1));
 					}
 				}
 			}});
