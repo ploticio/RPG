@@ -23,7 +23,8 @@ public class Level241 extends LevelCreator {
 		setImage(17,2,"Images\\cave.png",false);
 		setImage(17,3,"Images\\cave.png",false);
 		setImage(18,1,"Images\\cave.png",false);
-		setImage(18,2, "Images\\door.png",false);//boss level door
+		setImage(18,2, "Images\\door.png", false);//boss level door
+		setChanger(18,2,1);
 		setImage(18,3,"Images\\cave.png",false);
 		setImage(19,1,"Images\\cave.png",false);
 		setImage(19,2,"Images\\cave.png",false);

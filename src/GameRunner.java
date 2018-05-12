@@ -33,8 +33,8 @@ public class GameRunner {
 	private static boolean isSelling = false;
 	// private static boolean isPaused = false;// checks if game is paused
 
-	static int lX = 3;
-	static int lY = 4;
+	static int lX = 4;
+	static int lY = 2;
 	static int lZ = 0;
 	static WorldGrid wg;
 	static LevelCreator currentLevel;
@@ -206,18 +206,22 @@ public class GameRunner {
 							if(lZ==0) {
 								for(int y=0; y<5; y++) {
 									for(int x=0; x<5; x++) {
-										if(worldGrid[x][y][lZ].getEnemyManager().getTimer()!=null) {
-											worldGrid[x][y][lZ].getEnemyManager().getTimer().stop();
-										}
+										for(int i=0; i<worldGrid[x][y][lZ].getEnemyManager().getTimers().size(); i++) {
+											if(worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i)!=null) {
+												worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i).stop();
+											}
+										}	
 									}
 								}
 							}
 							if(lZ==1) {
 								for(int y=3; y<5; y++) {
 									for(int x=2; x<4; x++) {
-										if(worldGrid[x][y][lZ].getEnemyManager().getTimer()!=null) {
-											worldGrid[x][y][lZ].getEnemyManager().getTimer().stop();
-										}
+										for(int i=0; i<worldGrid[x][y][lZ].getEnemyManager().getTimers().size(); i++) {
+											if(worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i)!=null) {
+												worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i).stop();
+											}
+										}	
 									}
 								}
 							}
@@ -227,18 +231,22 @@ public class GameRunner {
 							if(lZ == 0) {
 								for(int y=0; y<5; y++) {
 									for(int x=0; x<5; x++) {
-										if(worldGrid[x][y][lZ].getEnemyManager().getTimer()!=null) {
-											worldGrid[x][y][lZ].getEnemyManager().getTimer().start();
-										}
+										for(int i=0; i<worldGrid[x][y][lZ].getEnemyManager().getTimers().size(); i++) {
+											if(worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i)!=null) {
+												worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i).start();
+											}
+										}	
 									}
 								}
 							}
 							if(lZ==1) {
 								for(int y=3; y<5; y++) {
 									for(int x=2; x<4; x++) {
-										if(worldGrid[x][y][lZ].getEnemyManager().getTimer()!=null) {
-											worldGrid[x][y][lZ].getEnemyManager().getTimer().stop();
-										}
+										for(int i=0; i<worldGrid[x][y][lZ].getEnemyManager().getTimers().size(); i++) {
+											if(worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i)!=null) {
+												worldGrid[x][y][lZ].getEnemyManager().getTimers().get(i).start();
+											}
+										}			
 									}
 								}
 							}
@@ -256,24 +264,24 @@ public class GameRunner {
 									Iterator<Enemy> iter = worldGrid[x][y][1].getEnemyManager().getList().iterator();
 									while(iter.hasNext()){
 										iter.next();
+										System.out.println(iter);
 										iter.remove();
 									}
 								}
 							}
 						}
-						else {
+						if(lZ == 1) {
 							for(int y=0; y<5; y++) {
 								for(int x=0; x<5; x++) {
 									Iterator<Enemy> iter = worldGrid[x][y][0].getEnemyManager().getList().iterator();
 									while(iter.hasNext()) {
 										iter.next();
+										System.out.println(iter);
 										iter.remove();
 									}
-									
 								}
 							}
 						}
-						
 					}
 				});
 				
