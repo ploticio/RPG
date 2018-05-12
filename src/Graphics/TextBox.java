@@ -1,5 +1,6 @@
 package Graphics;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -23,8 +24,10 @@ public class TextBox extends JPanel{
 	private String s2 = "";
 	private String s3 = "";
 	private String s4 = "";
+	private String s5 = "";
 	private BufferedImage textBoxImage;
 	private Font customFont;
+	private BufferedImage statBoxImage;
 	
 	/**
 	 * Default Constructor - initializes textBoxImage to image
@@ -32,6 +35,7 @@ public class TextBox extends JPanel{
 	public TextBox() {
 		try {
 			textBoxImage = ImageIO.read(new File("Images\\textBox.png"));
+			statBoxImage = ImageIO.read(new File("Images\\boiStat.png"));
 			//customFont = Font.createFont(Font.TRUETYPE_FONT, new File("")); 
 			//GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			//ge.registerFont(customFont);
@@ -75,6 +79,11 @@ public class TextBox extends JPanel{
 		this.s4 = s;
 	}
 	
+	public void setText5(String s) {
+		this.s5 = s;
+	}
+	
+	
 	/**
 	 * Updates graphics
 	 */
@@ -87,12 +96,14 @@ public class TextBox extends JPanel{
 	 */
 	public void paintComponent(Graphics g) {
         g.drawImage(textBoxImage, 0, 0, 800, 150, null);
+        g.drawImage(statBoxImage, 20, 35, null);
         g.setFont(new Font("Arial", Font.BOLD, 16));
         //g.setFont(customFont);
-        g.drawString(s, 15, 30);
-        g.drawString(s2, 15, 50);
-        g.drawString(s3, 15, 70);
-        g.drawString(s4, 15, 90);
+        g.drawString(s, 95, 30);
+        g.drawString(s2, 95, 50);
+        g.drawString(s3, 95, 70);
+        g.drawString(s4, 95, 90);
+        g.drawString(s5, 95, 110);
         g.drawString("Press 'E' to close", 635, 135);
     }
 

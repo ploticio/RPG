@@ -1,19 +1,13 @@
 package Graphics;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import Entities.Enemy;
 import Entities.Player;
@@ -76,10 +70,6 @@ public class CombatBox extends JPanel {
 		return p;
 	}
 	
-	public void setAltPlayer(Player p) {
-		p.setAltPlayer(p);
-	}
-	
 	public void setEnemy(Enemy e) {
 		this.e = e;
 	}
@@ -122,7 +112,7 @@ public class CombatBox extends JPanel {
 			g.drawImage(statBoxImage, 5,5, 70, 70, null);
 			g.setFont(new Font("Arial", Font.BOLD, 16));
 			g.drawString("Your Health: " + p.getCurrentHP(), 300, 20);
-			g.drawString("Enemies Health: " + e.getCurrentHP(), 600, 20);
+			g.drawString("Enemy's Health: " + e.getCurrentHP(), 600, 20);
 		}
 	}
 }

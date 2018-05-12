@@ -8,33 +8,33 @@ import javax.imageio.ImageIO;
 
 import Entities.*;
 
-public class Potion extends Item {
+public class BigPotion extends Item {
 	private String name;
 	private String desc;
 	private int price;
 	private BufferedImage picture;
 
-	public Potion() {
-		price = 10;
+	public BigPotion() {
+		price = 15;
 		super.setPrice(price);
-		name = "(PRICE: " + price +")" + " Potion";
-		desc = "Heals 10 hp";
+		name = "(PRICE: " + price +")" + " Big Potion";
+		desc = "Heals 15 hp";
 		try {
-			picture = ImageIO.read(new File("Images\\potSmall.png"));
+			picture = ImageIO.read(new File("Images\\potBig.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public Potion(String name, String desc, int price) {
+	public BigPotion(String name, String desc, int price) {
 		super(name, desc, price);
 		// this.p = p;
 		// TODO Auto-generated constructor stub
 	}
 
 	public void use(Entity e) {
-		e.changeHP(10);
+		e.changeHP(15);
 	}
 
 	public String toString() {

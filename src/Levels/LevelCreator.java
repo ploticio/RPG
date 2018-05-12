@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import Entities.Enemy;
 import Entities.Player;
-import Graphics.TextBox;
 import Managers.EnemyManager;
 
 public class LevelCreator {
@@ -15,7 +14,7 @@ public class LevelCreator {
 	private final int levelSize = 21; //size of square grid in tiles
 	private Player player = new Player();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	private EnemyManager enemyManager = new EnemyManager(enemies,0,0,0,0);
+	private EnemyManager enemyManager = new EnemyManager();
 	private Tile[][] grid = new Tile[levelSize][levelSize];
 	
 	/**
@@ -144,10 +143,6 @@ public class LevelCreator {
 			}
 		}
 	}
-
-	public void setAltPlayer(Player p) {
-		player.setAltPlayer(p);
-	}
 	
 	/**
 	 * Gets player entity
@@ -164,4 +159,5 @@ public class LevelCreator {
 	public EnemyManager getEnemyManager() {
 		return enemyManager;
 	}
+	
 }

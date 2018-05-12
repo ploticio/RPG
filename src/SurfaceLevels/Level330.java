@@ -33,6 +33,7 @@ public class Level330 extends LevelCreator {
 		setImage(6,7,"Images\\cEnt16.png",true);
 		setImage(7,7,"Images\\cEnt17.png",true);
 		setImage(8,7,"Images\\cEnt18.png",false);//entrance
+		setChanger(8, 6, 1);
 		setImage(9,7,"Images\\cEnt19.png",true);
 		setImage(10,7,"Images\\cEnt20.png",true);
 	}

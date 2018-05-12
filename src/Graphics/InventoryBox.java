@@ -42,7 +42,7 @@ public class InventoryBox extends JPanel {
 	 * @return arrow's position
 	 */
 	public int getArrowPos() {
-		return 40 + arrowPos * 20;
+		return 60 + arrowPos * 30;
 	}
 
 	/**
@@ -85,7 +85,8 @@ public class InventoryBox extends JPanel {
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.drawString("Gold: " + p.getGold(), 40, 30);
 		for (int i = 0; i < p.getInventory().size(); i++) {
-			g.drawString(p.getInventory().get(i).toString(), 40, 50 + i * 20);
+			g.drawString(p.getInventory().get(i).toString(), 90, 70 + i * 30);
+			g.drawImage(p.getInventory().get(i).getPicture(), 40, 40 + i*30, null);
 		}
 		g.drawString("Press 'F' to use", 650, 435);
 

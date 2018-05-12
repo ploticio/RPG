@@ -26,7 +26,7 @@ public class BlueBlob extends Enemy {
 	public BlueBlob(int x, int y) {
 		super(x, y, "Blue Blob", 20, 20, 10, 25, 3);
 		try {
-			current = ImageIO.read(new File("Images\\redBlob.png"));
+			current = ImageIO.read(new File("Images\\blueBlob.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}

@@ -1,7 +1,5 @@
 package Entities;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,7 +9,6 @@ import Items.*;
 
 import javax.imageio.ImageIO;
 
-import Graphics.GraphicsMaker;
 
 public class Player extends Entity {
 	private int gold;
@@ -23,7 +20,6 @@ public class Player extends Entity {
 	private NoArmor na = new NoArmor();
 	private Weapon equipedWeapon;
 	private NoWeapon nw = new NoWeapon();
-	private Player alt;
 	
 	ArrayList<Item> inventory = new ArrayList<Item>();
 	ArrayList<Attack> attacks = new ArrayList<Attack>();
@@ -38,6 +34,11 @@ public class Player extends Entity {
 	BufferedImage right;
 	BufferedImage current;
 	BufferedImage statBoxImage;
+	
+	Attack punch = new Attack("Punch", 5);
+	Attack kick = new Attack("Kick", 6);
+	Attack stab = new Attack("Stab", 7);
+	Attack slice = new Attack("Slice", 8);
 
 	/**
 	 * Default Constructor - initializes player sprites and sets the current direction to down
@@ -49,9 +50,8 @@ public class Player extends Entity {
 		super.setCurrentHP(5);
 		equipedArmor = na;
 		equipedWeapon = nw;
+		attacks.add(punch);
 		try {
-			fillAttacks();
-			statBoxImage = ImageIO.read(new File("Images\\boiStat.png"));
 			up = ImageIO.read(new File("Images\\boiBack.png"));
 			down = ImageIO.read(new File("Images\\boiFront.png"));
 			left = ImageIO.read(new File("Images\\boiLeft.png"));
@@ -63,19 +63,10 @@ public class Player extends Entity {
 	}
 
 	
-	public void setAltPlayer(Player alt) {
-		this.alt = alt;
-	}
-
 	/**
 	 * Adds attacks to players attack list
 	 */
-	private void fillAttacks() {
-		attacks.add(new Attack("Stab", 2));
-		attacks.add(new Attack("Slice", 10));
-		attacks.add(new Attack("Kick", 4));
-		attacks.add(new Attack("Punch", 6));
-	}
+	
 
 	///////// Graphics/////////////
 	/**
@@ -98,15 +89,6 @@ public class Player extends Entity {
 	 * @param g - graphics drawer
 	 */
 	public void draw(Graphics g) {
-		if(alt != null) {
-			g.drawImage(statBoxImage, 5,5, 70, 70, null);
-			g.setFont(new Font("Arial", Font.BOLD, 16));
-			g.setColor(Color.WHITE);
-			g.drawString("Gold: " + alt.getGold(), 80, 64);
-			g.drawString("Health: " + alt.getCurrentHP() + "/" + alt.getMaxHP(), 80, 44);
-			g.drawString("Level: " + alt.getLevel(), 80, 24);
-			g.drawString("EXP: " + Math.round(alt.getExp()*10)/10 + "/" + Math.round(alt.getRequiredEXP()*10)/10, 80, 84);
-		}
 		g.drawImage(current, xPos, yPos, null);
 	}
 
@@ -119,6 +101,9 @@ public class Player extends Entity {
         trueHP++;
         trueStrength++;
         level++;
+        if(level == 2) {
+        	attacks.add(kick);
+        }
         exp = exp % requiredEXP;
         requiredEXP = 50*Math.exp(0.1*level);
     }
@@ -272,6 +257,15 @@ public class Player extends Entity {
 	public Weapon getEquipedWeapon() {
 		return equipedWeapon;
 	}
+	
+	public boolean hasWeapon() {
+		if(equipedWeapon == nw) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 	/**
 	 * gets the strength without modifiers
 	 * @return strength
@@ -323,7 +317,22 @@ public class Player extends Entity {
 	 * + "]"; }
 	 */
 
-	
+	public void setWeaponAttacks(boolean b) {
+		if(b && !attacks.contains(stab)) {
+			attacks.add(stab);
+		}
+		if(b && level == 6 && !attacks.contains(slice)) { //TODO: CHANGE LEVEL MINIMUM FOR STATS WHEN GAME IS BALANCED
+			attacks.add(slice);
+		}
+		if(!b) {
+			if(attacks.contains(stab)) {
+				attacks.remove(stab);
+			}
+			if(attacks.contains(slice)) {
+				attacks.remove(slice);
+			}
+		}
+	}
 	
 	
 	

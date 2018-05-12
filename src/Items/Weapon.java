@@ -1,19 +1,26 @@
 package Items;
 
+import java.awt.image.BufferedImage;
+
+import Entities.Player;
+
 public abstract class Weapon implements Equipment {
 	private String name;
 	private String desc;
 	private int increase;
 	private boolean isEquiped;
+	private int price;
+	private BufferedImage picture;
 
 	public Weapon() {
 		isEquiped = false;
 	}
 
-	public Weapon(String name, String desc, int increase) {
+	public Weapon(String name, String desc, int increase, int price) {
 		this.name = name;
 		this.desc = desc;
 		this.increase = increase;
+		this.price = price;
 	}
 
 	public String getName() {
@@ -57,6 +64,27 @@ public abstract class Weapon implements Equipment {
 		return increase;
 	}
 
+	public void setPrice(int i) {
+		price = i;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void buy(Player p) {
+		p.addWeapon(this);
+		p.setGold(p.getGold() - price);
+	}
+	
+	public void sell(Player p) {
+		p.setGold(p.getGold() + price/2);
+	}
+	
+	public BufferedImage getPicture() {
+		return picture;
+	}
+	
 	public String toString() {
 		String s;
 		if (isEquiped) {

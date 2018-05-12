@@ -3,7 +3,7 @@ package Entities;
 public class Attack {
 	private String name;
 	private int strength;
-
+	
 	/**
 	 * Loaded Constructor - initializes name and strength of attack
 	 * @param name - attack name
@@ -46,4 +46,5 @@ public class Attack {
 	public void setStrength(int strength) {
 		this.strength = strength;
 	}
+	
 }

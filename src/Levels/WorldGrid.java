@@ -1,7 +1,8 @@
 package Levels;
 
-import SpecialLevels.Shop222;
+import CaveLevels.*;
 import SurfaceLevels.*;
+import SpecialLevels.Shop222;
 
 public class WorldGrid {
 	
@@ -37,7 +38,14 @@ public class WorldGrid {
 		worldGrid[4][2][0] = new Level420();
 		worldGrid[4][3][0] = new Level430();
 		worldGrid[4][4][0] = new Level440();
+		worldGrid[2][3][1] = new Level231();
+		worldGrid[2][4][1] = new Level241();
+		worldGrid[3][3][1] = new Level331();
+		worldGrid[3][4][1] = new Level341();
 		worldGrid[2][2][2] = new Shop222();
+		
+		worldGrid[3][3][0].getEnemyManager().spawnBlobs(7,10,21,21);
+		
 		worldGrid[4][2][0].getPlayer().setxGrid(10);
 		worldGrid[4][2][0].getPlayer().setyGrid(17);
 	}

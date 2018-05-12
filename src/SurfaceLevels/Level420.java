@@ -1,17 +1,11 @@
 package SurfaceLevels;
 
-import java.util.ArrayList;
 import java.util.Random;
-
-import Entities.Blob;
-import Entities.Enemy;
 import Levels.LevelCreator;
-import Managers.EnemyManager;
+
 
 public class Level420 extends LevelCreator{
 	private Random r = new Random();
-	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	private EnemyManager em = new EnemyManager(enemies,3,5);
 	
 	
 	public Level420(){
@@ -46,13 +40,7 @@ public class Level420 extends LevelCreator{
 			setImage(k, 0, "Images\\bushHo.png", true);
 		}
 		
-		em.spawnCrawlers();
-		em.spawnMushrooms();
-		em.spawnFlameSkulls();
 	}
 	
-	public EnemyManager getEnemyManager() {
-		return em;
-	}
 	
 }

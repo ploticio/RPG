@@ -6,18 +6,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class WoodenSword extends Weapon {
+public class GoblinMail extends Armor {
 	
-	private static int increase = 2;
+	private static int increase = 5;
 	private static int price = 5;
-	private static String name = "(PRICE: " + price +")" + " Wooden Sword";
-	private static String desc = "Increases Strength by 2";
+	private static String name = "(PRICE: " + price +")" + " Goblin Mail";
+	private static String desc = "Increases maximum HP by 5";
 	private BufferedImage picture;
-	
-	public WoodenSword() {
-		super(name, desc, increase, 5);
+
+	public GoblinMail() {
+		super(name, desc, increase, price);
 		try {
-			picture = ImageIO.read(new File("Images\\swordWood.png"));
+			picture = ImageIO.read(new File("Images\\goblinMail.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -27,4 +27,5 @@ public class WoodenSword extends Weapon {
 	public BufferedImage getPicture() {
 		return picture;
 	}
+
 }

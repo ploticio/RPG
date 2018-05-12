@@ -21,52 +21,34 @@ public class EnemyManager {
 	
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private Random r = new Random();
-	private int min, max, xBound, yBound;
 	private int enemyIndex = 0;
 	private Timer respawner;
 	
-	public EnemyManager(int min, int max, int xBound, int yBound) {
-		this.min = min;
-		this.max = max;
-		this.xBound = xBound;
-		this.yBound = yBound;
-	}
-	
-	public EnemyManager(ArrayList<Enemy> enemies, int min, int max, int xBound, int yBound) {
-		this(min,max,xBound,yBound);
-		this.enemies = enemies;
-	}
-	
-	public EnemyManager(ArrayList<Enemy> enemies, int min, int max) {
-		this(enemies,min,max,21,21);
-	}
-	
-	public EnemyManager(int min, int max) {
-		this(min,max,21,21);
+	public EnemyManager() {
+		//nothing
 	}
 
 	public ArrayList<Enemy> getList() {
 		return enemies;
 	}
 	
-	public void spawnBlobs() {
+	public void spawnBlobs(int min, int max, int xBound, int yBound) {
 		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					blob();
+					blob(xBound, yBound);
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
-					System.out.println(spawnChance);
-					if(spawnChance<25) {
-						blob();
+					if(spawnChance<15) {
+						blob(xBound, yBound);
 					}
 				}
 			}});
 		respawner.start();
 	}
 	
-	public void spawnMushrooms() {
+	public void spawnMushrooms(int min, int max, int xBound, int yBound) {
 		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
@@ -74,7 +56,6 @@ public class EnemyManager {
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
-					System.out.println(spawnChance);
 					if(spawnChance<25) {
 						enemies.add(new Mushroom(r.nextInt(xBound), r.nextInt(yBound)));
 					}
@@ -83,7 +64,7 @@ public class EnemyManager {
 		respawner.start();
 	}
 	
-	public void spawnWitches() {
+	public void spawnWitches(int min, int max, int xBound, int yBound) {
 		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
@@ -91,7 +72,6 @@ public class EnemyManager {
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
-					System.out.println(spawnChance);
 					if(spawnChance<25) {
 						enemies.add(new Witch(r.nextInt(xBound), r.nextInt(yBound)));
 					}
@@ -100,7 +80,7 @@ public class EnemyManager {
 		respawner.start();
 	}
 	
-	public void spawnFlameSkulls() {
+	public void spawnFlameSkulls(int min, int max, int xBound, int yBound) {
 		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
@@ -108,7 +88,6 @@ public class EnemyManager {
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
-					System.out.println(spawnChance);
 					if(spawnChance<25) {
 						enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
 					}
@@ -117,7 +96,7 @@ public class EnemyManager {
 		respawner.start();
 	}
 	
-	public void spawnCrawlers() {
+	public void spawnCrawlers(int min, int max, int xBound, int yBound) {
 		respawner = new Timer(RESPAWN_RATE, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
@@ -125,7 +104,6 @@ public class EnemyManager {
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
-					System.out.println(spawnChance);
 					if(spawnChance<25) {
 						enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
 					}
@@ -134,7 +112,7 @@ public class EnemyManager {
 		respawner.start();
 	}
 	
-	private void blob() {
+	private void blob(int xBound, int yBound) {
 		int blobType = r.nextInt(3);
 		if(blobType == 0)
 			enemies.add(new Blob(r.nextInt(xBound), r.nextInt(yBound)));
@@ -155,7 +133,7 @@ public class EnemyManager {
 	public void setEnemyIndex(int enemyIndex) {
 		this.enemyIndex = enemyIndex;
 	}
-
+	
 	public void draw(Graphics g) {
 		for (Enemy e : enemies)
 			e.draw(g);

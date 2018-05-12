@@ -34,7 +34,7 @@ public class WeaponBox extends JPanel {
 	}
 
 	public int getArrowPos() {
-		return 40 + arrowPos * 20;
+		return 60 + arrowPos * 30;
 	}
 
 	public void setArrowPos(int x) {
@@ -57,8 +57,10 @@ public class WeaponBox extends JPanel {
 		g.drawImage(invenBoxImage, 0, 0, 800, 450, null);
 		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));
+		g.drawString("Gold: " + p.getGold(), 40, 30);
 		for (int i = 0; i < p.getWeapons().size(); i++) {
-			g.drawString(p.getWeapons().get(i).toString(), 40, 50 + i * 20);
+			g.drawString(p.getWeapons().get(i).toString(), 90, 70 + i * 30);
+			g.drawImage(p.getWeapons().get(i).getPicture(), 40, 40 + i*30, null);
 		}
 		g.drawString("Press 'F' to equip/unequip", 580, 435);
 

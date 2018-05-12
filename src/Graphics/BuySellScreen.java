@@ -16,13 +16,13 @@ import javax.swing.Timer;
 
 import Entities.Player;
 
-public class PauseScreen extends JPanel {
+public class BuySellScreen extends JPanel {
 	/// made 5/7
 	private int arrowPos;
 	private BufferedImage pause;
 	private BufferedImage arrow;
 
-	public PauseScreen() {
+	public BuySellScreen() {
 		arrowPos = 0;
 		try {
 			pause = ImageIO.read(new File("Images\\textBox.png"));
@@ -52,10 +52,9 @@ public class PauseScreen extends JPanel {
 		g.drawImage(pause, 0, 0, 800, 150, null);
 		g.drawImage(arrow, 10, getArrowPos(), 10, 10, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));
-		g.drawString("Inventory", 25, 30);
+		g.drawString("Items", 25, 30);
 		g.drawString("Armor", 25, 50);
 		g.drawString("Weapons", 25, 70);
-		g.drawString("Stats", 25, 90);
-		g.drawString("Press F to select", 650, 135);
+
 	}
 }
