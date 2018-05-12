@@ -691,17 +691,19 @@ public class GameRunner {
 						isSelling = false;
 						isPaused = false;
 					} else {
-						pauseTimer.stop();
-						shopTimer.stop();
-						buySellTimer.stop();
-						inventoryBoxTimer.stop();
-						armorTimer.stop();
-						weaponTimer.stop();
-						gameTimer.start();
-						isBuying = false;
-						isSelling = false;
-						wasInCombat = false;
-						isPaused = false;
+						if(!winTimer.isRunning() && !deathTimer.isRunning()) {
+							pauseTimer.stop();
+							shopTimer.stop();
+							buySellTimer.stop();
+							inventoryBoxTimer.stop();
+							armorTimer.stop();
+							weaponTimer.stop();
+							gameTimer.start();
+							isBuying = false;
+							isSelling = false;
+							wasInCombat = false;
+							isPaused = false;
+						}
 					}
 
 					/*
@@ -880,7 +882,7 @@ public class GameRunner {
                                     tb.setText2("You are now level " + p.getLevel() + "!");
                                     tb.setText3("HP is now: " +p.getTrueStrength());
                                     tb.setText4("Strength is now: " +p.getTrueStrength());
-                                    if(p.getLevel() == 2 || p.getLevel() == 6) {
+                                    if(p.getLevel() == 3 || p.getLevel() == 6) {
                                     	tb.setText5("You learned a new move!");
                                     }
                                    // System.out.println("current: " + p.getExp());

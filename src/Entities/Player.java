@@ -35,19 +35,19 @@ public class Player extends Entity {
 	BufferedImage current;
 	BufferedImage statBoxImage;
 	
-	Attack punch = new Attack("Punch", 5);
-	Attack kick = new Attack("Kick", 6);
-	Attack stab = new Attack("Stab", 7);
-	Attack slice = new Attack("Slice", 8);
+	Attack punch = new Attack("Punch", 10);
+	Attack kick = new Attack("Kick", 15);
+	Attack stab = new Attack("Stab", 20);
+	Attack slice = new Attack("Slice", 25);
 
 	/**
 	 * Default Constructor - initializes player sprites and sets the current direction to down
 	 */
 	public Player() {
 		requiredEXP = 50;
-		trueHP = 5;
-		trueStrength = 5;
-		super.setCurrentHP(5);
+		trueHP = 10;
+		trueStrength = 1;
+		super.setCurrentHP(10);
 		equipedArmor = na;
 		equipedWeapon = nw;
 		attacks.add(punch);
@@ -101,7 +101,7 @@ public class Player extends Entity {
         trueHP++;
         trueStrength++;
         level++;
-        if(level == 2) {
+        if(level == 3) {
         	attacks.add(kick);
         }
         exp = exp % requiredEXP;
