@@ -7,14 +7,14 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class Blob extends Enemy {
+public class Bat extends Enemy {
 
 	/**
 	 * Default Constructor - loads enemy image
 	 */
-	public Blob() {
+	public Bat() {
 		try {
-			current = ImageIO.read(new File("Images\\blob.png"));
+			current = ImageIO.read(new File("Images\\bat.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}
@@ -23,14 +23,15 @@ public class Blob extends Enemy {
 	/**
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
-	public Blob(int x, int y) {
-		super(x, y, "Green Blob", 15, 15, 10, 25, 3);
+	public Bat(int x, int y) {
+		super(x, y, "Bat", 15, 15, 10, 10, 10);
 		try {
-			current = ImageIO.read(new File("Images\\blob.png"));
+			current = ImageIO.read(new File("Images\\bat.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}
 	}
+
 
 	/**
 	 * Renders enemy

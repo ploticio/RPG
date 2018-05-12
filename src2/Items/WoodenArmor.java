@@ -5,9 +5,10 @@ public class WoodenArmor extends Armor {
 	private static String name = "Wooden Armor";;
 	private static String desc = "Increases maximum HP by 5";;
 	private static int increase = 5;
+	private static int price = 5;
 
 	public WoodenArmor() {
-		super(name, desc, increase);
+		super(name, desc, increase, price);
 	}
 
 

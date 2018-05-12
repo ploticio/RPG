@@ -4,9 +4,10 @@ public class IronSword extends Weapon {
 	private static String name = "Iron Sword";
 	private static String desc = "Increases Strength by 5";
 	private static int increase = 5;
+	private static int price = 10;
 
 	public IronSword() {
-		super(name, desc, increase);
+		super(name, desc, increase, price);
 	}
 
 }

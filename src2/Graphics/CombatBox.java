@@ -1,5 +1,6 @@
 package Graphics;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -14,17 +15,25 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import Entities.Enemy;
 import Entities.Player;
 
 public class CombatBox extends JPanel {
 	/// made 5/8
 	private int arrowPos;
 	private BufferedImage combBoxImage;
+	private BufferedImage statBoxImage;
 	private BufferedImage arrow;
 	Player p;
+	Enemy e;
 	String s1 = "";
 	String s2 = "";
 
+	/**
+	 * Loaded Constructor - initializes combBoxImage and arrow to images 
+	 * and initializes player entity
+	 * @param p - 
+	 */
 	public CombatBox(Player p) {
 		this.p = p;
 		try {
@@ -34,35 +43,72 @@ public class CombatBox extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Gets arrow position in the window
+	 * @return arrow's position
+	 */
 	public int getArrowPos() {
 		return 40 + arrowPos * 25;
 	}
 
+	/**
+	 * Sets arrow position in the window
+	 * @return x - arrow's new position
+	 */
 	public void setArrowPos(int x) {
 		arrowPos -= x;
 	}
 
+	/**
+	 * Gets array position in the window
+	 * @return arrowPos - position of arrow
+	 */
 	public int getArrayPostion() {
 		return arrowPos;
 	}
 
+	/**
+	 * Gets the player entity
+	 * @return p - player entity
+	 */
 	public Player getPlayer() {
 		return p;
 	}
-
+	
+	public void setAltPlayer(Player p) {
+		p.setAltPlayer(p);
+	}
+	
+	public void setEnemy(Enemy e) {
+		this.e = e;
+	}
+	/**
+	 * Updates graphics
+	 */
 	public void update() {
 		repaint();
 	}
 
+	/**
+	 * Sets primary text
+	 * @param s - new primary text
+	 */
 	public void setTextMain(String s) {
 		this.s1 = s;
 	}
 	
+	/**
+	 * Sets secondary text
+	 * @param s - new secondary text
+	 */
 	public void setTextSub(String s) {
 		this.s2 = s;
 	}
 
+	/**
+	 * Renders combat box in the window
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage(combBoxImage, 0, 0, 800, 150, null);
 		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);
@@ -72,6 +118,11 @@ public class CombatBox extends JPanel {
 		}
 		g.drawString(s1, 300, 75);
 		g.drawString(s2, 300, 100);
-
+		if(p!=null && e!=null) {
+			g.drawImage(statBoxImage, 5,5, 70, 70, null);
+			g.setFont(new Font("Arial", Font.BOLD, 16));
+			g.drawString("Your Health: " + p.getCurrentHP(), 300, 20);
+			g.drawString("Enemies Health: " + e.getCurrentHP(), 600, 20);
+		}
 	}
 }

@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 
 public class BlueBlob extends Enemy {
 
+	/**
+	 * Default Constructor - loads enemy image
+	 */
 	public BlueBlob() {
 		try {
 			current = ImageIO.read(new File("Images\\blueBlob.png"));
@@ -17,8 +20,11 @@ public class BlueBlob extends Enemy {
 		}
 	}
 
+	/**
+	 * Loaded Constructor - loads enemy image and x and y position
+	 */
 	public BlueBlob(int x, int y) {
-		super(x, y, "Blue Blob", 20, 20, 10, gold());
+		super(x, y, "Blue Blob", 20, 20, 10, 25, 3);
 		try {
 			current = ImageIO.read(new File("Images\\redBlob.png"));
 		} catch (IOException e) {
@@ -26,13 +32,10 @@ public class BlueBlob extends Enemy {
 		}
 	}
 
-	// random amount of gold to be dropped
-	private static int gold() {
-		Random rand = new Random();
-		int gold = rand.nextInt(9) + 1;
-		return gold;
-	}
 
+	/**
+	 * Renders enemy
+	 */
 	public void draw(Graphics g) {
 		g.drawImage(current, xPos, yPos, null);
 	}

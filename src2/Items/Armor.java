@@ -1,19 +1,23 @@
 package Items;
 
+import Entities.Player;
+
 public abstract class Armor implements Equipment {
 	private String name;
 	private String desc;
 	private int increase;
 	private boolean isEquiped;
+	private int price;
 
 	public Armor() {
 		isEquiped = false;
 	}
 
-	public Armor(String name, String desc, int increase) {
+	public Armor(String name, String desc, int increase, int price) {
 		this.name = name;
 		this.desc = desc;
 		this.increase = increase;
+		this.price = price;
 	}
 
 	public String getName() {
@@ -55,6 +59,22 @@ public abstract class Armor implements Equipment {
 
 	public int getIncrease() {
 		return increase;
+	}
+
+	public void setPrice(int i) {
+		price = i;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void buy(Player p) {
+		p.addArmor(this);
+		p.setGold(p.getGold() - price);
+	}
+	public void sell(Player p) {
+		p.setGold(p.getGold() + price);
 	}
 
 	public String toString() {

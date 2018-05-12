@@ -1,11 +1,15 @@
 package Levels;
 
+import SpecialLevels.Shop222;
 import SurfaceLevels.*;
 
 public class WorldGrid {
 	
 	private LevelCreator[][][] worldGrid = new LevelCreator[5][5][3];
 	
+	/**
+	 * Default Constructor - Creates 3d array of levels
+	 */
 	public WorldGrid() {
 		//SURFACE LEVELS
 		worldGrid[0][0][0] = new Level000();
@@ -33,10 +37,15 @@ public class WorldGrid {
 		worldGrid[4][2][0] = new Level420();
 		worldGrid[4][3][0] = new Level430();
 		worldGrid[4][4][0] = new Level440();
+		worldGrid[2][2][2] = new Shop222();
 		worldGrid[4][2][0].getPlayer().setxGrid(10);
 		worldGrid[4][2][0].getPlayer().setyGrid(17);
 	}
 	
+	/**
+	 * Gets grid of levels
+	 * @return worldGrid - 3d array of levels
+	 */
 	public LevelCreator[][][] getWorldGrid(){
 		return worldGrid;
 	}
