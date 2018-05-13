@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  */
 public class BlueBlob extends Enemy {
 	static int health = 20;
-	static int strength = 18;
+	static int strength = 12;
 	static int exp = 25;
 	static int gold = 10;
 	/**
