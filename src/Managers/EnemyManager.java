@@ -12,13 +12,11 @@ import Entities.*;
 
 //created 5/1
 public class EnemyManager {
-
-	//NOTE FOR MYSELF: ADAPT ENEMY MANAGER INTO WORLD GRID SO ENEMIES DONT KEEP SPAWNING WHILE PLAYER IS IN COMBAT
 	
 	
 	////////RESPAWN RATE///////////
-	private int respawnRate = 5000;
-	private int caveRespawnRate = 500;
+	private int respawnRate = 3500;
+	private int caveRespawnRate = 2000;
 	private int chance = 15;
 	
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -75,12 +73,12 @@ public class EnemyManager {
 		batRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Bat(1 +r.nextInt(xBound), 1 + r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Bat(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Bat(1 +r.nextInt(xBound), 1 + r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -91,12 +89,12 @@ public class EnemyManager {
 		goblinRespawner = new Timer(respawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Goblin(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Goblin(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Goblin(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Goblin(1 + r.nextInt(xBound), 1 +  r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -107,12 +105,12 @@ public class EnemyManager {
 		mushroomRespawner = new Timer(respawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Mushroom(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Mushroom(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Mushroom(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Mushroom(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -123,12 +121,12 @@ public class EnemyManager {
 		witchRespawner = new Timer(respawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Witch(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Witch(1 + r.nextInt(xBound),1 +  r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Witch(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Witch(1 + r.nextInt(xBound),1 +  r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -144,7 +142,7 @@ public class EnemyManager {
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new FlameSkull(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -155,12 +153,12 @@ public class EnemyManager {
 		crawlerRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new Crawler(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);
 					if(spawnChance<chance) {
-						enemies.add(new Crawler(r.nextInt(xBound), r.nextInt(yBound)));
+						enemies.add(new Crawler(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 					}
 				}
 			}});
@@ -172,11 +170,11 @@ public class EnemyManager {
 	private void blob(int xBound, int yBound) {
 		int blobType = r.nextInt(3);
 		if(blobType == 0)
-			enemies.add(new Blob(r.nextInt(xBound), r.nextInt(yBound)));
+			enemies.add(new Blob(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 		if(blobType == 1)
-			enemies.add(new RedBlob(r.nextInt(xBound), r.nextInt(yBound)));
+			enemies.add(new RedBlob(1 + r.nextInt(xBound),1 + r.nextInt(yBound)));
 		if(blobType == 2)
-			enemies.add(new BlueBlob(r.nextInt(xBound), r.nextInt(yBound)));
+			enemies.add(new BlueBlob(1 + r.nextInt(xBound), 1 + r.nextInt(yBound)));
 	}
 	
 	public int getEnemyIndex() {

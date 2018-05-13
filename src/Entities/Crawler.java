@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 
 public class Crawler extends Enemy {
 
+	static double multiplier = 3.5;
+	
 	/**
 	 * Default Constructor - loads enemy image
 	 */
@@ -23,7 +25,8 @@ public class Crawler extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Crawler(int x, int y) {
-		super(x, y, "Crawler", 30, 30, 60, 30, 3);
+		super(x, y, "Crawler", (int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		try {
 			current = ImageIO.read(new File("Images\\crawler.png"));
 		} catch (IOException e) {

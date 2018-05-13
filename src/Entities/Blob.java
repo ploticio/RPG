@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 public class Blob extends Enemy {
 
 	static Random r = new Random();
-
+	static double multiplier = 0.9;
 	/**
 	 * Default Constructor - loads enemy image
 	 */
@@ -26,7 +26,8 @@ public class Blob extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Blob(int x, int y) {
-		super(x, y, "Green Blob", 7, 7, 20, r.nextInt(4) + 24, 3);
+		super(x, y, "Green Blob", (int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		try {
 			current = ImageIO.read(new File("Images\\blob.png"));
 		} catch (IOException e) {

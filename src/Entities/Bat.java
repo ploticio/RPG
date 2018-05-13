@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 
 public class Bat extends Enemy {
 
+	static double multiplier = 2;
+	
 	/**
 	 * Default Constructor - loads enemy image
 	 */
@@ -24,7 +26,8 @@ public class Bat extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Bat(int x, int y) {
-		super(x, y, "Bat", 20, 20, 50, 20, 10);
+		super(x, y, "Bat", (int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		try {
 			current = ImageIO.read(new File("Images\\bat.png"));
 		} catch (IOException e) {

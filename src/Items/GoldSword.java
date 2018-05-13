@@ -8,10 +8,10 @@ import javax.imageio.ImageIO;
 
 public class GoldSword extends Weapon {
 	
-	private static int increase = 10;
-	private static int price = 15;
+	private static int increase = 95;
+	private static int price = 700;
 	private static String name = "(PRICE: " + price +")" + " Gold Sword";
-	private static String desc = "Increases Strength by 10";
+	private static String desc = "Increases Strength by " + increase;
 	private BufferedImage picture;
 
 	public GoldSword() {

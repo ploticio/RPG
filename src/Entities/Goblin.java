@@ -7,7 +7,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Goblin extends Enemy {
-
+	
+	static double multiplier = 3;
+	
 	/**
 	 * Default Constructor - loads enemy image
 	 */
@@ -23,7 +25,8 @@ public class Goblin extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Goblin(int x, int y) {
-		super(x, y, "Goblin", 30, 30, 60, 65, 3);
+		super(x, y, "Goblin", (int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		try {
 			current = ImageIO.read(new File("Images\\goblin.png"));
 		} catch (IOException e) {

@@ -7,7 +7,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Witch extends Enemy {
-
+	
+	static double multiplier = 5;
+	
 	/**
 	 * Default Constructor - loads enemy image
 	 */
@@ -23,7 +25,8 @@ public class Witch extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Witch(int x, int y) {
-		super(x, y, "Witch", 50, 50, 100, 70, 3);
+		super(x, y, "Witch",(int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		try {
 			current = ImageIO.read(new File("Images\\witch.png"));
 		} catch (IOException e) {

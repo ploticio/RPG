@@ -48,13 +48,13 @@ public class Player extends Entity {
 	 */
 	public Player() {
 		requiredEXP = 50;
-		trueStrength = 5;
+		trueStrength = 10;
 		super.setMaxHP(100);
 		super.setCurrentHP(100);
 		equipedArmor = na;
 		equipedWeapon = nw;
 		attacks.add(punch);
-		gold = 100;
+		gold = 1400;
 		try {
 			up = ImageIO.read(new File("Images\\boiBack.png"));
 			down = ImageIO.read(new File("Images\\boiFront.png"));
@@ -105,8 +105,11 @@ public class Player extends Entity {
 	 */
 	public void levelUp() {
 		// trueHP++;
-		trueStrength+=5;
-		super.setMaxHP(super.getMaxHP()+20);
+		trueStrength = 10 + level*5;
+		super.setMaxHP(100 + level * 10);
+		if (super.getCurrentHP() < super.getMaxHP() / 2) {
+			super.setCurrentHP(super.getMaxHP() / 2);
+		}
 		level++;
 		if (level == 3) {
 			attacks.add(kick);
@@ -114,7 +117,11 @@ public class Player extends Entity {
 		exp = exp % requiredEXP;
 		requiredEXP = 50 * Math.exp(0.1 * level);
 	}
-
+	
+	public void setLevel(int n) {
+		level = n;
+	}
+	
 	/**
 	 * Checks if player has enough experience points to level up
 	 * 
@@ -299,7 +306,7 @@ public class Player extends Entity {
 	}
 
 	public boolean hasWeapon() {
-		if (equipedWeapon == nw) {
+		if (equipedWeapon.equals(nw)) {
 			return false;
 		} else {
 			return true;
@@ -382,7 +389,15 @@ public class Player extends Entity {
 		}
 	}
 	
-	private ArrayList<Weapon> weaponMerge(final ArrayList<Weapon> first, final ArrayList<Weapon> second) {
+	public void unequipWeapon() {
+		equipedWeapon = nw;
+	}
+	
+	public void unequipArmor() {
+		equipedArmor = na;
+	}
+	
+	private ArrayList<Weapon> weaponMerge(ArrayList<Weapon> first, ArrayList<Weapon> second) {
         ArrayList<Weapon> mergedList = new ArrayList<>();
         while (first.size() > 0  && second.size() > 0) {
             if (first.get(0).getPrice() <= second.get(0).getPrice()) {
@@ -396,7 +411,7 @@ public class Player extends Entity {
         return mergedList;
     }
 
-    public void weaponMergeSort(final ArrayList<Weapon> input) {
+    public void weaponMergeSort(ArrayList<Weapon> input) {
         if (input.size() != 1) {
             ArrayList<Weapon> left = new ArrayList<Weapon>();
             ArrayList<Weapon> right = new ArrayList<Weapon>();

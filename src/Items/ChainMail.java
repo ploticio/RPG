@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class ChainMail extends Armor {
 
 	private static double increase = .2;
-	private static int price = 10;
+	private static int price = 400;
 	private static String name = "(PRICE: " + price + ")" + " Chain Mail";
 	private static String desc = "Decreases damage taken by 20%";
 	private BufferedImage picture;

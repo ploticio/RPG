@@ -84,14 +84,9 @@ public class GameRunner {
 				window.add(shopArmor);
 				window.add(shopWeapon);
 
-				p.addItems(new Potion());
-				p.addItems(new Potion());
-				p.addItems(new Potion());
-				p.addItems(new Potion());
-				p.addItems(new Potion());
-				p.addItems(new Potion());
-				p.addItems(new Potion());
-				p.addItems(new Potion());
+				for(int i = 0; i<10; i++) {
+					p.addItems(new BigPotion());
+				}
 				
 				shopKeeper.addItems(new Potion());
 				shopKeeper.addItems(new BigPotion());
@@ -330,7 +325,7 @@ public class GameRunner {
 				enemyTimer.start();
 				checkTimer.start();
 				despawnTimer.start();
-
+				
 				//////////////////// KEYBOARD INPUT//////////////////////
 				InputMap in = g.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 				in.put(KeyStroke.getKeyStroke("A"), "left");
@@ -339,7 +334,12 @@ public class GameRunner {
 				in.put(KeyStroke.getKeyStroke("S"), "down");
 				in.put(KeyStroke.getKeyStroke("E"), "menu");
 				in.put(KeyStroke.getKeyStroke("F"), "use");
+				in.put(KeyStroke.getKeyStroke("C"), "level");
 				ActionMap out = g.getActionMap();
+				out.put("level", new AbstractAction() {
+					public void actionPerformed(ActionEvent arg0) {
+						p.levelUp();
+					}});
 				out.put("left", new AbstractAction() {
 					public void actionPerformed(ActionEvent arg0) {
 						currentLevel.getPlayer().setCurrent("left");
@@ -811,10 +811,12 @@ public class GameRunner {
 						} else if (armorTimer.isRunning() && isSelling) {
 							p.getArmor().get(ab.getArrayPostion()).sell(p);
 							p.getArmor().remove(ab.getArrayPostion());
+							p.unequipArmor();
 							p.armorMergeSort(p.getArmor());
 						} else if (weaponTimer.isRunning() && isSelling) {
 							p.getWeapons().get(wb.getArrayPostion()).sell(p);
 							p.getWeapons().remove(wb.getArrayPostion());
+							p.unequipWeapon();
 							p.weaponMergeSort(p.getWeapons());
 						} else if (isSelling && buySellTimer.isRunning()) {
 							buySellTimer.stop();
@@ -848,10 +850,10 @@ public class GameRunner {
 							////////////// Unequipping stuff////
 						} else if (armorTimer.isRunning() && p.getArmor().get(ab.getArrayPostion()).isEquiped()) {
 							p.getArmor().get(ab.getArrayPostion()).unequip();
-							p.setEquipedArmor(new NoArmor());
+							p.unequipArmor();
 						} else if (weaponTimer.isRunning() && p.getWeapons().get(wb.getArrayPostion()).isEquiped()) {
 							p.getWeapons().get(wb.getArrayPostion()).unequip();
-							p.setEquipedWeapon(new NoWeapon());
+							p.unequipWeapon();
 						}
 						////////////// Equipping stuff///////
 						else if (inventoryBoxTimer.isRunning()) {
@@ -912,8 +914,8 @@ public class GameRunner {
 									.get(currentLevel.getEnemyManager().getEnemyIndex());
 							// amount of total damage player deals
 							double percentIncrease = (double) p.getStrength() / 100;
-							double totalAttack = p.getAttacks().get(cb.getArrayPostion()).getStrength()
-									+ p.getAttacks().get(cb.getArrayPostion()).getStrength() * percentIncrease;
+							double initialAttack = p.getAttacks().get(cb.getArrayPostion()).getStrength() + r.nextInt(3);
+							double totalAttack = initialAttack + p.getAttacks().get(cb.getArrayPostion()).getStrength() * percentIncrease;
 							if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()) {
 								totalAttack*=1.3;
 							}
@@ -953,7 +955,7 @@ public class GameRunner {
 										tb.setBounds(20, 660, 800, 150);
 										tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
 										tb.setText2("You are now level " + p.getLevel() + "!");
-										tb.setText3("HP is now: " + p.getTrueStrength());
+										tb.setText3("HP is now: " + p.getMaxHP());
 										tb.setText4("Strength is now: " + p.getTrueStrength());
 										if (p.getLevel() == 3 || p.getLevel() == 10) {
 											tb.setText5("You learned a new move!");
@@ -968,8 +970,8 @@ public class GameRunner {
 								}
 							} else {
 
-								int enemyAttack = e.getStrength()
-										- (int) (e.getStrength() * p.getEquipedArmor().getIncrease());
+								int initialEnemyAttack = e.getStrength() + r.nextInt(3);
+								int enemyAttack = initialEnemyAttack - (int) (e.getStrength() * p.getEquipedArmor().getIncrease());
 
 								// enemy attacks
 								p.changeHealth(-1 * enemyAttack);

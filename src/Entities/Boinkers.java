@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 
 public class Boinkers extends Enemy {
 	
+	static double multiplier = 10;
+	
 	/**
 	 * Default Constructor - loads enemy image
 	 */
@@ -25,7 +27,8 @@ public class Boinkers extends Enemy {
 	 */
 	
 	public Boinkers(int x, int y) {
-		super(x, y, "bOinkers", 1000, 1000, 100, 1000, 100);
+		super(x, y, "bOinkers", (int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		isBoss = true;
 		try {
 			current = ImageIO.read(new File("Images\\bOinkers.png"));
