@@ -23,7 +23,7 @@ public class Crawler extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Crawler(int x, int y) {
-		super(x, y, "Crawler", 15, 15, 10, 25, 3);
+		super(x, y, "Crawler", 30, 30, 60, 30, 3);
 		try {
 			current = ImageIO.read(new File("Images\\crawler.png"));
 		} catch (IOException e) {

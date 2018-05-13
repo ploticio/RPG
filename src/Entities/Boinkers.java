@@ -25,7 +25,7 @@ public class Boinkers extends Enemy {
 	 */
 	
 	public Boinkers(int x, int y) {
-		super(x, y, "bOinkers", 15, 15, 10, 25, 3);
+		super(x, y, "bOinkers", 1000, 1000, 100, 1000, 100);
 		isBoss = true;
 		try {
 			current = ImageIO.read(new File("Images\\bOinkers.png"));

@@ -13,6 +13,7 @@ import Items.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.Random;
 
 //UPDATED MAY 12TH
 
@@ -25,6 +26,7 @@ public class GameRunner {
 	private static boolean debounce = false;
 	private static boolean isBuying = false;
 	private static boolean isSelling = false;
+	private static Random r = new Random();
 	// private static boolean isPaused = false;// checks if game is paused
 
 	static int lX = 4;
@@ -82,6 +84,15 @@ public class GameRunner {
 				window.add(shopArmor);
 				window.add(shopWeapon);
 
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				
 				shopKeeper.addItems(new Potion());
 				shopKeeper.addItems(new BigPotion());
 				shopKeeper.addArmor(new GoblinMail());
@@ -187,6 +198,7 @@ public class GameRunner {
 								combBoxTimer.start();
 								cb.setTextMain("Fighting: " + e.getName() + "!");
 								cb.setTextSub(" ");
+								cb.setTextTertiary(" ");
 							}
 							if (lX == 2 && lY == 4 && lZ == 2) {
 								if (currentLevel.getPlayer().getxGrid() > 0 && currentLevel.getPlayer().getxGrid() < 19
@@ -765,6 +777,7 @@ public class GameRunner {
 								// do nothing
 							} else {
 								shopKeeper.getArmor().get(shopArmor.getArrayPostion()).buy(p);
+								p.armorMergeSort(p.getArmor());
 							}
 						} else if (shopItemsTimer.isRunning() && isBuying) {
 							if (p.getGold() < shopKeeper.getInventory().get(shopItems.getArrayPostion()).getPrice()) {
@@ -778,6 +791,7 @@ public class GameRunner {
 								// do nothing
 							} else {
 								shopKeeper.getWeapons().get(shopWeapon.getArrayPostion()).buy(p);
+								p.weaponMergeSort(p.getWeapons());
 							}
 						} else if (buySellTimer.isRunning() && isBuying) {
 							buySellTimer.stop();
@@ -797,9 +811,11 @@ public class GameRunner {
 						} else if (armorTimer.isRunning() && isSelling) {
 							p.getArmor().get(ab.getArrayPostion()).sell(p);
 							p.getArmor().remove(ab.getArrayPostion());
+							p.armorMergeSort(p.getArmor());
 						} else if (weaponTimer.isRunning() && isSelling) {
 							p.getWeapons().get(wb.getArrayPostion()).sell(p);
 							p.getWeapons().remove(wb.getArrayPostion());
+							p.weaponMergeSort(p.getWeapons());
 						} else if (isSelling && buySellTimer.isRunning()) {
 							buySellTimer.stop();
 							if (bs.getArrayPostion() == 0) {
@@ -898,7 +914,12 @@ public class GameRunner {
 							double percentIncrease = (double) p.getStrength() / 100;
 							double totalAttack = p.getAttacks().get(cb.getArrayPostion()).getStrength()
 									+ p.getAttacks().get(cb.getArrayPostion()).getStrength() * percentIncrease;
-
+							if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()) {
+								totalAttack*=1.3;
+							}
+							if(p.getAttacks().get(cb.getArrayPostion()).wasMissed()) {
+								totalAttack = 0;
+							}
 							// player attacks with chosen attack
 							e.changeHealth((int) (-1 * totalAttack));
 							System.out.println(percentIncrease);
@@ -906,8 +927,17 @@ public class GameRunner {
 
 							// print out player action
 							cb.setTextMain("Player uses " + p.getAttacks().get(cb.getArrayPostion()).getName()
-									+ ", and deals " + totalAttack + " damage!");
-
+									+ ", and deals " + (int)totalAttack + " damage!");
+							System.out.println(p.getAttacks().get(cb.getArrayPostion()).wasCritical());
+							if(p.getAttacks().get(cb.getArrayPostion()).wasMissed()) {
+								cb.setTextTertiary("*** YOU MISSED ***");
+							}
+							else if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()){
+								cb.setTextTertiary("*** CRITICAL HIT ***");
+							}
+							else {
+								cb.setTextTertiary(" ");
+							}
 							// if enemy dies
 							if (e.getCurrentHP() <= 0 && p.getCurrentHP() > 0) {
 								if (e.isBoss()) {
@@ -931,7 +961,7 @@ public class GameRunner {
 										tb.setText2("You are now level " + p.getLevel() + "!");
 										tb.setText3("HP is now: " + p.getTrueStrength());
 										tb.setText4("Strength is now: " + p.getTrueStrength());
-										if (p.getLevel() == 3 || p.getLevel() == 6) {
+										if (p.getLevel() == 3 || p.getLevel() == 10) {
 											tb.setText5("You learned a new move!");
 										}
 										// System.out.println("current: " + p.getExp());

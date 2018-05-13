@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
+
 import Items.*;
 
 import javax.imageio.ImageIO;
@@ -19,6 +21,7 @@ public class Player extends Entity {
 	private NoArmor na = new NoArmor();
 	private Weapon equipedWeapon;
 	private NoWeapon nw = new NoWeapon();
+	private Random r = new Random();
 
 	ArrayList<Item> inventory = new ArrayList<Item>();
 	ArrayList<Attack> attacks = new ArrayList<Attack>();
@@ -34,10 +37,10 @@ public class Player extends Entity {
 	BufferedImage current;
 	BufferedImage statBoxImage;
 
-	Attack punch = new Attack("Punch", 10);
-	Attack kick = new Attack("Kick", 15);
-	Attack stab = new Attack("Stab", 20);
-	Attack slice = new Attack("Slice", 25);
+	Attack punch = new Attack("Punch", 4);
+	Attack kick = new Attack("Kick", 9);
+	Attack stab = new Attack("Stab", 19);
+	Attack slice = new Attack("Slice", 29);
 
 	/**
 	 * Default Constructor - initializes player sprites and sets the current
@@ -45,9 +48,9 @@ public class Player extends Entity {
 	 */
 	public Player() {
 		requiredEXP = 50;
-		trueStrength = 20;
-		super.setMaxHP(10);
-		super.setCurrentHP(10);
+		trueStrength = 5;
+		super.setMaxHP(100);
+		super.setCurrentHP(100);
 		equipedArmor = na;
 		equipedWeapon = nw;
 		attacks.add(punch);
@@ -102,7 +105,8 @@ public class Player extends Entity {
 	 */
 	public void levelUp() {
 		// trueHP++;
-		trueStrength++;
+		trueStrength+=5;
+		super.setMaxHP(super.getMaxHP()+20);
 		level++;
 		if (level == 3) {
 			attacks.add(kick);
@@ -365,7 +369,7 @@ public class Player extends Entity {
 		if (b && !attacks.contains(stab)) {
 			attacks.add(stab);
 		}
-		if (b && level == 6 && !attacks.contains(slice)) { // TODO: CHANGE LEVEL MINIMUM FOR STATS WHEN GAME IS BALANCED
+		if (b && level == 10 && !attacks.contains(slice)) { 
 			attacks.add(slice);
 		}
 		if (!b) {
@@ -377,5 +381,71 @@ public class Player extends Entity {
 			}
 		}
 	}
+	
+	private ArrayList<Weapon> weaponMerge(final ArrayList<Weapon> first, final ArrayList<Weapon> second) {
+        ArrayList<Weapon> mergedList = new ArrayList<>();
+        while (first.size() > 0  && second.size() > 0) {
+            if (first.get(0).getPrice() <= second.get(0).getPrice()) {
+                mergedList.add(first.remove(0));
+            } else {
+                mergedList.add(second.remove(0));
+            }
+        }
+        mergedList.addAll(first);
+        mergedList.addAll(second);
+        return mergedList;
+    }
 
+    public void weaponMergeSort(final ArrayList<Weapon> input) {
+        if (input.size() != 1) {
+            ArrayList<Weapon> left = new ArrayList<Weapon>();
+            ArrayList<Weapon> right = new ArrayList<Weapon>();
+            boolean changeList = true;
+            while (input.size() > 0) {
+                if (changeList) {
+                    left.add(input.remove(0));
+                } else {
+                    right.add(input.remove(0));
+                }
+                changeList = !changeList;
+            }
+            weaponMergeSort(left);
+            weaponMergeSort(right);
+            input.addAll(weaponMerge(left, right));
+        }
+    }
+    
+    private ArrayList<Armor> armorMerge(final ArrayList<Armor> first, final ArrayList<Armor> second) {
+        ArrayList<Armor> mergedList = new ArrayList<>();
+        while (first.size() > 0  && second.size() > 0) {
+            if (first.get(0).getPrice() <= second.get(0).getPrice()) {
+                mergedList.add(first.remove(0));
+            } else {
+                mergedList.add(second.remove(0));
+            }
+        }
+        mergedList.addAll(first);
+        mergedList.addAll(second);
+        return mergedList;
+    }
+
+    public void armorMergeSort(final ArrayList<Armor> input) {
+        if (input.size() != 1) {
+            ArrayList<Armor> left = new ArrayList<Armor>();
+            ArrayList<Armor> right = new ArrayList<Armor>();
+            boolean changeList = true;
+            while (input.size() > 0) {
+                if (changeList) {
+                    left.add(input.remove(0));
+                } else {
+                    right.add(input.remove(0));
+                }
+                changeList = !changeList;
+            }
+            armorMergeSort(left);
+            armorMergeSort(right);
+            input.addAll(armorMerge(left, right));
+        }
+    }
+	
 }

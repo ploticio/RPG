@@ -23,7 +23,7 @@ public class Witch extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Witch(int x, int y) {
-		super(x, y, "Witch", 15, 15, 10, 25, 3);
+		super(x, y, "Witch", 50, 50, 100, 70, 3);
 		try {
 			current = ImageIO.read(new File("Images\\witch.png"));
 		} catch (IOException e) {

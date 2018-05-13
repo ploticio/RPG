@@ -24,7 +24,7 @@ public class Bat extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Bat(int x, int y) {
-		super(x, y, "Bat", 15, 15, 10, 10, 10);
+		super(x, y, "Bat", 20, 20, 50, 20, 10);
 		try {
 			current = ImageIO.read(new File("Images\\bat.png"));
 		} catch (IOException e) {

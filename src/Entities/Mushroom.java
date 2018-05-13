@@ -23,7 +23,7 @@ public class Mushroom extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Mushroom(int x, int y) {
-		super(x, y, "Mushroom", 15, 15, 10, 25, 3);
+		super(x, y, "Mushroom", 20, 20, 30, 40, 3);
 		try {
 			current = ImageIO.read(new File("Images\\mushroom.png"));
 		} catch (IOException e) {

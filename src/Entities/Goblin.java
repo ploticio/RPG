@@ -23,7 +23,7 @@ public class Goblin extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Goblin(int x, int y) {
-		super(x, y, "Goblin", 15, 15, 10, 25, 3);
+		super(x, y, "Goblin", 30, 30, 60, 65, 3);
 		try {
 			current = ImageIO.read(new File("Images\\goblin.png"));
 		} catch (IOException e) {

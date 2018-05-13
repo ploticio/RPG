@@ -23,7 +23,7 @@ public class FlameSkull extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public FlameSkull(int x, int y) {
-		super(x, y, "Flame Skull", 15, 15, 10, 25, 3);
+		super(x, y, "Flame Skull", 40, 40, 70, 50, 3);
 		try {
 			current = ImageIO.read(new File("Images\\flameSkull.png"));
 		} catch (IOException e) {
