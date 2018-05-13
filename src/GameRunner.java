@@ -84,6 +84,10 @@ public class GameRunner {
 				window.add(shopArmor);
 				window.add(shopWeapon);
 				
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				p.addItems(new Potion());
+				
 				shopKeeper.addItems(new Potion());
 				shopKeeper.addItems(new BigPotion());
 				shopKeeper.addArmor(new GoblinMail());
