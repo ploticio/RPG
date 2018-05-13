@@ -7,14 +7,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ChainMail extends Armor {
-	
-	private static int increase = 10;
+
+	private static double increase = .2;
 	private static int price = 10;
-	private static String name = "(PRICE: " + price +")" + " Chain Mail";
-	private static String desc = "Increases maximum HP by 10";
+	private static String name = "(PRICE: " + price + ")" + " Chain Mail";
+	private static String desc = "Decreases damage taken by 20%";
 	private BufferedImage picture;
-	
-	public ChainMail () {
+
+	public ChainMail() {
 		super(name, desc, increase, price);
 		try {
 			picture = ImageIO.read(new File("Images\\chainMail.png"));

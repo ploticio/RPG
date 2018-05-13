@@ -8,10 +8,10 @@ import javax.imageio.ImageIO;
 
 public class GoblinMail extends Armor {
 	
-	private static int increase = 5;
+	private static double increase = .10;
 	private static int price = 5;
 	private static String name = "(PRICE: " + price +")" + " Goblin Mail";
-	private static String desc = "Increases maximum HP by 5";
+	private static String desc = "Decreases damage taken by 10%";
 	private BufferedImage picture;
 
 	public GoblinMail() {

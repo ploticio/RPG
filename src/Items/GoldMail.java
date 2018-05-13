@@ -8,10 +8,10 @@ import javax.imageio.ImageIO;
 
 public class GoldMail extends Armor {
 	
-	private static int increase = 15;
+	private static double increase = .3;
 	private static int price = 15;
 	private static String name = "(PRICE: " + price +")" + " Gold Mail";
-	private static String desc = "Increases maximum HP by 15";
+	private static String desc = "Decreases damage taken by 30%";
 	private BufferedImage picture;
 	
 	public GoldMail () {

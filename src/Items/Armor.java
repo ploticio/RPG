@@ -7,7 +7,7 @@ import Entities.Player;
 public abstract class Armor implements Equipment {
 	private String name;
 	private String desc;
-	private int increase;
+	private double increase;
 	private boolean isEquiped;
 	private int price;
 	private BufferedImage picture;
@@ -16,7 +16,7 @@ public abstract class Armor implements Equipment {
 		isEquiped = false;
 	}
 
-	public Armor(String name, String desc, int increase, int price) {
+	public Armor(String name, String desc, double increase, int price) {
 		this.name = name;
 		this.desc = desc;
 		this.increase = increase;
@@ -60,7 +60,7 @@ public abstract class Armor implements Equipment {
 		return isEquiped;
 	}
 
-	public int getIncrease() {
+	public double getIncrease() {
 		return increase;
 	}
 

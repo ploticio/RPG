@@ -8,8 +8,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class Blob extends Enemy {
-	
+
 	static Random r = new Random();
+
 	/**
 	 * Default Constructor - loads enemy image
 	 */
@@ -25,7 +26,7 @@ public class Blob extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Blob(int x, int y) {
-		super(x, y, "Green Blob", 5, 5, 2, r.nextInt(3)+5, 3);
+		super(x, y, "Green Blob", 20, 20, 1, r.nextInt(3) + 5, 3);
 		try {
 			current = ImageIO.read(new File("Images\\blob.png"));
 		} catch (IOException e) {
