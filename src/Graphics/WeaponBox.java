@@ -88,7 +88,8 @@ public class WeaponBox extends JPanel {
 			g.drawString(p.getWeapons().get(i).toString(), 90, 70 + i * 30);
 			g.drawImage(p.getWeapons().get(i).getPicture(), 40, 40 + i * 30, null);
 		}
-		g.drawString("Press 'F' to equip/unequip", 580, 435);
+		g.drawString("Press 'E' to equip/unequip", 580, 415);
+		g.drawString("Press 'Escape' to quit", 615, 435);
 
 	}
 }

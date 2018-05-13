@@ -100,7 +100,8 @@ public class InventoryBox extends JPanel {
 			g.drawString(p.getInventory().get(i).toString(), 90, 70 + i * 30);
 			g.drawImage(p.getInventory().get(i).getPicture(), 40, 40 + i * 30, null);
 		}
-		g.drawString("Press 'F' to use", 650, 435);
+		g.drawString("Press 'E' to use/buy/sell", 600, 415);
+		g.drawString("Press 'Escape' to quit", 615, 435);
 
 	}
 }

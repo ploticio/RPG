@@ -88,6 +88,8 @@ public class WorldGrid {
 		
 		worldGrid[4][2][0].getPlayer().setxGrid(10);
 		worldGrid[4][2][0].getPlayer().setyGrid(17);
+		//worldGrid[2][4][2].getPlayer().setxGrid(10);
+		//worldGrid[2][4][2].getPlayer().setyGrid(17);
 	}
 	
 	/**

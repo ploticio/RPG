@@ -189,7 +189,7 @@ public class EnemyManager {
 		flameSkullRespawner = new Timer(caveRespawnRate, new ActionListener() { //respawn every 10 seconds
 			public void actionPerformed(ActionEvent arg0) {
 				if(enemies.size() < min) {
-					enemies.add(new FlameSkull(r.nextInt(xBound), r.nextInt(yBound)));
+					enemies.add(new FlameSkull(1 + r.nextInt(xBound),1 + r.nextInt(yBound)));
 				}
 				else if(enemies.size()>=min && enemies.size()<max) {
 					int spawnChance = r.nextInt(100);

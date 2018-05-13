@@ -10,7 +10,9 @@ public class Attack {
 	private String name;
 	private int strength;
 	private boolean critical = false;
+	private boolean missed = false;
 	private final int CRITICAL_CHANCE = 10;
+	private final int MISS_CHANCE = 5;
 	private Random r = new Random();
 	/**
 	 * Loaded Constructor - initializes name and strength of attack
@@ -44,13 +46,21 @@ public class Attack {
 	 * @return strength - the strength of the attack
 	 */
 	public int getStrength() {
-		int chance = r.nextInt(100);
-		if(chance < CRITICAL_CHANCE) {
+		int chance =r.nextInt(100);
+		critical = false;
+		missed = false;
+		//System.out.println(chance);
+		if(chance > 100-MISS_CHANCE) {
+			missed = true;
+			return 0;
+		}
+		else if(chance < CRITICAL_CHANCE) {
 			critical = true;
 			return strength * 2;
 		}
 		else {
 			critical = false;
+			missed = false;
 			return strength;
 		}
 	}
@@ -61,6 +71,10 @@ public class Attack {
 	 */
 	public boolean wasCritical() {
 		return critical;
+	}
+	
+	public boolean wasMissed() {
+		return missed;
 	}
 	
 	/**

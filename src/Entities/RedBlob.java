@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  */
 public class RedBlob extends Enemy {
 	static Random r = new Random();
-	static double multiplier = 1.1;
+	static double multiplier = 1.2;
 	/**
 	 * Default Constructor - loads enemy image
 	 */

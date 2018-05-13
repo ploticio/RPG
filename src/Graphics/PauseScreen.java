@@ -85,6 +85,6 @@ public class PauseScreen extends JPanel {
 		g.drawString("Armor", 25, 50);
 		g.drawString("Weapons", 25, 70);
 		g.drawString("Stats", 25, 90);
-		g.drawString("Press F to select", 650, 135);
+		g.drawString("Press E to select", 650, 135);
 	}
 }

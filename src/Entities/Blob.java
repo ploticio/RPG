@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 public class Blob extends Enemy {
 
 	static Random r = new Random();
-	static double multiplier = 0.9;
+	static double multiplier = 0.8;
 	/**
 	 * Default Constructor - loads enemy image
 	 */

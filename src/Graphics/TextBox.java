@@ -88,15 +88,35 @@ public class TextBox extends JPanel {
 	public void setText3(String s) {
 		this.s3 = s;
 	}
-
+	/**
+	 * Sets text for text box
+	 * 
+	 * @param s
+	 *            - text content
+	 */
 	public void setText4(String s) {
 		this.s4 = s;
 	}
-
+	/**
+	 * Sets text for text box
+	 * 
+	 * @param s
+	 *            - text content
+	 */
 	public void setText5(String s) {
 		this.s5 = s;
 	}
-
+	/**
+	 * clears all text
+	 */
+	public void clearText() {
+		setText("");
+		setText2("");
+		setText3("");
+		setText4("");
+		setText5("");
+	}
+	
 	/**
 	 * Updates graphics
 	 */

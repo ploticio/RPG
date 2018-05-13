@@ -84,6 +84,6 @@ public class BuySellScreen extends JPanel {
 		g.drawString("Items", 25, 30);
 		g.drawString("Armor", 25, 50);
 		g.drawString("Weapons", 25, 70);
-
+		g.drawString("Press 'Escape' to quit", 630, 135);
 	}
 }

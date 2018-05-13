@@ -40,10 +40,10 @@ public class Player extends Entity {
 	BufferedImage current;
 	BufferedImage statBoxImage;
 
-	Attack punch = new Attack("Punch", 4);
-	Attack kick = new Attack("Kick", 9);
-	Attack stab = new Attack("Stab", 19);
-	Attack slice = new Attack("Slice", 29);
+	Attack punch = new Attack("Punch", 6);
+	Attack kick = new Attack("Kick", 10);
+	Attack stab = new Attack("Stab", 20);
+	Attack slice = new Attack("Slice", 30);
 
 	/**
 	 * Default Constructor - initializes player sprites and sets the current
@@ -52,6 +52,8 @@ public class Player extends Entity {
 	public Player() {
 		requiredEXP = 50;
 		trueStrength = 10;
+		setLevel(1);
+		setGold(1400);
 		super.setMaxHP(100);
 		super.setCurrentHP(100);
 		equipedArmor = na;
@@ -118,6 +120,7 @@ public class Player extends Entity {
 		}
 		exp = exp % requiredEXP;
 		requiredEXP = 50 * Math.exp(0.1 * level);
+		//TODO: adjust leveling if needed
 	}
 	
 	public void setLevel(int n) {
@@ -352,7 +355,7 @@ public class Player extends Entity {
 		if (b && !attacks.contains(stab)) {
 			attacks.add(stab);
 		}
-		if (b && level == 10 && !attacks.contains(slice)) { 
+		if (b && level >= 10 && !attacks.contains(slice)) { 
 			attacks.add(slice);
 		}
 		if (!b) {

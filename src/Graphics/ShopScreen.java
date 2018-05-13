@@ -83,6 +83,6 @@ public class ShopScreen extends JPanel {
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.drawString("Buy", 25, 30);
 		g.drawString("Sell (for half price)", 25, 50);
-
+		g.drawString("Press 'Escape' to quit", 630, 135);
 	}
 }
