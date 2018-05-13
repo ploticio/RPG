@@ -83,10 +83,6 @@ public class GameRunner {
 				window.add(shopItems);
 				window.add(shopArmor);
 				window.add(shopWeapon);
-
-				for(int i = 0; i<10; i++) {
-					p.addItems(new BigPotion());
-				}
 				
 				shopKeeper.addItems(new Potion());
 				shopKeeper.addItems(new BigPotion());

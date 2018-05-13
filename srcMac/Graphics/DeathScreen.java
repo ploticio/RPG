@@ -10,10 +10,18 @@ import javax.swing.JPanel;
 
 // MAY 1ST
 
-public class DeathScreen extends JPanel{
-	
+/**
+ * 
+ * graphic box for the death screen
+ *
+ */
+public class DeathScreen extends JPanel {
+
 	private BufferedImage gameover;
-	
+
+	/**
+	 * default constructor; initializes death screen image
+	 */
 	public DeathScreen() {
 		try {
 			gameover = ImageIO.read(new File("Images////gameover.png"));
@@ -21,19 +29,19 @@ public class DeathScreen extends JPanel{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Updates graphics
 	 */
 	public void update() {
 		repaint();
 	}
-	
+
 	/**
-	 * Renders text box in the window
+	 * Renders death screen in the window
 	 */
 	public void paintComponent(Graphics g) {
-        g.drawImage(gameover, 0, 0, 840, 840, null);
-    }
+		g.drawImage(gameover, 0, 0, 840, 840, null);
+	}
 
 }

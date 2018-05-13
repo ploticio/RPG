@@ -16,6 +16,11 @@ import javax.swing.Timer;
 
 import Entities.Player;
 
+/**
+ * 
+ * graphic box for armor in inventory
+ *
+ */
 public class ArmorBox extends JPanel {
 	// made 5/9
 	private int arrowPos;
@@ -23,6 +28,12 @@ public class ArmorBox extends JPanel {
 	private BufferedImage arrow;
 	Player p;
 
+	/**
+	 * Loaded constructor - initializes player and images
+	 * 
+	 * @param p
+	 *            - player
+	 */
 	public ArmorBox(Player p) {
 		this.p = p;
 		try {
@@ -33,26 +44,52 @@ public class ArmorBox extends JPanel {
 		}
 	}
 
+	/**
+	 * Gets arrow position in the window
+	 * 
+	 * @return arrow's position
+	 */
 	public int getArrowPos() {
 		return 60 + arrowPos * 30;
 	}
 
+	/**
+	 * Sets arrow position in the window
+	 * 
+	 * @return x - arrow's new position
+	 */
 	public void setArrowPos(int x) {
 		arrowPos -= x;
 	}
 
+	/**
+	 * Gets array position in the window
+	 * 
+	 * @return arrowPos - position of arrow
+	 */
 	public int getArrayPostion() {
 		return arrowPos;
 	}
 
+	/**
+	 * Gets the player entity
+	 * 
+	 * @return p - player entity
+	 */
 	public Player getPlayer() {
 		return p;
 	}
 
+	/**
+	 * Updates graphics
+	 */
 	public void update() {
 		repaint();
 	}
 
+	/**
+	 * Renders armor box in the window
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage(invenBoxImage, 0, 0, 800, 450, null);
 		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);
@@ -60,7 +97,7 @@ public class ArmorBox extends JPanel {
 		g.drawString("Gold: " + p.getGold(), 40, 30);
 		for (int i = 0; i < p.getArmor().size(); i++) {
 			g.drawString(p.getArmor().get(i).toString(), 90, 70 + i * 30);
-			g.drawImage(p.getArmor().get(i).getPicture(), 40, 40 + i*30, null);
+			g.drawImage(p.getArmor().get(i).getPicture(), 40, 40 + i * 30, null);
 		}
 		g.drawString("Press 'F' to equip/unequip", 580, 435);
 

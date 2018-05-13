@@ -6,6 +6,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Chain mail armor. It decreases damage by 20%
+ *
+ */
 public class ChainMail extends Armor {
 
 	private static double increase = .2;
@@ -14,6 +18,9 @@ public class ChainMail extends Armor {
 	private static String desc = "Decreases damage taken by 20%";
 	private BufferedImage picture;
 
+	/**
+	 * default Constructor
+	 */
 	public ChainMail() {
 		super(name, desc, increase, price);
 		try {
@@ -24,6 +31,11 @@ public class ChainMail extends Armor {
 		}
 	}
 
+	/**
+	 * getter method for the picture
+	 * 
+	 * @return chain mail's armor
+	 */
 	public BufferedImage getPicture() {
 		return picture;
 	}
