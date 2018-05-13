@@ -10,10 +10,18 @@ import javax.swing.JPanel;
 
 // MAY 1ST
 
-public class WinScreen extends JPanel{
-	
+/**
+ * 
+ * graphic box for win screen
+ *
+ */
+public class WinScreen extends JPanel {
+
 	private BufferedImage winScreen;
-	
+
+	/**
+	 * default constructor; initializes win screen image
+	 */
 	public WinScreen() {
 		try {
 			winScreen = ImageIO.read(new File("Images\\winScreen.png"));
@@ -21,19 +29,19 @@ public class WinScreen extends JPanel{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Updates graphics
 	 */
 	public void update() {
 		repaint();
 	}
-	
+
 	/**
-	 * Renders text box in the window
+	 * Renders win screen in the window
 	 */
 	public void paintComponent(Graphics g) {
-        g.drawImage(winScreen, 0, 0, 840, 840, null);
-    }
+		g.drawImage(winScreen, 0, 0, 840, 840, null);
+	}
 
 }
