@@ -917,9 +917,6 @@ public class GameRunner {
 							if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()) {
 								totalAttack*=1.3;
 							}
-							if(p.getAttacks().get(cb.getArrayPostion()).wasMissed()) {
-								totalAttack = 0;
-							}
 							// player attacks with chosen attack
 							e.changeHealth((int) (-1 * totalAttack));
 							System.out.println(percentIncrease);
@@ -929,10 +926,7 @@ public class GameRunner {
 							cb.setTextMain("Player uses " + p.getAttacks().get(cb.getArrayPostion()).getName()
 									+ ", and deals " + (int)totalAttack + " damage!");
 							System.out.println(p.getAttacks().get(cb.getArrayPostion()).wasCritical());
-							if(p.getAttacks().get(cb.getArrayPostion()).wasMissed()) {
-								cb.setTextTertiary("*** YOU MISSED ***");
-							}
-							else if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()){
+							if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()){
 								cb.setTextTertiary("*** CRITICAL HIT ***");
 							}
 							else {

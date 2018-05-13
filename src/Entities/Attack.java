@@ -6,9 +6,7 @@ public class Attack {
 	private String name;
 	private int strength;
 	private boolean critical = false;
-	private boolean missed = false;
-	private final int CRITICAL_CHANCE = 90;
-	private final int MISS_CHANCE = 5;
+	private final int CRITICAL_CHANCE = 10;
 	private Random r = new Random();
 	/**
 	 * Loaded Constructor - initializes name and strength of attack
@@ -47,23 +45,14 @@ public class Attack {
 			critical = true;
 			return strength * 2;
 		}
-		else if(chance > 99-MISS_CHANCE) {
-			missed = true;
-			return 0;
-		}
 		else {
 			critical = false;
-			missed = false;
 			return strength;
 		}
 	}
 	
 	public boolean wasCritical() {
 		return critical;
-	}
-	
-	public boolean wasMissed() {
-		return missed;
 	}
 	
 	/**
