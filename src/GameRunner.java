@@ -46,7 +46,7 @@ public class GameRunner {
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				window.setLocationRelativeTo(null);
 				window.setVisible(true);
-
+				
 				///////////////// INITIALIZATION///////////////////////
 				TextBox tb = new TextBox();
 				Player p = new Player();
