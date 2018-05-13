@@ -25,8 +25,8 @@ public class PauseScreen extends JPanel {
 	public PauseScreen() {
 		arrowPos = 0;
 		try {
-			pause = ImageIO.read(new File("Images//textBoxMac.png"));
-			arrow = ImageIO.read(new File("Images//pointarrow.png"));
+			pause = ImageIO.read(new File("Images////textBoxMac.png"));
+			arrow = ImageIO.read(new File("Images////pointarrow.png"));
 		} catch (IOException e /* | FontFormatException e */) {
 			e.printStackTrace();
 		}

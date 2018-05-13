@@ -10,8 +10,8 @@ import Managers.EnemyManager;
 public class Level110  extends LevelCreator{
 	
 	public Level110() {
-		setImage("Images//grass.png");
-		setImage(0,0,"Images//bushEnd.png",true);
+		setImage("Images////grass.png");
+		setImage(0,0,"Images////bushEnd.png",true);
 	}
 	
 }

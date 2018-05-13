@@ -34,8 +34,8 @@ public class TextBox extends JPanel{
 	 */
 	public TextBox() {
 		try {
-			textBoxImage = ImageIO.read(new File("Images//textBoxMac.png"));
-			statBoxImage = ImageIO.read(new File("Images//boiStat.png"));
+			textBoxImage = ImageIO.read(new File("Images////textBoxMac.png"));
+			statBoxImage = ImageIO.read(new File("Images////boiStat.png"));
 			//customFont = Font.createFont(Font.TRUETYPE_FONT, new File("")); 
 			//GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			//ge.registerFont(customFont);

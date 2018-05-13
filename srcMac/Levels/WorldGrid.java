@@ -47,41 +47,41 @@ public class WorldGrid {
 		worldGrid[2][4][2] = new Boss242();
 		
 		//layer 4
-		worldGrid[4][3][0].getEnemyManager().spawnBlobs(3, 5, 21, 21);
-		worldGrid[4][4][0].getEnemyManager().spawnBlobs(3, 5, 21, 21);
-		worldGrid[4][1][0].getEnemyManager().spawnBlobs(3, 5, 21, 21);
-		worldGrid[4][0][0].getEnemyManager().spawnBlobs(3, 5, 21, 21);
+		worldGrid[4][3][0].getEnemyManager().spawnBlobs(3, 5, 18, 18);
+		worldGrid[4][4][0].getEnemyManager().spawnBlobs(3, 5, 18, 18);
+		worldGrid[4][1][0].getEnemyManager().spawnBlobs(3, 5, 18, 18);
+		worldGrid[4][0][0].getEnemyManager().spawnBlobs(3, 5, 18, 18);
 		
 		//layer 3
-		worldGrid[3][0][0].getEnemyManager().spawnBlobs(7, 10, 21, 21);
-		worldGrid[3][1][0].getEnemyManager().spawnBlobs(7, 10, 21, 21);
-		worldGrid[3][3][0].getEnemyManager().spawnGoblins(7, 10, 21, 21);
-		worldGrid[3][4][0].getEnemyManager().spawnMushrooms(7, 10, 21, 21);
+		worldGrid[3][0][0].getEnemyManager().spawnBlobs(7, 10, 18, 18);
+		worldGrid[3][1][0].getEnemyManager().spawnBlobs(7, 10, 18, 18);
+		worldGrid[3][3][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
+		worldGrid[3][4][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
 		
 		//layer 2
-		worldGrid[2][0][0].getEnemyManager().spawnMushrooms(7, 10, 21, 21);
-		worldGrid[2][1][0].getEnemyManager().spawnMushrooms(7, 10, 21, 21);
-		worldGrid[2][3][0].getEnemyManager().spawnBlobs(7, 10, 21, 21);
-		worldGrid[2][4][0].getEnemyManager().spawnMushrooms(7, 10, 21, 21);
+		worldGrid[2][0][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
+		worldGrid[2][1][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
+		worldGrid[2][3][0].getEnemyManager().spawnBlobs(7, 10, 18, 18);
+		worldGrid[2][4][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
 		
 		//layer 1
-		worldGrid[1][0][0].getEnemyManager().spawnGoblins(7, 10, 21, 21);
-		worldGrid[1][1][0].getEnemyManager().spawnGoblins(7, 10, 21, 21);
-		worldGrid[1][3][0].getEnemyManager().spawnMushrooms(7, 10, 21, 21);
-		worldGrid[1][4][0].getEnemyManager().spawnMushrooms(7, 10, 21, 21);
+		worldGrid[1][0][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
+		worldGrid[1][1][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
+		worldGrid[1][3][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
+		worldGrid[1][4][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
 		
 		//layer 0
-		worldGrid[0][0][0].getEnemyManager().spawnWitches(7, 10, 21, 21);
-		worldGrid[0][1][0].getEnemyManager().spawnGoblins(7, 10, 21, 21);
-		worldGrid[0][2][0].getEnemyManager().spawnGoblins(7, 10, 21, 21);
-		worldGrid[0][3][0].getEnemyManager().spawnGoblins(7, 10, 21, 21);
-		worldGrid[0][4][0].getEnemyManager().spawnWitches(7, 10, 21, 21);
+		worldGrid[0][0][0].getEnemyManager().spawnWitches(7, 10, 18, 18);
+		worldGrid[0][1][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
+		worldGrid[0][2][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
+		worldGrid[0][3][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
+		worldGrid[0][4][0].getEnemyManager().spawnWitches(7, 10, 18, 18);
 		
 		//CAVE
-		worldGrid[3][3][1].getEnemyManager().spawnBats(100, 132, 18, 18);
-		worldGrid[3][4][1].getEnemyManager().spawnCrawlers(100, 132, 18, 18);
-		worldGrid[2][3][1].getEnemyManager().spawnCrawlers(100, 132, 18, 18);
-		worldGrid[2][4][1].getEnemyManager().spawnFlameSkulls(100, 132, 18, 18);
+		worldGrid[3][3][1].getEnemyManager().spawnBats(10, 15, 18, 18);
+		worldGrid[3][4][1].getEnemyManager().spawnCrawlers(10, 15, 18, 18);
+		worldGrid[2][3][1].getEnemyManager().spawnCrawlers(10, 15, 18, 18);
+		worldGrid[2][4][1].getEnemyManager().spawnFlameSkulls(10, 15, 18, 18);
 		
 		//BOSS
 		worldGrid[2][4][2].getEnemyManager().getList().add(new Boinkers(1,1));

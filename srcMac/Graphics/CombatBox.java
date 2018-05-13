@@ -1,5 +1,6 @@
 package Graphics;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -22,6 +23,7 @@ public class CombatBox extends JPanel {
 	Enemy e;
 	String s1 = "";
 	String s2 = "";
+	String s3 = "";
 
 	/**
 	 * Loaded Constructor - initializes combBoxImage and arrow to images 
@@ -31,8 +33,8 @@ public class CombatBox extends JPanel {
 	public CombatBox(Player p) {
 		this.p = p;
 		try {
-			combBoxImage = ImageIO.read(new File("Images//combBoxMac.png"));
-			arrow = ImageIO.read(new File("Images//pointarrow.png"));
+			combBoxImage = ImageIO.read(new File("Images////combBoxMac.png"));
+			arrow = ImageIO.read(new File("Images////pointarrow.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,6 +97,10 @@ public class CombatBox extends JPanel {
 	public void setTextSub(String s) {
 		this.s2 = s;
 	}
+	
+	public void setTextTertiary(String s) {
+		this.s3 = s;
+	}
 
 	/**
 	 * Renders combat box in the window
@@ -106,8 +112,9 @@ public class CombatBox extends JPanel {
 		for (int i = 0; i < p.getAttacks().size(); i++) {
 			g.drawString(p.getAttacks().get(i).getName().toString(), 50, 50 + i * 25);
 		}
-		g.drawString(s1, 300, 75);
-		g.drawString(s2, 300, 100);
+		g.drawString(s1, 300, 65);
+		g.drawString(s2, 300, 115);
+		g.drawString(s3, 300, 90);
 		if(p!=null && e!=null) {
 			g.drawImage(statBoxImage, 5,5, 70, 70, null);
 			g.setFont(new Font("Arial", Font.BOLD, 16));

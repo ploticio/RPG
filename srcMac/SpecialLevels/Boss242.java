@@ -6,7 +6,7 @@ public class Boss242 extends LevelCreator{
 	
 	
 	public Boss242() {
-		setImage("Images//bossTile.png");
+		setImage("Images////bossTile.png");
 	}
 	
 	

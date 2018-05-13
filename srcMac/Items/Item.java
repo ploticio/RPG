@@ -79,7 +79,7 @@ public abstract class Item {
 	}
 	
 	public String toString() {
-		return "name: \n" + name + "\ndesc: \n" + desc;
+		return "name: //n" + name + "//ndesc: //n" + desc;
 	}
 
 	public abstract void use(Entity e);

@@ -26,8 +26,8 @@ public class WeaponBox extends JPanel {
 	public WeaponBox(Player p) {
 		this.p = p;
 		try {
-			invenBoxImage = ImageIO.read(new File("Images//invenBoxMac.png"));
-			arrow = ImageIO.read(new File("Images//pointarrow.png"));
+			invenBoxImage = ImageIO.read(new File("Images////invenBoxMac.png"));
+			arrow = ImageIO.read(new File("Images////pointarrow.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

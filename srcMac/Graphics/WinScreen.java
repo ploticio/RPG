@@ -16,7 +16,7 @@ public class WinScreen extends JPanel{
 	
 	public WinScreen() {
 		try {
-			winScreen = ImageIO.read(new File("Images//winScreen.png"));
+			winScreen = ImageIO.read(new File("Images////winScreen.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

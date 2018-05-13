@@ -13,6 +13,7 @@ import Items.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.Random;
 
 //UPDATED MAY 12TH
 
@@ -25,6 +26,7 @@ public class GameRunner {
 	private static boolean debounce = false;
 	private static boolean isBuying = false;
 	private static boolean isSelling = false;
+	private static Random r = new Random();
 	// private static boolean isPaused = false;// checks if game is paused
 
 	static int lX = 4;
@@ -82,6 +84,10 @@ public class GameRunner {
 				window.add(shopArmor);
 				window.add(shopWeapon);
 
+				for(int i = 0; i<10; i++) {
+					p.addItems(new BigPotion());
+				}
+				
 				shopKeeper.addItems(new Potion());
 				shopKeeper.addItems(new BigPotion());
 				shopKeeper.addArmor(new GoblinMail());
@@ -187,6 +193,7 @@ public class GameRunner {
 								combBoxTimer.start();
 								cb.setTextMain("Fighting: " + e.getName() + "!");
 								cb.setTextSub(" ");
+								cb.setTextTertiary(" ");
 							}
 							if (lX == 2 && lY == 4 && lZ == 2) {
 								if (currentLevel.getPlayer().getxGrid() > 0 && currentLevel.getPlayer().getxGrid() < 19
@@ -318,16 +325,25 @@ public class GameRunner {
 				enemyTimer.start();
 				checkTimer.start();
 				despawnTimer.start();
-
+				
 				//////////////////// KEYBOARD INPUT//////////////////////
 				InputMap in = g.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 				in.put(KeyStroke.getKeyStroke("A"), "left");
 				in.put(KeyStroke.getKeyStroke("D"), "right");
 				in.put(KeyStroke.getKeyStroke("W"), "up");
 				in.put(KeyStroke.getKeyStroke("S"), "down");
+				in.put(KeyStroke.getKeyStroke("LEFT"), "left");
+				in.put(KeyStroke.getKeyStroke("RIGHT"), "right");
+				in.put(KeyStroke.getKeyStroke("UP"), "up");
+				in.put(KeyStroke.getKeyStroke("DOWN"), "down");
 				in.put(KeyStroke.getKeyStroke("E"), "menu");
 				in.put(KeyStroke.getKeyStroke("F"), "use");
+				in.put(KeyStroke.getKeyStroke("F12"), "level");
 				ActionMap out = g.getActionMap();
+				out.put("level", new AbstractAction() {
+					public void actionPerformed(ActionEvent arg0) {
+						p.levelUp();
+					}});
 				out.put("left", new AbstractAction() {
 					public void actionPerformed(ActionEvent arg0) {
 						currentLevel.getPlayer().setCurrent("left");
@@ -444,7 +460,7 @@ public class GameRunner {
 								currentLevel.getPlayer().setyGrid(20);
 								currentLevel.getPlayer().setxGrid(positionX);
 								g.changeLevel(currentLevel);
-								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
+								//System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
 								currentLevel.getPlayer().setCurrent("up");
 							} else if (currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel
 									.getPlayer().getyGrid() - 1].getChanger() != 0) {
@@ -668,7 +684,7 @@ public class GameRunner {
 							gameTimer.start();
 						}
 						// opens the shop if he is on the shop tile
-						else if (lZ == 2 && currentLevel.getPlayer().getxGrid() == 10
+						else if (lX == 2 && lY == 2 && lZ == 2 && currentLevel.getPlayer().getxGrid() == 10
 								&& currentLevel.getPlayer().getyGrid() == 13 && (!isBuying && !isSelling)) {
 							gameTimer.stop();
 							ss.setBounds(20, 660, 800, 150);
@@ -765,6 +781,7 @@ public class GameRunner {
 								// do nothing
 							} else {
 								shopKeeper.getArmor().get(shopArmor.getArrayPostion()).buy(p);
+								p.armorMergeSort(p.getArmor());
 							}
 						} else if (shopItemsTimer.isRunning() && isBuying) {
 							if (p.getGold() < shopKeeper.getInventory().get(shopItems.getArrayPostion()).getPrice()) {
@@ -778,6 +795,7 @@ public class GameRunner {
 								// do nothing
 							} else {
 								shopKeeper.getWeapons().get(shopWeapon.getArrayPostion()).buy(p);
+								p.weaponMergeSort(p.getWeapons());
 							}
 						} else if (buySellTimer.isRunning() && isBuying) {
 							buySellTimer.stop();
@@ -797,9 +815,13 @@ public class GameRunner {
 						} else if (armorTimer.isRunning() && isSelling) {
 							p.getArmor().get(ab.getArrayPostion()).sell(p);
 							p.getArmor().remove(ab.getArrayPostion());
+							p.unequipArmor();
+							p.armorMergeSort(p.getArmor());
 						} else if (weaponTimer.isRunning() && isSelling) {
 							p.getWeapons().get(wb.getArrayPostion()).sell(p);
 							p.getWeapons().remove(wb.getArrayPostion());
+							p.unequipWeapon();
+							p.weaponMergeSort(p.getWeapons());
 						} else if (isSelling && buySellTimer.isRunning()) {
 							buySellTimer.stop();
 							if (bs.getArrayPostion() == 0) {
@@ -832,10 +854,10 @@ public class GameRunner {
 							////////////// Unequipping stuff////
 						} else if (armorTimer.isRunning() && p.getArmor().get(ab.getArrayPostion()).isEquiped()) {
 							p.getArmor().get(ab.getArrayPostion()).unequip();
-							p.setEquipedArmor(new NoArmor());
+							p.unequipArmor();
 						} else if (weaponTimer.isRunning() && p.getWeapons().get(wb.getArrayPostion()).isEquiped()) {
 							p.getWeapons().get(wb.getArrayPostion()).unequip();
-							p.setEquipedWeapon(new NoWeapon());
+							p.unequipWeapon();
 						}
 						////////////// Equipping stuff///////
 						else if (inventoryBoxTimer.isRunning()) {
@@ -896,9 +918,11 @@ public class GameRunner {
 									.get(currentLevel.getEnemyManager().getEnemyIndex());
 							// amount of total damage player deals
 							double percentIncrease = (double) p.getStrength() / 100;
-							double totalAttack = p.getAttacks().get(cb.getArrayPostion()).getStrength()
-									+ p.getAttacks().get(cb.getArrayPostion()).getStrength() * percentIncrease;
-
+							double initialAttack = p.getAttacks().get(cb.getArrayPostion()).getStrength() + r.nextInt(3);
+							double totalAttack = initialAttack + p.getAttacks().get(cb.getArrayPostion()).getStrength() * percentIncrease;
+							if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()) {
+								totalAttack*=1.3;
+							}
 							// player attacks with chosen attack
 							e.changeHealth((int) (-1 * totalAttack));
 							System.out.println(percentIncrease);
@@ -906,8 +930,14 @@ public class GameRunner {
 
 							// print out player action
 							cb.setTextMain("Player uses " + p.getAttacks().get(cb.getArrayPostion()).getName()
-									+ ", and deals " + totalAttack + " damage!");
-
+									+ ", and deals " + (int)totalAttack + " damage!");
+							System.out.println(p.getAttacks().get(cb.getArrayPostion()).wasCritical());
+							if(p.getAttacks().get(cb.getArrayPostion()).wasCritical()){
+								cb.setTextTertiary("*** CRITICAL HIT ***");
+							}
+							else {
+								cb.setTextTertiary(" ");
+							}
 							// if enemy dies
 							if (e.getCurrentHP() <= 0 && p.getCurrentHP() > 0) {
 								if (e.isBoss()) {
@@ -929,9 +959,9 @@ public class GameRunner {
 										tb.setBounds(20, 660, 800, 150);
 										tb.setText(e.getName() + " has died and dropped " + e.getGold() + " gold.");
 										tb.setText2("You are now level " + p.getLevel() + "!");
-										tb.setText3("HP is now: " + p.getTrueStrength());
+										tb.setText3("HP is now: " + p.getMaxHP());
 										tb.setText4("Strength is now: " + p.getTrueStrength());
-										if (p.getLevel() == 3 || p.getLevel() == 6) {
+										if (p.getLevel() == 3 || p.getLevel() == 10) {
 											tb.setText5("You learned a new move!");
 										}
 										// System.out.println("current: " + p.getExp());
@@ -944,8 +974,8 @@ public class GameRunner {
 								}
 							} else {
 
-								int enemyAttack = e.getStrength()
-										- (int) (e.getStrength() * p.getEquipedArmor().getIncrease());
+								int initialEnemyAttack = e.getStrength() + r.nextInt(3);
+								int enemyAttack = initialEnemyAttack - (int) (e.getStrength() * p.getEquipedArmor().getIncrease());
 
 								// enemy attacks
 								p.changeHealth(-1 * enemyAttack);

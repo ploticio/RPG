@@ -30,8 +30,8 @@ public class InventoryBox extends JPanel {
 	public InventoryBox(Player p) {
 		this.p = p;
 		try {
-			invenBoxImage = ImageIO.read(new File("Images//invenBoxMac.png"));
-			arrow = ImageIO.read(new File("Images//pointarrow.png"));
+			invenBoxImage = ImageIO.read(new File("Images////invenBoxMac.png"));
+			arrow = ImageIO.read(new File("Images////pointarrow.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

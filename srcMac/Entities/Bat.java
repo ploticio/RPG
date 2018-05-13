@@ -6,15 +6,21 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Bat enemy
+ *
+ */
 public class Bat extends Enemy {
 
+	static double multiplier = 2;
+	
 	/**
 	 * Default Constructor - loads enemy image
 	 */
 	public Bat() {
 		try {
-			current = ImageIO.read(new File("Images//bat.png"));
+			current = ImageIO.read(new File("Images////bat.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}
@@ -24,9 +30,10 @@ public class Bat extends Enemy {
 	 * Loaded Constructor - loads enemy image and x and y position
 	 */
 	public Bat(int x, int y) {
-		super(x, y, "Bat", 15, 15, 10, 10, 10);
+		super(x, y, "Bat", (int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		try {
-			current = ImageIO.read(new File("Images//bat.png"));
+			current = ImageIO.read(new File("Images////bat.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}

@@ -5,20 +5,26 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
+
 import Items.*;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Player object to be used ingame.
+ *
+ */
 public class Player extends Entity {
 	private int gold;
 	private int level;
 	private double exp;
-	// private int trueHP;// hp before armor is added
 	private int trueStrength;
 	private Armor equipedArmor;
 	private NoArmor na = new NoArmor();
 	private Weapon equipedWeapon;
 	private NoWeapon nw = new NoWeapon();
+	private Random r = new Random();
 
 	ArrayList<Item> inventory = new ArrayList<Item>();
 	ArrayList<Attack> attacks = new ArrayList<Attack>();
@@ -34,10 +40,10 @@ public class Player extends Entity {
 	BufferedImage current;
 	BufferedImage statBoxImage;
 
-	Attack punch = new Attack("Punch", 10);
-	Attack kick = new Attack("Kick", 15);
-	Attack stab = new Attack("Stab", 20);
-	Attack slice = new Attack("Slice", 25);
+	Attack punch = new Attack("Punch", 4);
+	Attack kick = new Attack("Kick", 9);
+	Attack stab = new Attack("Stab", 19);
+	Attack slice = new Attack("Slice", 29);
 
 	/**
 	 * Default Constructor - initializes player sprites and sets the current
@@ -45,18 +51,18 @@ public class Player extends Entity {
 	 */
 	public Player() {
 		requiredEXP = 50;
-		trueStrength = 20;
-		super.setMaxHP(10);
-		super.setCurrentHP(10);
+		trueStrength = 10;
+		super.setMaxHP(100);
+		super.setCurrentHP(100);
 		equipedArmor = na;
 		equipedWeapon = nw;
 		attacks.add(punch);
-		gold = 100;
+		gold = 1400;
 		try {
-			up = ImageIO.read(new File("Images//boiBack.png"));
-			down = ImageIO.read(new File("Images//boiFront.png"));
-			left = ImageIO.read(new File("Images//boiLeft.png"));
-			right = ImageIO.read(new File("Images//boiRight.png"));
+			up = ImageIO.read(new File("Images////boiBack.png"));
+			down = ImageIO.read(new File("Images////boiFront.png"));
+			left = ImageIO.read(new File("Images////boiLeft.png"));
+			right = ImageIO.read(new File("Images////boiRight.png"));
 			current = down;
 		} catch (IOException e) {
 			System.out.println("No Image Found: Player");
@@ -102,7 +108,11 @@ public class Player extends Entity {
 	 */
 	public void levelUp() {
 		// trueHP++;
-		trueStrength++;
+		trueStrength = 10 + level*5;
+		super.setMaxHP(100 + level * 10);
+		if (super.getCurrentHP() < super.getMaxHP() / 2) {
+			super.setCurrentHP(super.getMaxHP() / 2);
+		}
 		level++;
 		if (level == 3) {
 			attacks.add(kick);
@@ -110,7 +120,11 @@ public class Player extends Entity {
 		exp = exp % requiredEXP;
 		requiredEXP = 50 * Math.exp(0.1 * level);
 	}
-
+	
+	public void setLevel(int n) {
+		level = n;
+	}
+	
 	/**
 	 * Checks if player has enough experience points to level up
 	 * 
@@ -219,33 +233,6 @@ public class Player extends Entity {
 	public ArrayList<Attack> getAttacks() {
 		return attacks;
 	}
-
-	///////// HP STUFF///////////////
-	/**
-	 * Gets health
-	 * 
-	 * @return health without armor
-	 */
-	/*
-	 * public int getTrueHP() { return trueHP; }
-	 */
-
-	/**
-	 * sets max hp
-	 */
-	/*
-	 * public void setMaxHP() { super.setMaxHP(trueHP + equipedArmor.getIncrease());
-	 * }
-	 */
-
-	/**
-	 * gets max hp
-	 * 
-	 * @return gets max hp
-	 */
-	/*
-	 * public int getMaxHP() { return equipedArmor.getIncrease() + trueHP; }
-	 */
 	/**
 	 * gets equipped armor
 	 * 
@@ -293,9 +280,14 @@ public class Player extends Entity {
 	public Weapon getEquipedWeapon() {
 		return equipedWeapon;
 	}
-
+	
+	
+	/**
+	 * checks to see if the player has a weapon
+	 * @return whether the player has a weapon equipped
+	 */
 	public boolean hasWeapon() {
-		if (equipedWeapon == nw) {
+		if (equipedWeapon.equals(nw)) {
 			return false;
 		} else {
 			return true;
@@ -353,19 +345,15 @@ public class Player extends Entity {
 		this.gold = gold;
 	}
 
-	/*
-	 * public String toString() { return "Player [level=" + level + ", exp=" + exp +
-	 * ", requiredEXP=" + requiredEXP + ", inventory=" + inventory + ", equipped=" +
-	 * equipped + ", myName=" + super.getName() + ", maxHP=" + super.getMaxHP() +
-	 * ", currentHP=" + super.getCurrentHP() + ", myStrength=" + super.getStrength()
-	 * + "]"; }
+	/**
+	 * sets whether the player has weapon attacks
+	 * @param b - allows the player to have weapon attacks
 	 */
-
 	public void setWeaponAttacks(boolean b) {
 		if (b && !attacks.contains(stab)) {
 			attacks.add(stab);
 		}
-		if (b && level == 6 && !attacks.contains(slice)) { // TODO: CHANGE LEVEL MINIMUM FOR STATS WHEN GAME IS BALANCED
+		if (b && level == 10 && !attacks.contains(slice)) { 
 			attacks.add(slice);
 		}
 		if (!b) {
@@ -377,5 +365,100 @@ public class Player extends Entity {
 			}
 		}
 	}
-
+	
+	/**
+	 *  unequips the player's weapon
+	 */
+	public void unequipWeapon() {
+		equipedWeapon = nw;
+	}
+	/**
+	 * unequips the player's armor
+	 */
+	public void unequipArmor() {
+		equipedArmor = na;
+	}
+	/**
+	 * helper method for recursive mergesort
+	 * @param first - left list
+	 * @param second - right list
+	 * @return - sorted list
+	 */
+	private ArrayList<Weapon> weaponMerge(ArrayList<Weapon> first, ArrayList<Weapon> second) {
+        ArrayList<Weapon> mergedList = new ArrayList<>();
+        while (first.size() > 0  && second.size() > 0) {
+            if (first.get(0).getPrice() <= second.get(0).getPrice()) {
+                mergedList.add(first.remove(0));
+            } else {
+                mergedList.add(second.remove(0));
+            }
+        }
+        mergedList.addAll(first);
+        mergedList.addAll(second);
+        return mergedList;
+    }
+	/**
+	 * recursive mergesort for weapons
+	 * @param list - weapons list to be sorted
+	 */
+    public void weaponMergeSort(ArrayList<Weapon> list) {
+        if (list.size() != 1) {
+            ArrayList<Weapon> left = new ArrayList<Weapon>();
+            ArrayList<Weapon> right = new ArrayList<Weapon>();
+            boolean changeList = true;
+            while (list.size() > 0) {
+                if (changeList) {
+                    left.add(list.remove(0));
+                } else {
+                    right.add(list.remove(0));
+                }
+                changeList = !changeList;
+            }
+            weaponMergeSort(left);
+            weaponMergeSort(right);
+            list.addAll(weaponMerge(left, right));
+        }
+    }
+    /**
+     * helper method for recursive mergesort
+     * @param first - left list
+     * @param second - right list
+     * @return sorted list
+     */
+    private ArrayList<Armor> armorMerge(final ArrayList<Armor> first, final ArrayList<Armor> second) {
+        ArrayList<Armor> mergedList = new ArrayList<>();
+        while (first.size() > 0  && second.size() > 0) {
+            if (first.get(0).getPrice() <= second.get(0).getPrice()) {
+                mergedList.add(first.remove(0));
+            } else {
+                mergedList.add(second.remove(0));
+            }
+        }
+        mergedList.addAll(first);
+        mergedList.addAll(second);
+        return mergedList;
+    }
+    /**
+     * recursive mergesort for armors
+     * @param list - list of armor to be sorted
+     */
+    public void armorMergeSort(final ArrayList<Armor> list) {
+        if (list.size() != 1) {
+            ArrayList<Armor> left = new ArrayList<Armor>();
+            ArrayList<Armor> right = new ArrayList<Armor>();
+            boolean changeList = true;
+            while (list.size() > 0) {
+                if (changeList) {
+                    left.add(list.remove(0));
+                } else {
+                    right.add(list.remove(0));
+                }
+                changeList = !changeList;
+            }
+            armorMergeSort(left);
+            armorMergeSort(right);
+            list.addAll(armorMerge(left, right));
+        }
+    }
+	
 }

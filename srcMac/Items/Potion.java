@@ -12,15 +12,17 @@ public class Potion extends Item {
 	private String name;
 	private String desc;
 	private int price;
+	private int increase;
 	private BufferedImage picture;
 
 	public Potion() {
-		price = 10;
+		price = 25;
+		increase = 25;
 		super.setPrice(price);
 		name = "(PRICE: " + price +")" + " Potion";
-		desc = "Heals 10 hp";
+		desc = "Heals " + increase + " hp";
 		try {
-			picture = ImageIO.read(new File("Images//potSmall.png"));
+			picture = ImageIO.read(new File("Images////potSmall.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,7 +36,7 @@ public class Potion extends Item {
 	}
 
 	public void use(Entity e) {
-		e.changeHP(10);
+		e.changeHP(25);
 	}
 
 	public String toString() {

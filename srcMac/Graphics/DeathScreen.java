@@ -16,7 +16,7 @@ public class DeathScreen extends JPanel{
 	
 	public DeathScreen() {
 		try {
-			gameover = ImageIO.read(new File("Images//gameover.png"));
+			gameover = ImageIO.read(new File("Images////gameover.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

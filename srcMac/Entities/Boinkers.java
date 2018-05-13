@@ -5,8 +5,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Boinkers Boss Enemy
+ *
+ */
 public class Boinkers extends Enemy {
+	
+	static double multiplier = 10;
 	
 	/**
 	 * Default Constructor - loads enemy image
@@ -14,7 +20,7 @@ public class Boinkers extends Enemy {
 	public Boinkers() {
 		isBoss = true;
 		try {
-			current = ImageIO.read(new File("Images//bOinkers.png"));
+			current = ImageIO.read(new File("Images////bOinkers.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}
@@ -25,10 +31,11 @@ public class Boinkers extends Enemy {
 	 */
 	
 	public Boinkers(int x, int y) {
-		super(x, y, "bOinkers", 15, 15, 10, 25, 3);
+		super(x, y, "bOinkers", (int) (BlueBlob.health*multiplier) ,(int) (BlueBlob.health*multiplier)
+				, (int) (BlueBlob.strength*multiplier), (int) (BlueBlob.exp*multiplier), (int) (BlueBlob.gold*multiplier));
 		isBoss = true;
 		try {
-			current = ImageIO.read(new File("Images//bOinkers.png"));
+			current = ImageIO.read(new File("Images////bOinkers.png"));
 		} catch (IOException e) {
 			System.out.println("No Image Found: Enemy");
 		}

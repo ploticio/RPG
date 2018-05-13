@@ -25,8 +25,8 @@ public class ShopScreen extends JPanel {
 	public ShopScreen() {
 		arrowPos = 0;
 		try {
-			pause = ImageIO.read(new File("Images//textBoxMac.png"));
-			arrow = ImageIO.read(new File("Images//pointarrow.png"));
+			pause = ImageIO.read(new File("Images////textBoxMac.png"));
+			arrow = ImageIO.read(new File("Images////pointarrow.png"));
 		} catch (IOException e /* | FontFormatException e */) {
 			e.printStackTrace();
 		}
@@ -53,7 +53,7 @@ public class ShopScreen extends JPanel {
 		g.drawImage(arrow, 10, getArrowPos(), 10, 10, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.drawString("Buy", 25, 30);
-		g.drawString("Sell", 25, 50);
+		g.drawString("Sell (for half price)", 25, 50);
 
 	}
 }
