@@ -57,7 +57,6 @@ public class Player extends Entity {
 		equipedArmor = na;
 		equipedWeapon = nw;
 		attacks.add(punch);
-		gold = 1400;
 		try {
 			up = ImageIO.read(new File("Images\\boiBack.png"));
 			down = ImageIO.read(new File("Images\\boiFront.png"));
