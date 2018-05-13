@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Bat enemy
+ *
+ */
 public class Bat extends Enemy {
 
 	static double multiplier = 2;

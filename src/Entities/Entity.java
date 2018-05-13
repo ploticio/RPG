@@ -2,7 +2,11 @@ package Entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
+/**
+ * 
+ * Entity abstract class for creating entities
+ *
+ */
 public abstract class Entity {
 
 	protected int xPos, yPos, xGrid, yGrid;

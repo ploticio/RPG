@@ -6,11 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-/**
- * 
- * @author Vincent
- * Middle tier weapon in shop
- */
 public class StoneSword extends Weapon {
 	
 	private static int increase = 55;
@@ -19,9 +14,6 @@ public class StoneSword extends Weapon {
 	private static String desc = "Increases Strength by " + increase;
 	private BufferedImage picture;
 
-	/**
-	 * Default Constructor - Loads name, description, strength percent increase, and price
-	 */
 	public StoneSword() {
 		super(name, desc, increase, price);
 		try {
@@ -32,9 +24,7 @@ public class StoneSword extends Weapon {
 		}
 	}
 
-	/**
-	 * Returns image of sword
-	 */
+	
 	public BufferedImage getPicture() {
 		return picture;
 	}

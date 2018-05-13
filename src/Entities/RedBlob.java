@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ *  Red Blob Enemy
+ *
+ */
 public class RedBlob extends Enemy {
 	static Random r = new Random();
 	static double multiplier = 1.1;

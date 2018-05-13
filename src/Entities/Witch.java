@@ -6,6 +6,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * Witch Enemy
+ *
+ */
 public class Witch extends Enemy {
 	
 	static double multiplier = 5;

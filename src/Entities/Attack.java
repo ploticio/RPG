@@ -1,7 +1,11 @@
 package Entities;
 
 import java.util.Random;
-
+/**
+ * 
+ * Attack object used to allow player to attack
+ *
+ */
 public class Attack {
 	private String name;
 	private int strength;
@@ -51,6 +55,10 @@ public class Attack {
 		}
 	}
 	
+	/**
+	 * checks if attack was critical
+	 * @return - whether attack was critical
+	 */
 	public boolean wasCritical() {
 		return critical;
 	}

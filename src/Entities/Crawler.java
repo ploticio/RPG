@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Crawler Enemy
+ *
+ */
 public class Crawler extends Enemy {
 
 	static double multiplier = 3.5;

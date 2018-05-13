@@ -8,7 +8,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Levels.Tile;
-
+/**
+ * 
+ * Enemy Abstract Class for creating enemies
+ *
+ */
 public abstract class Enemy extends Entity {
 
 	Random r = new Random();
@@ -137,7 +141,10 @@ public abstract class Enemy extends Entity {
 	public void changeHealth(int x) {
 		super.setCurrentHP(super.getCurrentHP() + x);
 	}
-	
+	/**
+	 * checks if enemy is the boss
+	 * @return whether the enemy is the boss
+	 */
 	public boolean isBoss() {
 		return isBoss;
 	}

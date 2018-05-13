@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Goblin Enemy
+ *
+ */
 public class Goblin extends Enemy {
 	
 	static double multiplier = 3;

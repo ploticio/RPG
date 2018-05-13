@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * BlueBlob Enemy
+ *
+ */
 public class BlueBlob extends Enemy {
 	static int health = 20;
 	static int strength = 18;

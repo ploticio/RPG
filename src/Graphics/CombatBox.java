@@ -26,11 +26,9 @@ public class CombatBox extends JPanel {
 	String s3 = "";
 
 	/**
-	 * Loaded Constructor - initializes combBoxImage and arrow to images and
-	 * initializes player entity
-	 * 
-	 * @param p
-	 *            - player
+	 * Loaded Constructor - initializes combBoxImage and arrow to images 
+	 * and initializes player entity
+	 * @param p - 
 	 */
 	public CombatBox(Player p) {
 		this.p = p;
@@ -41,10 +39,9 @@ public class CombatBox extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Gets arrow position in the window
-	 * 
 	 * @return arrow's position
 	 */
 	public int getArrowPos() {
@@ -53,7 +50,6 @@ public class CombatBox extends JPanel {
 
 	/**
 	 * Sets arrow position in the window
-	 * 
 	 * @return x - arrow's new position
 	 */
 	public void setArrowPos(int x) {
@@ -62,7 +58,6 @@ public class CombatBox extends JPanel {
 
 	/**
 	 * Gets array position in the window
-	 * 
 	 * @return arrowPos - position of arrow
 	 */
 	public int getArrayPostion() {
@@ -71,23 +66,15 @@ public class CombatBox extends JPanel {
 
 	/**
 	 * Gets the player entity
-	 * 
 	 * @return p - player entity
 	 */
 	public Player getPlayer() {
 		return p;
 	}
-
-	/**
-	 * sets enemy the player is fighting, from the enemy manager arraylist
-	 * 
-	 * @param e
-	 *            - Enemy player is fighting
-	 */
+	
 	public void setEnemy(Enemy e) {
 		this.e = e;
 	}
-
 	/**
 	 * Updates graphics
 	 */
@@ -97,24 +84,20 @@ public class CombatBox extends JPanel {
 
 	/**
 	 * Sets primary text
-	 * 
-	 * @param s
-	 *            - new primary text
+	 * @param s - new primary text
 	 */
 	public void setTextMain(String s) {
 		this.s1 = s;
 	}
-
+	
 	/**
 	 * Sets secondary text
-	 * 
-	 * @param s
-	 *            - new secondary text
+	 * @param s - new secondary text
 	 */
 	public void setTextSub(String s) {
 		this.s2 = s;
 	}
-
+	
 	public void setTextTertiary(String s) {
 		this.s3 = s;
 	}
@@ -132,8 +115,8 @@ public class CombatBox extends JPanel {
 		g.drawString(s1, 300, 65);
 		g.drawString(s2, 300, 115);
 		g.drawString(s3, 300, 90);
-		if (p != null && e != null) {
-			g.drawImage(statBoxImage, 5, 5, 70, 70, null);
+		if(p!=null && e!=null) {
+			g.drawImage(statBoxImage, 5,5, 70, 70, null);
 			g.setFont(new Font("Arial", Font.BOLD, 16));
 			g.drawString("Your Health: " + p.getCurrentHP(), 300, 20);
 			g.drawString("Enemy's Health: " + e.getCurrentHP(), 600, 20);

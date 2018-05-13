@@ -332,9 +332,13 @@ public class GameRunner {
 				in.put(KeyStroke.getKeyStroke("D"), "right");
 				in.put(KeyStroke.getKeyStroke("W"), "up");
 				in.put(KeyStroke.getKeyStroke("S"), "down");
+				in.put(KeyStroke.getKeyStroke("LEFT"), "left");
+				in.put(KeyStroke.getKeyStroke("RIGHT"), "right");
+				in.put(KeyStroke.getKeyStroke("UP"), "up");
+				in.put(KeyStroke.getKeyStroke("DOWN"), "down");
 				in.put(KeyStroke.getKeyStroke("E"), "menu");
 				in.put(KeyStroke.getKeyStroke("F"), "use");
-				in.put(KeyStroke.getKeyStroke("C"), "level");
+				in.put(KeyStroke.getKeyStroke("F12"), "level");
 				ActionMap out = g.getActionMap();
 				out.put("level", new AbstractAction() {
 					public void actionPerformed(ActionEvent arg0) {

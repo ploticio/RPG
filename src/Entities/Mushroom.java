@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * Mushroom Enemy
+ *
+ */
 public class Mushroom extends Enemy {
 	
 	static double multiplier = 1.5;

@@ -33,52 +33,26 @@ public class WeaponBox extends JPanel {
 		}
 	}
 
-	/**
-	 * Gets arrow position in the window
-	 * 
-	 * @return arrow's position
-	 */
 	public int getArrowPos() {
 		return 60 + arrowPos * 30;
 	}
 
-	/**
-	 * Sets arrow position in the window
-	 * 
-	 * @return x - arrow's new position
-	 */
 	public void setArrowPos(int x) {
 		arrowPos -= x;
 	}
 
-	/**
-	 * Gets array position in the window
-	 * 
-	 * @return arrowPos - position of arrow
-	 */
 	public int getArrayPostion() {
 		return arrowPos;
 	}
 
-	/**
-	 * Gets the player entity
-	 * 
-	 * @return p - player entity
-	 */
 	public Player getPlayer() {
 		return p;
 	}
 
-	/**
-	 * Updates graphics
-	 */
 	public void update() {
 		repaint();
 	}
 
-	/**
-	 * Renders weapon box in the window
-	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage(invenBoxImage, 0, 0, 800, 450, null);
 		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);
@@ -86,7 +60,7 @@ public class WeaponBox extends JPanel {
 		g.drawString("Gold: " + p.getGold(), 40, 30);
 		for (int i = 0; i < p.getWeapons().size(); i++) {
 			g.drawString(p.getWeapons().get(i).toString(), 90, 70 + i * 30);
-			g.drawImage(p.getWeapons().get(i).getPicture(), 40, 40 + i * 30, null);
+			g.drawImage(p.getWeapons().get(i).getPicture(), 40, 40 + i*30, null);
 		}
 		g.drawString("Press 'F' to equip/unequip", 580, 435);
 

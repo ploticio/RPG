@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * green blob enemy
+ *
+ */
 public class Blob extends Enemy {
 
 	static Random r = new Random();

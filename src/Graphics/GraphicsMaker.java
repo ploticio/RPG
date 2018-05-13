@@ -22,11 +22,6 @@ import Managers.EnemyManager;
 
 //UPDATED MAY 1ST
 
-/**
- * 
- * draws the current level based on its tiles
- *
- */
 public class GraphicsMaker extends JPanel {
 
 	private LevelCreator l;
@@ -37,12 +32,10 @@ public class GraphicsMaker extends JPanel {
 
 	/**
 	 * Loaded Constructor - Renders a level without any enemies
-	 * 
-	 * @param l
-	 *            - level to be rendered
-	 * @param p
-	 *            - player object to be placed
+	 * @param l - level to be rendered
+	 * @param p - player object to be placed
 	 */
+
 	public GraphicsMaker(LevelCreator l) {
 		p = l.getPlayer();
 		this.l = l;
@@ -54,12 +47,10 @@ public class GraphicsMaker extends JPanel {
 		}
 		setSize(840, 840);
 	}
-
+	
 	/**
 	 * Loads new level
-	 * 
-	 * @param l
-	 *            - new level
+	 * @param l - new level
 	 */
 	public void changeLevel(LevelCreator l) {
 		p = l.getPlayer();
@@ -81,9 +72,7 @@ public class GraphicsMaker extends JPanel {
 
 	/**
 	 * Renders new graphic
-	 * 
-	 * @param g
-	 *            - graphic drawer
+	 * @param g - graphic drawer
 	 */
 	public void paintComponent(Graphics g) {
 		l.makeLevel(g);
