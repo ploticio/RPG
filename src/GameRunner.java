@@ -456,7 +456,7 @@ public class GameRunner {
 								currentLevel.getPlayer().setyGrid(20);
 								currentLevel.getPlayer().setxGrid(positionX);
 								g.changeLevel(currentLevel);
-								System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
+								//System.out.println("[" + lX + "][" + lY + "][" + lZ + "]");
 								currentLevel.getPlayer().setCurrent("up");
 							} else if (currentLevel.getGrid()[currentLevel.getPlayer().getxGrid()][currentLevel
 									.getPlayer().getyGrid() - 1].getChanger() != 0) {
@@ -680,7 +680,7 @@ public class GameRunner {
 							gameTimer.start();
 						}
 						// opens the shop if he is on the shop tile
-						else if (lZ == 2 && currentLevel.getPlayer().getxGrid() == 10
+						else if (lX == 2 && lY == 2 && lZ == 2 && currentLevel.getPlayer().getxGrid() == 10
 								&& currentLevel.getPlayer().getyGrid() == 13 && (!isBuying && !isSelling)) {
 							gameTimer.stop();
 							ss.setBounds(20, 660, 800, 150);
