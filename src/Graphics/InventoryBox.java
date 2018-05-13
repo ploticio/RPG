@@ -16,8 +16,14 @@ import javax.swing.Timer;
 
 import Entities.Player;
 
+/**
+ * graphic box for player's inventory
+ * 
+ * 
+ *
+ */
 public class InventoryBox extends JPanel {
-	///made 5/7
+	/// made 5/7
 	private int arrowPos;
 	private BufferedImage invenBoxImage;
 	private BufferedImage arrow;
@@ -25,7 +31,9 @@ public class InventoryBox extends JPanel {
 
 	/**
 	 * Loaded Constructor - initializes arrow and invenBoxImage to images
-	 * @param p - player entity
+	 * 
+	 * @param p
+	 *            - player entity
 	 */
 	public InventoryBox(Player p) {
 		this.p = p;
@@ -39,6 +47,7 @@ public class InventoryBox extends JPanel {
 
 	/**
 	 * Gets arrow position in the window
+	 * 
 	 * @return arrow's position
 	 */
 	public int getArrowPos() {
@@ -47,46 +56,49 @@ public class InventoryBox extends JPanel {
 
 	/**
 	 * Sets arrow position in the window
+	 * 
 	 * @return x - arrow's new position
 	 */
 	public void setArrowPos(int x) {
 		arrowPos -= x;
 	}
-	
+
 	/**
 	 * Gets array position in the window
+	 * 
 	 * @return arrowPos - position of arrow
 	 */
 	public int getArrayPostion() {
 		return arrowPos;
 	}
-	
+
 	/**
 	 * Gets the player entity
+	 * 
 	 * @return p - player entity
 	 */
 	public Player getPlayer() {
 		return p;
 	}
-	
+
 	/**
 	 * Updates graphics
 	 */
 	public void update() {
 		repaint();
 	}
-	
+
 	/**
 	 * Renders inventory box in the window
 	 */
 	public void paintComponent(Graphics g) {
-		g.drawImage(invenBoxImage, 0,0, 800, 450, null);
+		g.drawImage(invenBoxImage, 0, 0, 800, 450, null);
 		g.drawImage(arrow, 25, getArrowPos(), 10, 10, null);
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.drawString("Gold: " + p.getGold(), 40, 30);
 		for (int i = 0; i < p.getInventory().size(); i++) {
 			g.drawString(p.getInventory().get(i).toString(), 90, 70 + i * 30);
-			g.drawImage(p.getInventory().get(i).getPicture(), 40, 40 + i*30, null);
+			g.drawImage(p.getInventory().get(i).getPicture(), 40, 40 + i * 30, null);
 		}
 		g.drawString("Press 'F' to use", 650, 435);
 
