@@ -39,7 +39,7 @@ public class GameRunner {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				//////////////////// MAKE WINDOW//////////////////////
-				JFrame window = new JFrame("Game");
+				JFrame window = new JFrame("RPG Master");
 				window.pack();
 				window.setSize(846, 869);
 				window.setResizable(false);

@@ -16,7 +16,7 @@ public class WoodenSword extends Weapon {
 	private static int increase = 20;
 	private static int price = 150;
 	private static String name = "(PRICE: " + price +")" + " Wooden Sword";
-	private static String desc = "Increases Strength by 2";
+	private static String desc = "Increases Strength by " + increase;
 	private BufferedImage picture;
 	
 	/**
