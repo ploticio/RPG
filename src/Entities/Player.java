@@ -53,7 +53,6 @@ public class Player extends Entity {
 		requiredEXP = 50;
 		trueStrength = 10;
 		setLevel(1);
-		setGold(1400);
 		super.setMaxHP(100);
 		super.setCurrentHP(100);
 		equipedArmor = na;
