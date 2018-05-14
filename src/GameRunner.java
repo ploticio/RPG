@@ -367,12 +367,19 @@ public class GameRunner {
 				in.put(KeyStroke.getKeyStroke("E"), "open/use");
 				in.put(KeyStroke.getKeyStroke("ESCAPE"), "close");
 				in.put(KeyStroke.getKeyStroke("F"), "attack");
-
+				
+				in.put(KeyStroke.getKeyStroke("F11"), "gold");
 				in.put(KeyStroke.getKeyStroke("F12"), "level");
+				
 				ActionMap out = g.getActionMap();
 				out.put("level", new AbstractAction() {
 					public void actionPerformed(ActionEvent arg0) {
 						p.levelUp();
+					}
+				});
+				out.put("gold", new AbstractAction() {
+					public void actionPerformed(ActionEvent arg0) {
+						p.setGold(p.getGold()+100);
 					}
 				});
 				out.put("left", new AbstractAction() {
