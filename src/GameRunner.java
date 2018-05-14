@@ -945,6 +945,7 @@ public class GameRunner {
 										p.setGold(p.getGold() + e.getGold());
 										// if player levels up
 										if (p.ifNextLevel()) {
+								
 											p.levelUp();
 											gameTimer.stop();
 											combBoxTimer.stop();
@@ -954,7 +955,7 @@ public class GameRunner {
 											tb.setText2(
 													e.getName() + " has died and dropped " + e.getGold() + " gold.");
 											tb.setText3("You are now level " + p.getLevel() + "!");
-											tb.setText4("HP is now: " + p.getMaxHP() + ", Strength is now: "
+											tb.setText4("Max HP is now: " + p.getMaxHP() + ", Strength is now: "
 													+ p.getTrueStrength());
 											if (p.getLevel() == 3 || p.getLevel() == 10) {
 												tb.setText5("You learned a new move!");

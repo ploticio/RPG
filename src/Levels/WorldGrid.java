@@ -61,12 +61,14 @@ public class WorldGrid {
 		//layer 2
 		worldGrid[2][0][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
 		worldGrid[2][1][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
+		worldGrid[2][2][0].getEnemyManager().spawnNpcs(4, 6, 18, 18);
 		worldGrid[2][3][0].getEnemyManager().spawnBlobs(7, 10, 18, 18);
 		worldGrid[2][4][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
 		
 		//layer 1
 		worldGrid[1][0][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
 		worldGrid[1][1][0].getEnemyManager().spawnGoblins(7, 10, 18, 18);
+		worldGrid[1][2][0].getEnemyManager().spawnNpcs(4, 6, 18, 18);
 		worldGrid[1][3][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
 		worldGrid[1][4][0].getEnemyManager().spawnMushrooms(7, 10, 18, 18);
 		

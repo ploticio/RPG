@@ -8,14 +8,42 @@ public class Level240 extends LevelCreator{
 	private Random r = new Random();
 	public Level240() {
 		setImage("Images\\grass.png");
-		for(int i = 0; i<4; i++) {
-			setImage(r.nextInt(21), r.nextInt(21), "Images\\bush.png", true);
-			setImage(r.nextInt(21), r.nextInt(21), "Images\\rockOnGrass.png", true);
+		for(int i=0; i<11; i++) {
+			setImage(i,9, "Images\\dirtToGrassN.png");
+			setImage(i,10, "Images\\stoneOnDirt.png");
+			setImage(i,11, "Images\\dirtToGrassS.png");
 		}
+		setImage(9,11, "Images\\grassToDirtNE.png");
+		setImage(11,9, "Images\\dirtToGrassNE.png");
+		setImage(11,10, "Images\\dirtToGrassE.png");
+		setImage(11,11, "Images\\dirtToGrassE.png");
+		setImage(10,11, "Images\\stoneOnDirt.png");
+		
+		for(int i = 12; i<21; i++) {
+			setImage(10,i, "Images\\stoneOnDirt.png");
+			setImage(9,i,"Images\\dirtToGrassW.png");
+			setImage(11,i,"Images\\dirtToGrassE.png");
+		}
+		
+		for(int i = 0; i<2; i++) {
+			setImage(r.nextInt(21), r.nextInt(9), "Images\\bush.png", true);
+			setImage(r.nextInt(21), r.nextInt(9), "Images\\rockOnGrass.png", true);
+		}
+		for(int i = 0; i<1; i++) {
+			setImage(r.nextInt(9), r.nextInt(9)+12, "Images\\bush.png", true);
+			setImage(r.nextInt(9), r.nextInt(9)+12, "Images\\rockOnGrass.png", true);
+		}
+		for(int i = 0; i<1; i++) {
+			setImage(r.nextInt(9)+12, r.nextInt(9)+12, "Images\\bush.png", true);
+			setImage(r.nextInt(9)+12, r.nextInt(9)+12, "Images\\rockOnGrass.png", true);
+		}
+		
 		setImage(0,20,"Images\\bushEnd.png",true);
+		
 		for(int k = 0; k < 21; k++) {
 			setImage(k, 0, "Images\\bushHo.png", true);
 		}
+		
 		for(int k = 0; k < 21; k++) {
 			setImage(20, k, "Images\\bushVe.png", true);
 		}

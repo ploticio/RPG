@@ -7,7 +7,17 @@ public class Level220 extends LevelCreator {
 		// no enemy
 
 		setImage("Images\\grass.png");
-
+		
+		setImage(9,20,"Images\\dirtToGrassW.png", false);
+		setImage(10,20,"Images\\stoneOnDirt.png", false);
+		setImage(11, 20, "Images\\dirtToGrassE.png", false);
+		setImage(9, 19, "Images\\dirtToGrassNW.png", false);
+		setImage(10, 19, "Images\\dirtToGrassN.png", false);
+		setImage(11, 19, "Images\\dirtToGrassNE.png", false);
+		setImage(20,9, "Images\\dirtToGrassNW.png", false);
+		setImage(20,10, "Images\\dirtToGrassW.png", false);
+		setImage(20,11, "Images\\dirtToGrassSW.png", false);
+		
 		for (int k = 0; k < 18; k++) {
 			setImage(1, k, "Images\\cobbleW.png", false);
 			setImage(19, k, "Images\\cobbleE.png",false);

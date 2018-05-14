@@ -34,6 +34,7 @@ public class EnemyManager {
 	private Timer crawlerRespawner;
 	private Timer batRespawner;
 	private Timer goblinRespawner;
+	private Timer npcRespawner;
 	private ArrayList<Timer> TimerList = new ArrayList<Timer>();
 	/**
 	 * Constructor that initializes all enemy timers
@@ -46,6 +47,7 @@ public class EnemyManager {
 		TimerList.add(crawlerRespawner);
 		TimerList.add(batRespawner);
 		TimerList.add(goblinRespawner);
+		TimerList.add(npcRespawner);
 	}
 	/**
 	 * Returns the current list of enemies
@@ -67,6 +69,29 @@ public class EnemyManager {
 	 */
 	public void setSpawnChance(int chance) {
 		this.chance = chance;
+	}
+	
+	/**
+	 * Spawns NPCS
+	 * @param min - minimum number of enemies
+	 * @param max - maximum number of enemies
+	 * @param xBound - x bound of where enemies can spawn
+	 * @param yBound - y bound of where enemies can spawn
+	 */
+	public void spawnNpcs(int min, int max, int xBound, int yBound) {
+		npcRespawner = new Timer(respawnRate, new ActionListener() { //respawn every 10 seconds
+			public void actionPerformed(ActionEvent arg0) {
+				if(enemies.size() < min) {
+					enemies.add(new NPC(1 +r.nextInt(xBound), 1 + r.nextInt(yBound)));
+				}
+				else if(enemies.size()>=min && enemies.size()<max) {
+					int spawnChance = r.nextInt(100);
+					if(spawnChance<chance) {
+						enemies.add(new NPC(1 +r.nextInt(xBound), 1 + r.nextInt(yBound)));
+					}
+				}
+			}});
+		npcRespawner.start();
 	}
 	/**
 	 * Spawns blobs

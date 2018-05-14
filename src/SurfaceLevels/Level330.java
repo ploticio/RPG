@@ -8,6 +8,24 @@ public class Level330 extends LevelCreator {
 		setImage(0,0,"Images\\bushEnd.png",true);
 		setImage(0,20,"Images\\bushEnd.png",true);
 		
+		for(int i=16; i<21; i++) {
+			setImage(i,9, "Images\\dirtToGrassN.png");
+			setImage(i,10, "Images\\stoneOnDirt.png");
+			setImage(i,11, "Images\\dirtToGrassS.png");
+		}
+		
+		setImage(14,9, "Images\\dirtToGrassNW.png");
+		setImage(14,10, "Images\\dirtToGrassW.png");
+		setImage(14,11, "Images\\dirtToGrassSW.png");
+		setImage(15,9, "Images\\dirtToGrassN.png");
+		setImage(15,10, "Images\\dirt.png");
+		setImage(15,11, "Images\\dirtToGrassS.png");
+		
+		setImage(12,10, "Images\\stoneOnGrass.png");
+		setImage(10,10, "Images\\stoneOnGrass.png");
+		setImage(8,10, "Images\\stoneOnGrass.png");
+		setImage(8,8, "Images\\stoneOnGrass.png");
+		
 		for(int k = 1; k < 20; k++) {
 			setImage(0, k, "Images\\bushVe.png", true);
 		}
